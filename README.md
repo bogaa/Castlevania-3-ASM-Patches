@@ -1,5 +1,6 @@
-;-------------------------------------------------------------------------------
-; Put following ROM in this directory and rename it to "Castlevania_3.nes"
+# Castlevania-3-ASM-Patches
+
+Put following ROM in this directory and rename it to "Castlevania_3.nes"
 
 		Castlevania_3.nes
 		Load a ROM
@@ -16,9 +17,9 @@ Credits:
 	- Konami for Castlevania 3, North America in 1990
 
 
-;================================================================================
-;Cheat Notes:
-;================================================================================
+
+Cheat Notes:
+
 
 About Cheats and Levelselect:
 	- To use levelSelect press select while pause. In debugg the screen select stage/helper use A,B and select to choose. Then pause again to lunch new stage.
