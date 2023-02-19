@@ -39,8 +39,8 @@ print "seed: {format:04x:seed}"
 expand = 1
 	if expand
 		addSRAM = 1
-		expandCHR = 1		; currently broken 
-		expandPRG = 1		; currently broken 
+		expandCHR = 1		
+		expandPRG = 1		
 		incsrc code/expand.asm
 		endif 
 
@@ -56,7 +56,7 @@ fastCharacterSwap = 1
 
 chrAnimations = 1			; expands to have more of them avalible 
 airControl = 1				; needs SRAM!
-subWeaponDrop = 1				; made by SpiderDave
+subWeaponDrop = 1			; made by SpiderDave
 
 
 ; ---------------------------------------------------
