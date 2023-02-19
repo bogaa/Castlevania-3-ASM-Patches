@@ -21,6 +21,7 @@ Credits:
 - SpiderDave for SpiderDaveASM: https://github.com/SpiderDave/SpiderDaveAsm
 - SpiderDave for ItemDrop Patch: https://spiderdave.me (among many other things)
 - nstbayless for the free AirMovement patch: https://github.com/nstbayless/cv3-controls
+- vinheim3 for dissasembly: https://github.com/vinheim3/castlevania3-disasm
 - Konami for Castlevania 3, North America in 1990
 
 About Cheats and Level Select:
