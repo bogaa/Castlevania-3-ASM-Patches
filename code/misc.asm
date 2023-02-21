@@ -560,6 +560,8 @@ db $FF
 miscData41:
 db $00, $80, $08, $08, $30, $08, $00, $00, $FF
 
+org $bed0			; freeSpace
+
 
 
 
