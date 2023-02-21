@@ -1,5 +1,5 @@
-; ----------------------------------------------------
 
+; ----------------------------------------------------
 if subWeaponDrop
     bank $17
 	base $a000
@@ -24,21 +24,21 @@ org $dc19   ; start of blank space
         popY = $08              ; how far to pop out item vertically
         popY = $18
 
-        lda $1234
-        lda $400, x
+;        lda $1234				; ??
+        lda wOamSpecIdxDoubled, x	; $400
         cmp #$24                ; points bag
         beq destroyItem
         cmp #$0e                ; heart
         beq destroyItem2
 
-        ldy $3b                 ; weapon slot to use
+        ldy wCurrCharacterIdx   ; weapon slot to use $3b
         lda $85, y              ; get current sub weapon
         pha
         
         jsr $a0fc               ; get the item
         
-        ldy $3b                 ; weapon slot to use
-        lda $85, y              ; get current sub weapon again
+        ldy wCurrCharacterIdx   ; weapon slot to use $3b
+        lda wCurrSubweapon, y   ; get current sub weapon again $85
         sta $10                 ; store in temp address
         
         pla                     ; get original weapon
@@ -49,54 +49,54 @@ org $dc19   ; start of blank space
         tay
         lda dropTable, y
         
-        sta $54e, x
+        sta wCurrPlayer, x		; $54e
         sec
         sbc #$60
         sta $5ef, x
         
         ; set a bunch of stuff for the item to look right
         ; this is mostly taken from 0b:831d
-        lda $54e, x
+        lda wCurrPlayer, x					; $54e
         sec
         sbc #$93
         tay
         lda $8333, y
-        sta $48c, x
+        sta wEntityOamSpecGroupDoubled, x 	; $48c
         lda $8353, y
-        sta $400, x
+        sta wOamSpecIdxDoubled, x	    	; $400
         
         ; y pos
-        lda $41c, x
+        lda wEntityBaseY, x		; $41c, x
         sec
         sbc #popY
-        sta $41c, x
+        sta wEntityBaseY, x		; $41c, x
         
-        lda $4a8                ; facing direction
+        lda wEntityFacingLeft	; $4a8         
         bne popItemRight
         
     popItemLeft:
         ; x pos
-        lda $438, x
+        lda wEntityBaseX, x		; $438, x
         sec
         sbc #popX
-        sta $438, x
+        sta wEntityBaseX, x		; $438, x
         jmp donePopItem
 
     popItemRight:
         ; x pos
-        lda $438, x
+        lda wEntityBaseX, x		; $438, x
         clc
         adc #popX
-        sta $438, x
+        sta wEntityBaseX, x		; $438, x
 
     donePopItem:
         lda #$02                ; set item state to collectable
-        sta $5c1, x
+        sta wEntityPhase, x		; $5c1, x
         rts
     
     noItem:
         lda #$04
-        sta $5c1, x
+        sta wEntityPhase, x		; $5c1, x
 ;        inc $5c1, x             ; increment item state
         rts
         
@@ -105,13 +105,12 @@ org $dc19   ; start of blank space
         db $2c                  ; bit opcode trick
     destroyItem:
         lda #$04
-        sta $5c1, x
+        sta wEntityPhase, x		; $5c1, x
         jsr $fec8               ; helps remove the object (normally only on air collecting)
         jsr $a0fc               ; helps remove the object
         rts
 
-    dropTable:
-        ; table mapping held item to dropped item value
+    dropTable:					 ; table mapping held item to dropped item value       
         db $00, $93, $94, $95, $96, $98, $99, $9a
         db $95, $93, $00, $97
 endif
@@ -167,8 +166,8 @@ org $b05d
 		lda #$01			; default start
 endif
 
-; ----------------------------------------------------
 
+; ----------------------------------------------------
 bank $1f
 if expandPRG
 bank $3f
@@ -177,8 +176,7 @@ base $E000
 org $E252 
 		LDA #$98          	; music engine bank
 		JSR prgBankSwitchWithBackup  
-		JSR $89DE   	   	; music Routine. Not SFX..             
-	
+		JSR $89DE   	   	; music Routine. Not SFX..             	
 ; ----------------------------------------------------
 if fastLunch
 	org $e386
@@ -186,145 +184,210 @@ if fastLunch
 	org $e41b	 
 		LDA #$01     			; title screen count down till it starts            
 endif	
-
+; ----------------------------------------------------
 
 org $e2e6    
-	prgBankSwitchWithBackup:
+	prgBankSwitchWithBackup: 
 		STA $21		
-	prgBankSwitch:	
+	prgBankSwitch:			; games prgSwapRoutine 
 		STA $5115 
 		RTS
 
 
-; ----------------------------------------------------
-if whilePauseRoutines
 	org $f384
+	if addSRAM
 		jsr beforePause
-
+	endif 
+		
 	org $f6b4
-		jsr whilePause  	; whilePauseHijack           
+	if addSRAM
+		jsr whilePause  	      
 		nop
 		BEQ +                
 		LDA #$00                 
 		STA $2B  		
 	+	
 		RTS  
-endif
-
-
-
+	endif
+	
 ; ----------------------------------------------------	
 bank $1e
 base $c000	
 org $de00	
 base $6000					; This section goes to SRAM when start or reset
 
-
-if whilePauseRoutines		
-	beforePause:			; you can write any routine that should always run in game mode
-	if cheats	
-		jsr getItemWhiteAB
-	endif	
+	
+	beforePause:			; you can write any routine that should always run in game mode					
+		if expandPRG
+		lda #$a0
+		jsr prgBankSwitch
+		endif
 		
+		if experiment
+		jsr checkRamPage
+		endif 
+
+		if expandPRG
+		lda $21 
+		jsr prgBankSwitch
+		endif
+				
 		jsr $f683			; jijack Fix pause check..
 		rts 
-
+	
 	whilePause:				; you can write any routine after here that should run while pause
-endif
-
-	if levelSelect	
+		if expandPRG
+		lda #$a0
+		jsr prgBankSwitch
+		endif
+		
+		if levelSelect	
 		jsr levelSelectDebuggScreen
-	   endLevelSelect:
-	endif
+		endif
 
-	if cheats		
+		if cheats		
 		jsr backupRestorePlayerState	; check if you like to copy stats to practice faster		
-	endif	
+		jsr getItemWhiteAB
+		endif			
+		
+		if expandPRG
+		lda #$a0
+		jsr prgBankSwitch
+		endif
 
-if whilePauseRoutines
-	endWhilePause:
 		LDA $F8      					; hijack fix  check to unpause        
 		AND #$10 
 		rts		
+
+if expandPRG
+bank $20
+base $8000
+org $8000
 endif
 
+	if cheats
+		getItemWhiteAB:
+			;lda $fa					; skip not holding select
+			;and #$20
+			;beq endGetItem
+			phx 
+			lda $f8
+			and #$40
+			beq ++
+			lda $87
+			clc 
+			adc #$01
+			cmp #$03
+			bne +
+			lda #$00				; reset upgrade
+		
+		+	sta $87					; we just upgrade helper and Trevor..
+			sta $88
+			jsr updateSpritesMulti
+			
+			lda #$40				; also give hearts
+			sta $84
+			
+		++	lda $f8
+			and #$80
+			beq endGetItem
+			lda $85
+			clc
+			adc #$01
+			cmp #$0c
+			bne +
+			lda #$00
+			
+		+	sta $85
+			sta $86
+			jsr updateSpritesSubw
 
-if cheats
-	getItemWhiteAB:
-		lda $fa					; skip not holding select
-		and #$20
-		beq endGetItem
-		
-		lda $f8
-		and #$40
-		beq ++
-		lda $87
-		clc 
-		adc #$01
-		cmp #$03
-		bne +
-		lda #$00				; reset upgrade
+		endGetItem:
+			plx 
+			rts 
 	
-	+	sta $87					; we just upgrade helper and Trevor..
-		sta $88
-		lda #$40
-		sta $84
-		
-	++	lda $f8
-		and #$80
-		beq endGetItem
-		lda $85
-		clc
-		adc #$01
-		cmp #$0c
-		bne +
-		lda #$00
-		
-	+	sta $85
-		sta $86
-	endGetItem:
-		rts 
-	
-	backupRestorePlayerState:
-		lda $26
-		cmp #$02
-		beq copyPlayerStats
-		cmp #$01
-		beq savePlayerStates
-		rts
-	copyPlayerStats:	
-		ldy #$0b
-	-
-		lda $84,y
-		sta $6200,y
-		dey 
-		bne -
-		lda $3b					; player ID used for upgrades resived
-		sta $6200
-		rts
-	savePlayerStates:
-		ldy #$0b
-	-
-		lda $6200,y
-		sta $84,y
-		dey 
-		bne -
-		lda $6200
-		sta $3b
-		rts	
-	endif	
+		backupRestorePlayerState:
+			lda $26
+			cmp #$02
+			beq copyPlayerStats
+			cmp #$01
+			beq savePlayerStates
+			rts
+		copyPlayerStats:	
+			ldy #$0b
+		-
+			lda $84,y
+			sta $6200,y
+			dey 
+			bne -
+			lda $3b					; player ID used for upgrades resived
+			sta $6200
+			rts
+		savePlayerStates:
+			ldy #$0b
+		-
+			lda $6200,y
+			sta $84,y
+			dey 
+			bne -
+			lda $6200
+			sta $3b
+			rts	
+		endif	
 	
 	if levelSelect
-	levelSelectDebuggScreen:
-		lda $fa
-		and #$10
-		beq endLevelSelect	; check hold start 
-		lda $f8	
-		and #$20			; check select
-		beq	endLevelSelect
-		lda #$07
-		sta $18
-		lda #$00
-		sta $19	
-		rts 
+		levelSelectDebuggScreen:
+			lda $fa
+			and #$10
+			beq endLevelSelect	; check hold start 
+			lda $f8	
+			and #$20			; check select
+			beq	endLevelSelect
+			lda #$07
+			sta $18
+			lda #$00
+			sta $19	
+		endLevelSelect:
+			rts 
 	endif	
+	
+
+		updateSpritesMulti:
+			tax
+			lda MultiplayerSpriteID,x 
+			sta $419
+			lda #$0e
+			sta $4a5
+			rts 
+		updateSpritesSubw:
+			tax
+			lda SubWeaponSpriteID,x 
+			sta $418
+			lda SubWeaponSpriteBankID,x 
+			sta $4a4
+			
+			lda #$24		; fix XY pos 
+			sta $434
+			lda #$90
+			sta $450
+			
+			rts 
+		MultiplayerSpriteID:
+			db $00,$58,$5a 
+		SubWeaponSpriteID:
+			db $00,$46,$42,$4E,$50,$52,$54,$4E,$4E,$46,$50,$68 
+		SubWeaponSpriteBankID:
+			db $00,$00,$00,$00,$00,$02,$02,$02,$00,$00,$00,$0E	
+
+if experiment			
+		checkRamPage:
+			lda w190 								
+			
+			lda w0d1
+			lda wCurrInstrumentDataAddr ;e0
+			lda wFreqAdjustFromEnvelope ; e2
+			lda wSoundBankTempVar1 	;e4
+		
+			lda w7f7    							; dsb $800-$7f7
+			rts 
+endif 			

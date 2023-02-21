@@ -9,15 +9,15 @@ nextRowCheck:
 	cmp #$ff					; check end of table
 	beq noMatchFound
 
-	cmp lvlblock		
+	cmp wCurrRoomGroup		
 	bne toNextRowCheck			; check in what level we are to write a level effect index to RAM $7d. From there they will be executed in that section. 
 
 	lda roomEffects+1, y	
-	cmp lvl	
+	cmp wCurrRoomSection		; lvl 
 	bne toNextRowCheck
 
 	lda roomEffects+2, y	
-	cmp stage		
+	cmp wCurrRoomIdx			; stage		
 	bne toNextRowCheck
 
 	lda roomEffects+3, y	

@@ -79,6 +79,7 @@ org $e0df
 		sty $5101		;CHR_MODE.w
 		rts
 
+
 bank $1e
 base $c000
 org $dd00
@@ -114,6 +115,30 @@ org $dd00
 	endInitRAM:	
 		JSR $E227     		 ;hijack fix  ->  initSound
 		rts
+
+;
+;	initExtRamAndMMC5Regs:		; venheim full initalize.. I might do different stup.. 
+;		lda #2
+;		sta $5102
+;		lda #1
+;		sta $5103
+;	
+;	; clear extended ram
+;		ldx #$80
+;		ldy #$00
+;		lda #$60
+;		sta $01
+;		lda #$00
+;		sta $00
+;	-	sta ($00), y
+;		iny
+;		bne -
+;		inc $01
+;		cpx $01
+;		bne -
+;	
+;		jmp initMMC5Regs
+
 
 org $de00	
 	CodeBlock:	

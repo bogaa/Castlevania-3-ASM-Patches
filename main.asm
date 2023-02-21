@@ -36,60 +36,60 @@ print "seed: {format:04x:seed}"
 ; ---------------------------------------------------
 ; feature are explained in readme.txt! --------------
 
-expand = 1
-	if expand
+enableROM_Mods = 1			; this is useful to disable if you do not want any code to be patched. Usefull to add vanilla tables and check if there are not any errors.
+
+expand = 1					
+	if expand				
 		addSRAM = 1
 		expandCHR = 1		
 		expandPRG = 1		
 		incsrc code/expand.asm
-		endif 
+		 
+		levelSelect = 1		; Mods needs SRAM! Or Expansion.
+		cheats = 1			;
+		airControl = 1		;	
+	endif
 
-whilePauseRoutines = 1		; needs SRAM!
-	if whilePauseRoutines
-		levelSelect = 1
-		cheats = 1
-	endif 
+fastLunch = 0				; cheats to test the game faster. 
+allCharacters = 0			;								  
+fastCharacterSwap = 0		;
 
-fastLunch = 1				; will get you in the game. Great for testing!
-allCharacters = 1
-fastCharacterSwap = 1
+chrAnimations = 0			; expands to have more of them avalible 
 
-chrAnimations = 1			; expands to have more of them avalible 
-airControl = 1				; needs SRAM!
-subWeaponDrop = 1			; made by SpiderDave
+subWeaponDrop = 0			; made by SpiderDave
 
 
 ; ---------------------------------------------------
 ; experimental features
-extraBGpalette4Character = 0
-
-mapExpand = 0
-experiment = 0				
+extraBGpalette4Character = 0	; non functional or buggy
+mapExpand = 0					;
+experiment = 0					;	
 
 
 ; ----------------------------------------------------
 ; patches
 
-incsrc code/RAM_Lables.asm		; get a overview of labels and use them to code 
+incsrc code/RAM_LabelsAndDefines.asm		; get a overview of labels and use them to code 
 
 
 if airControl
 incsrc code/airControl.asm
 endif
 
+if enableROM_Mods
 incsrc code/smallPatches.asm	; contains cheats, whilePauseRoutines, itemDrop
+endif 
+
+
 incsrc code/levelEffect.asm		; animations, fog and many other things can be set to different levels or disabled
 
 incsrc code/spriteAssembly.asm
 
+incsrc code/misc.asm			; this is a revamp lable. About the breakable walls and special events that go into levels. 
 
 ;textmap 0...9 d0	;TextMapMainGame
 ;textmap A...Z e0
 
-
-if experiment
-
-endif
 
 if extraBGpalette4Character
 incsrc  code/extraPalette.asm
