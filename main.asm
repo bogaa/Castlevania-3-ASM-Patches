@@ -50,13 +50,13 @@ expand = 1
 		airControl = 1		;	
 	endif
 
-fastLunch = 0				; cheats to test the game faster. 
-allCharacters = 0			;								  
-fastCharacterSwap = 0		;
+fastLunch = 1				; cheats to test the game faster. 
+allCharacters = 1			;								  
+fastCharacterSwap = 1		;
 
-chrAnimations = 0			; expands to have more of them avalible 
+chrAnimations = 1			; expands to have more of them avalible 
 
-subWeaponDrop = 0			; made by SpiderDave
+subWeaponDrop = 1			; made by SpiderDave
 
 
 ; ---------------------------------------------------
@@ -70,7 +70,7 @@ experiment = 0					;
 ; patches
 
 incsrc code/RAM_LabelsAndDefines.asm		; get a overview of labels and use them to code 
-
+incsrc code/generalASM/hardwareDefines.asm 
 
 if airControl
 incsrc code/airControl.asm

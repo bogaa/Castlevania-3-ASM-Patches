@@ -688,20 +688,20 @@ data_1a_0be0:
 data_1a_0be9:
 	.dw sprAssembZombie00_1a_0d7e
 	.dw sprAssembZombie00_1a_0d7e
-	.dw sprAssembZombie01_1a_0d8c
-	.dw data_1a_0d9a
-	.dw data_1a_0da3
-	.dw data_1a_0dab
-	.dw data_1a_0db9
-	.dw data_1a_0dc1
-	.dw data_1a_0db9
-	.dw data_1a_0dcf
-	.dw data_1a_0e03
-	.dw data_1a_0e08
-	.dw data_1a_0e0d
-	.dw data_1a_0e15
-	.dw data_1a_0e1d
-	.dw data_1a_0e25
+	.dw sprAssembZombie04_1a_0d8c
+	.dw sprAssembZombieAppear06_1a_0d9a
+	.dw sprAssembZombieAppear08_1a_0da3
+	.dw sprAssembBird0a_1a_0da3
+	.dw sprAssembBird0c_1a_0db9
+	.dw sprAssembBird10_1a_0dc1
+	.dw sprAssembBird0c_1a_0db9
+	.dw sprAssembBirdSit12_1a_0dcf
+	.dw sprAssembGhostAppear14_1a_0e03
+	.dw sprAssembGhostAppear16_1a_0e08
+	.dw sprAssembGhostAppear18_1a_0e0d
+	.dw sprAssembGhost1a_1a_0e15
+	.dw sprAssembGhost1c_1a_0e1d
+	.dw data_1a_0e25				; bat sprite 
 	.dw data_1a_0e2e
 	.dw data_1a_0e36
 	.dw data_1a_0e3e
@@ -897,29 +897,29 @@ sprAssembZombie00_1a_0d7e:
 	.db $01,$88,$f8		; Ypos,ID,Xpos 
 	.db $01,$8a,$00		; Ypos,ID,Xpos 
 
-sprAssembZombie01_1a_0d8c:
+sprAssembZombie04_1a_0d8c:
 	.db $04				; number of 8x16 segments
 	.db $e2,$80,$02,$f5	; Ypos,ID,Mirr+Flip+Palette,Xpos 
 	.db $e3,$82,$fd		; Ypos,ID,Xpos 
 	.db $01,$84,$f8		; Ypos,ID,Xpos 
 	.db $01,$86,$00		; Ypos,ID,Xpos 
 
-data_1a_0d9a:
+sprAssembZombieAppear06_1a_0d9a:
 	.db $02,$00,$90,$02,$f8,$00,$90,$42,$00
 
-data_1a_0da3:
+sprAssembZombieAppear08_1a_0da3:
 	.db $02,$00,$8c,$02,$f8,$01,$8e,$00
 
-data_1a_0dab:
+sprAssembBird0a_1a_0da3:
 	.db $04,$e0,$92,$02,$fd,$e1,$94,$05,$01,$96,$f8,$01,$98,$00
 
-data_1a_0db9:
+sprAssembBird0c_1a_0db9:
 	.db $02,$00,$9a,$02,$f8,$01,$9c,$00
 
-data_1a_0dc1:
+sprAssembBird10_1a_0dc1:
 	.db $04,$e2,$9e,$02,$f8,$e3,$a0,$00,$03,$a2,$f8,$03,$a4,$00
 
-data_1a_0dcf:
+sprAssembBirdSit12_1a_0dcf:
 	.db $02,$00,$a6,$02,$f8,$01,$a8,$00
 
 data_1a_0dd7:
@@ -934,19 +934,19 @@ data_1a_0ded:
 data_1a_0dfb:
 	.db $02,$00,$e6,$02,$f8,$01,$e8,$00
 
-data_1a_0e03:
+sprAssembGhostAppear14_1a_0e03:
 	.db $01,$f0,$be,$01,$fc
 
-data_1a_0e08:
+sprAssembGhostAppear16_1a_0e08:
 	.db $01,$f0,$b4,$01,$fc
 
-data_1a_0e0d:
+sprAssembGhostAppear18_1a_0e0d:
 	.db $02,$f0,$b0,$01,$f8,$f1,$b2,$00
 
-data_1a_0e15:
+sprAssembGhost1a_1a_0e15:
 	.db $02,$f0,$aa,$01,$f8,$f1,$ac,$00
 
-data_1a_0e1d:
+sprAssembGhost1c_1a_0e1d:
 	.db $02,$f0,$aa,$01,$f8,$f1,$ae,$00
 
 data_1a_0e25:
@@ -3231,3 +3231,358 @@ data_1b_1736:
 
 data_1b_175d:
 	.db $02,$f0,$64,$41,$f8,$f1,$62,$00
+	
+	
+	
+	
+; ----------------------------- entityAnimation Data
+; --------------------------------------------------
+bank $1f
+if expandPRG
+bank $3f
+endif
+base $E000
+org $EFB4
+
+;entitySpecGroupAnimationData:
+	.dw data_1f_0fd2
+	.dw data_1f_0fd2
+	.dw data_1f_0fd2
+	.dw data_1f_0fd2
+	.dw data_1f_10b9
+	.dw data_1f_1158
+	.dw data_1f_1002
+	.dw data_1f_133e	; $f33e
+	.dw data_1f_1257
+	.dw data_1f_1131
+	.dw data_1f_1362	; $f362
+	.dw data_1f_0fd2
+	.dw data_1f_0fd2
+	.dw data_1f_0fd2
+	.dw data_1f_0fd2
+
+data_1f_0fd2:			; format start, speed, leanth
+	.db $02, $08, $08		; trevorWalk_1f_0fd2
+	.db $18, $08, $04
+	.db $1e, $08, $04
+	.db $24, $08, $06
+	.db $24, $04, $06
+	.db $2a, $06, $0c
+	.db $34, $06, $0c
+	.db $40, $06, $06
+	.db $46, $06, $08
+	.db $46, $06, $08
+	.db $4e, $06, $04
+	.db $40, $04, $04
+	.db $56, $04, $0c
+	.db $36, $08, $04
+	.db $66, $08, $06
+	.db $6c, $08, $04 
+
+data_1f_1002:
+	.db $02, $0a, $04
+	.db $04, $0a, $04
+	.db $08, $08, $02
+	.db $0a, $08, $02
+	.db $0c, $08, $02
+	.db $0e, $08, $02
+	.db $10, $08, $02
+	.db $12, $08, $02
+	.db $14, $08, $02
+	.db $16, $08, $02
+	.db $18, $08, $02
+	.db $1a, $08, $02
+	.db $1c, $08, $02
+	.db $1e, $08, $02
+	.db $20, $08, $02
+	.db $22, $08, $02
+	.db $24, $08, $02
+	.db $26, $08, $02
+	.db $28, $08, $02
+	.db $2a, $08, $02
+	.db $2c, $08, $02
+	.db $2e, $08, $02
+	.db $30, $08, $02
+	.db $32, $08, $02
+	.db $24, $08, $02
+	.db $36, $08, $02
+	.db $38, $08, $02
+	.db $3a, $08, $02
+	.db $3c, $08, $02
+	.db $3e, $08, $02
+	.db $40, $08, $02
+	.db $42, $08, $02
+	.db $44, $08, $02
+	.db $46, $08, $02
+	.db $50, $08, $02
+	.db $4e, $08, $02
+	.db $4c, $08, $02
+	.db $4a, $08, $02
+	.db $48, $08, $02
+	.db $52, $08, $02
+	.db $54, $08, $02
+	.db $56, $08, $02
+	.db $58, $08, $02
+	.db $5a, $08, $02
+	.db $5c, $08, $02
+	.db $5e, $08, $02
+	.db $60, $08, $02
+	.db $62, $08, $02
+	.db $64, $08, $02
+	.db $66, $08, $02
+	.db $68, $08, $02
+	.db $6a, $08, $02
+	.db $6c, $08, $02
+	.db $6e, $08, $02
+	.db $ba, $08, $08
+	.db $c2, $08, $08
+	.db $ca, $08, $08
+	.db $e0, $09, $08
+	.db $ec, $07, $04
+	.db $f0, $09, $04
+	.db $fe, $08, $02
+
+
+data_1f_10b9:
+	.db $02, $10, $04
+	.db $0a, $08, $08
+	.db $1a, $0a, $04
+	.db $20, $0a, $08
+	.db $28, $0a, $04
+	.db $92, $10, $04
+	.db $a8, $0a, $04
+	.db $de, $18, $04
+	.db $8c, $0c, $04
+	.db $4c, $0a, $04
+	.db $62, $0a, $04
+	.db $34, $10, $04
+	.db $bc, $0c, $04
+	.db $2c, $0e, $04
+	.db $30, $0e, $04
+	.db $42, $10, $04
+	.db $58, $0a, $04
+	.db $62, $0a, $04
+	.db $68, $0c, $08
+	.db $88, $0c, $04
+	.db $74, $0c, $0a
+	.db $ac, $0a, $06
+	.db $a2, $0c, $06
+	.db $96, $08, $06
+	.db $b0, $0c, $04
+	.db $70, $0a, $04
+	.db $9c, $0c, $06
+	.db $b8, $0a, $04
+	.db $bc, $0c, $04
+	.db $ca, $18, $04
+	.db $de, $0c, $08
+	.db $da, $0c, $04
+	.db $e6, $18, $04
+	.db $e6, $0c, $08
+	.db $9c, $18, $06
+	.db $14, $08, $06
+	.db $d0, $0a, $08
+	.db $14, $08, $04
+	.db $92, $14, $04
+	.db $7e, $0a, $04 
+
+data_1f_1131:
+	.db $1A, $08, $06 
+	.db $20, $14, $04 
+	.db $24, $0C, $04 
+	.db $28, $10, $06 
+	.db $2E, $06, $04 
+	.db $34, $0A, $06 
+	.db $0C, $08, $04 
+	.db $56, $04, $04 
+	.db $72, $0C, $04 
+	.db $76, $0C, $04 
+	.db $64, $04, $04 
+	.db $68, $08, $08 
+	.db $7A, $0A, $04 
+
+data_1f_1158:
+	.db $02, $08, $06 
+	.db $0A, $04, $02 
+	.db $0C, $18, $02 
+	.db $0E, $18, $02 
+	.db $10, $08, $02 
+	.db $12, $08, $06 
+	.db $18, $10, $08 
+	.db $18, $08, $08 
+	.db $20, $10, $02 
+	.db $22, $10, $02 
+	.db $26, $08, $02 
+	.db $28, $08, $02 
+	.db $2E, $08, $02 
+	.db $02, $08, $02 
+	.db $04, $08, $02 
+	.db $06, $08, $02 
+	.db $04, $08, $02 
+	.db $38, $08, $02 
+	.db $3A, $08, $04 
+	.db $3E, $08, $04 
+	.db $42, $08, $04 
+	.db $46, $08, $04 
+	.db $4E, $08, $08 
+	.db $4C, $08, $02 
+	.db $4A, $08, $02 
+	.db $3A, $08, $02 
+	.db $3C, $08, $02 
+	.db $56, $08, $04 
+	.db $5A, $08, $04 
+	.db $5E, $08, $04 
+	.db $62, $08, $04 
+	.db $66, $08, $02 
+	.db $66, $08, $06 
+	.db $74, $08, $02 
+	.db $76, $08, $02 
+	.db $78, $08, $02 
+	.db $7A, $08, $04 
+	.db $7E, $08, $04 
+	.db $80, $08, $04 
+	.db $82, $08, $04 
+	.db $72, $08, $02 
+	.db $70, $08, $02 
+	.db $6E, $08, $02 
+	.db $6C, $08, $02 
+	.db $6C, $08, $02 
+	.db $6E, $08, $02 
+	.db $70, $08, $02 
+	.db $72, $08, $02 
+	.db $84, $08, $02 
+	.db $86, $08, $02 
+	.db $88, $08, $02 
+	.db $8A, $08, $0A 
+	.db $9A, $08, $02 
+	.db $9C, $08, $02 
+	.db $9E, $08, $02 
+	.db $A0, $08, $02 
+	.db $A2, $08, $02 
+	.db $A4, $08, $02 
+	.db $A6, $08, $02 
+	.db $A8, $08, $02 
+	.db $AA, $08, $02 
+	.db $AC, $08, $02 
+	.db $AE, $08, $02 
+	.db $B0, $08, $02 
+	.db $B2, $08, $02 
+	.db $B4, $08, $02 
+	.db $B6, $08, $02 
+	.db $B8, $08, $02 
+	.db $BA, $08, $02 
+	.db $BC, $08, $02 
+	.db $BE, $08, $02 
+	.db $C0, $08, $02 
+	.db $C2, $08, $02 
+	.db $C4, $08, $02 
+	.db $C6, $08, $02 
+	.db $C8, $08, $02 
+	.db $CA, $08, $02 
+	.db $CC, $08, $02 
+	.db $CE, $08, $02 
+	.db $D0, $08, $02 
+	.db $D2, $08, $02 
+	.db $D4, $08, $02 
+	.db $D6, $08, $02 
+	.db $D8, $08, $02 
+	.db $DA, $08, $02 
+
+data_1f_1257:
+	.db $02, $08, $02 
+	.db $04, $08, $02 
+	.db $06, $08, $02 
+	.db $08, $08, $02 
+	.db $0A, $08, $02 
+	.db $0C, $08, $02 
+	.db $0E, $18, $02 
+	.db $10, $18, $02 
+	.db $12, $08, $02 
+	.db $14, $08, $02 
+	.db $16, $08, $02 
+	.db $18, $08, $02 
+	.db $1A, $08, $02 
+	.db $1C, $08, $02 
+	.db $1E, $08, $06 
+	.db $24, $08, $02 
+	.db $26, $08, $02 
+	.db $28, $08, $02 
+	.db $2A, $08, $02 
+	.db $2C, $08, $06 
+	.db $32, $08, $02 
+	.db $34, $08, $02 
+	.db $36, $08, $02 
+	.db $38, $08, $02 
+	.db $3A, $08, $02 
+	.db $3C, $08, $02 
+	.db $3E, $08, $02 
+	.db $40, $08, $04 
+	.db $42, $08, $02 
+	.db $44, $08, $02 
+	.db $46, $08, $02 
+	.db $48, $08, $02 
+	.db $2C, $08, $02 
+	.db $4A, $08, $02 
+	.db $4C, $08, $02 
+	.db $4E, $08, $02 
+	.db $50, $08, $02 
+	.db $52, $08, $02 
+	.db $54, $08, $02 
+	.db $56, $08, $02 
+	.db $58, $08, $02 
+	.db $5A, $08, $02 
+	.db $5C, $08, $02 
+	.db $62, $08, $02 
+	.db $64, $08, $02 
+	.db $66, $08, $02 
+	.db $70, $08, $02 
+	.db $68, $08, $02 
+	.db $68, $08, $08 
+	.db $68, $08, $02 
+	.db $70, $08, $02 
+	.db $6C, $08, $02 
+	.db $6A, $08, $02 
+	.db $68, $08, $02 
+	.db $6C, $08, $02 
+	.db $70, $08, $02 
+	.db $68, $08, $02 
+	.db $72, $08, $06 
+	.db $78, $08, $02 
+	.db $7A, $08, $02 
+	.db $7C, $08, $02 
+	.db $7E, $08, $02 
+	.db $7C, $08, $02 
+	.db $80, $08, $02 
+	.db $82, $08, $02 
+	.db $84, $08, $02 
+	.db $86, $08, $02 
+	.db $88, $08, $04 
+	.db $8C, $08, $02 
+	.db $6C, $08, $02 
+	.db $AA, $08, $02 
+	.db $AC, $08, $02 
+	.db $AE, $08, $06 
+	.db $B2, $14, $06 
+	.db $B8, $03, $08 
+	.db $5E, $08, $02 
+	.db $60, $08, $02 
+
+data_1f_133e:
+	.db $02, $08, $04 
+	.db $60, $08, $08 
+	.db $0A, $08, $04 
+	.db $36, $04, $08 
+	.db $3E, $06, $08 
+	.db $46, $04, $0A 
+	.db $48, $08, $02 
+	.db $4A, $08, $02 
+	.db $4C, $08, $04 
+	.db $50, $08, $02 
+	.db $18, $08, $02 
+	.db $5C, $04, $04 
+data_1f_1362: 	
+	.db $1C, $0A, $06 
+	.db $22, $0A, $06 
+	.db $28, $10, $06 
+	.db $2E, $08, $08
+	.db $36, $0A, $08 
+

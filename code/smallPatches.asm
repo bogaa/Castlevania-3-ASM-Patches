@@ -381,13 +381,90 @@ endif
 
 if experiment			
 		checkRamPage:
-			lda w190 								
+;			lda OAMDMA
+;			lda NAMETABLE_MAPPING
+;			
+;			
+;			lda w190 								
+;			
+;			lda w0d1
+;			lda wCurrInstrumentDataAddr ;e0
+;			lda wFreqAdjustFromEnvelope ; e2
+;			lda wSoundBankTempVar1 	;e4
+;		
+;			lda w7f7    							; dsb $800-$7f7
 			
-			lda w0d1
-			lda wCurrInstrumentDataAddr ;e0
-			lda wFreqAdjustFromEnvelope ; e2
-			lda wSoundBankTempVar1 	;e4
+			
+		spriteViewer:	
+			lda $f8
+			and #$40
+			beq +
+	
+			inc $7000
+			inc $7000
+			
+			lda $7000
+			sta $418
+	
+			lda #$54							; fix XY pos 
+			sta $434
+			lda #$90
+			sta $450			
+			
+		+	lda wJoy1NewButtonsPressed2			; $f8
+			and #$80
+			beq ++
+			inc $7001							; go next pointer
+			inc $7001
+			
+			lda $7001		
+			cmp #$1e
+			bne +
+			lda #$00 
+			sta $7001
+		+	sta $4a4
+			
+		++	lda wJoy1NewButtonsPressed2			; reset pointer 
+			and #$20
+			beq +
+			lda #$0000
+			sta $7000			; table 
+			sta $7002			; CHR 
 		
-			lda w7f7    							; dsb $800-$7f7
-			rts 
+		+	lda wJoy1NewButtonsPressed2			; change CHR 
+			and #$08
+			beq +
+			lda $7002
+
+			sta CHR_BANK_0800
+			clc
+			adc #$01
+			sta CHR_BANK_0c00
+;			clc
+;			adc #$02
+;			sta CHR_BANK_0800_1800
+;			clc
+;			adc #$02
+;		
+;			sta CHR_BANK_0c00_1c00
+;			clc
+;			adc #$02			
+			
+			sta $7002
+			cmp #$37
+			bne +
+			lda #$08
+			sta $7002
+		+	lda wJoy1NewButtonsPressed2		; change CHR 
+			and #$04
+			beq +
+			lda $7002
+			sec
+			sbc #$02
+			sta $7002
+			sta CHR_BANK_0800
+			clc
+			adc #$01
+			sta CHR_BANK_0c00
+		+	rts 
 endif 			
