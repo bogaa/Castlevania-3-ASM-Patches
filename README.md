@@ -26,8 +26,8 @@ Credits:
 
 About Cheats and Level Select:
 - To use levelSelect press select while/hold pause. In debugg the screen select stage/helper use A,B and select to choose. Then pause again to lunch new stage.
-- MultiShot Press B while holding select (this works only well with fast swap. Else you have to wait till swap is done)	
-- Subweapon press A while holding select (this works only well with fast swap. Else you have to wait till swap is done)
+- MultiShot Press B while pause
+- Subweapon press A while pause
 	
 About Expansion:	
 - This is purpesfully made so you can disable all expansion and work with the base ROM. Most patches will make use of the expansion and will not work otherwise	
