@@ -216,14 +216,14 @@
 		wGameStateLoopCounter: 				.dsb 1	; $1a db
 		wIsExecutingNMIVector: 				.dsb 1	; $1b db
 		wCounterUntilCanShowSprBg: 			.dsb 1	; $1c db
-		wVramQueueNextIdxToFill: 			.dsb 1	; $1d db
+		wVramQueueNextIdxToFill: 			.dsb 2	; $1d db
 		wRandomVal: 						.dsb 1	; $1f db
 		wCurrFrameStartingOamOffset: 		.dsb 1	; $20 db
 		wPrgBank_8000: 						.db 1 	; $21 db
 		wPrgBankBkup_8000: 					.db 1	; $22 db
 		wPrgBankBkup2_8000: 				.db 1	; $23 db
 		wIsExecutingSoundFunc: 				.dsb 1	; $24 db
-		wNametableMapping: 					.dsb 1	; $25db
+		wNametableMapping: 					.dsb 1	; $25 db
 		wJoy1NewButtonsPressed: 			.dsb 1	; $26 db
 		wJoy2NewButtonsPressed: 			.dsb 1 	; $27 db
 		wJoy1ButtonsPressed: 				.dsb 1	; $28 db
@@ -231,7 +231,7 @@
 		wInGameSubstate: 					.dsb 1	; $2a db	; todo: could be multi-purpose, could be wrong
 		wIsPaused: 							.dsb 1	; $2b db
 		wCinematicsController: 				.dsb 1	; $2c db
-		w02d:    							.dsb 4	; dsb $30-$2d
+		w02d:    							.dsb 3	; dsb $30-$2d
 		wGenericStateTimer:					.dsb 2	; $30 dw
 		wCurrRoomGroup: 					.dsb 1	; $32 db	lvlblock = $32 
 		wCurrRoomSection: 					.dsb 1	; $33 db	lvl = $33			

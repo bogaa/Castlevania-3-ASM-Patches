@@ -36,35 +36,35 @@ print "seed: {format:04x:seed}"
 ; ---------------------------------------------------
 ; feature are explained in readme.txt! --------------
 
-enableROM_Mods = 1			; this is useful to disable if you do not want any code to be patched. Usefull to add vanilla tables and check if there are not any errors.
+enableROM_Mods = 0			; this is useful to disable if you do not want any code to be patched. Usefull to add vanilla tables and check if there are not any errors.
 
-expand = 1					
+expand = 0					
 	if expand				
 		addSRAM = 1
 		expandCHR = 1		
 		expandPRG = 1		
 		incsrc code/expand.asm
 		 
-		levelSelect = 1		; Mods needs SRAM! Or Expansion.
-		cheats = 1			;
-		airControl = 1		;	
+		levelSelect = 0		; Mods needs SRAM! Or Expansion.
+		cheats = 0			;
+		airControl = 0		;	
 	endif
 
-fastLunch = 1				; cheats to test the game faster. 
-allCharacters = 1			;								  
-fastCharacterSwap = 1		;
+fastLunch = 0				; cheats to test the game faster. 
+allCharacters = 0			;								  
+fastCharacterSwap = 0		;
 
-chrAnimations = 1			; expands to have more of them avalible 
+chrAnimations = 0			; expands to have more of them avalible 
 
-subWeaponDrop = 1			; made by SpiderDave
+subWeaponDrop = 0			; made by SpiderDave
 
-fastDoor = 1
+fastDoor = 0
 
 ; ---------------------------------------------------
 ; experimental features
 extraBGpalette4Character = 0	; non functional or buggy
 mapExpand = 0					;
-experiment = 0					;	
+experiment = 1					;	
 
 
 ; ----------------------------------------------------

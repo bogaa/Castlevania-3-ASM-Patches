@@ -120,7 +120,7 @@ org $8000
 	negA_16_00bc:
 		eor #$ff
 		adc #$01
-	00ATdone:						; point of success
+	00ATdone:						
 		rts
 	
 	
@@ -181,646 +181,573 @@ org $8000
 	
 	
 	entityPhaseFunc_00_setEntityAIIdxTo0:
-;		lda #$00
-;		sta wEntityAI_idx, x
-;	
-;	entityPhaseFunc_75_stub:
-;		rts
-;	
-;	
-;	scfIfInSunkenCityRisingWaterRooms:
-;		lda wCurrRoomGroup
-;		cmp #RG_SUNKEN_CITY
-;		bne +
-;	
-;		lda wCurrRoomSection
-;		cmp #$03
-;		rts
-;	
-;	+	clc
-;	-	rts
-;	
-;	
-;	entityPhaseFunc_a0:
-;		jsr scfIfInSunkenCityRisingWaterRooms		; 20 13 81
-;		bcc -
-;	
-;		lda wEntityBaseY, x	; bd 1c 04
-;		cmp $ca			; c5 ca
-;		bcc -
-;	
-;		jsr $84b2		; 20 b2 84
-;		sec				; 38 
-;		rts				; 60 
-;	
-;	
-;	func_16_0131:
-;		lda wInGameSubstate			; a5 2a
-;		cmp #$1b		; c9 1b
-;		bne B22_014f ; d0 18
-;
-;		lda wEntityState, x	; bd 70 04
-;		and #ES_FROZEN		; 29 02
-;		bne B22_014f ; d0 11
-;
-;		jsr $b6e6		; 20 e6 b6
-;		clc				; 18 
-;		lda $c7			; a5 c7
-;		adc #$04		; 69 04
-;		sta $05d8, x	; 9d d8 05
-;		jsr func_1f_1f8a		; 20 8a ff
-;		lda #$00		; a9 00
-;		rts				; 60 
-;	B22_014f:
-;		lda wEntityAI_idx, x	; bd ef 05
-;		rts				; 60 
-;	
-;	
-;	entityPhaseFunc_6d_tryToFall:
-;		lda #$10
-;		jsr addAtoEntityVertSpeed
-;	
-;	; 04/fc, 10
-;	; if floor below is empty, continue falling from vert speed
-;		ldy #$06
-;		jsr getCollisionTileValUsingOffsetPresets
-;		beq entityPhaseFunc_75_stub
-;	
-;	; solid below entity, cancel fall
-;		ldx wCurrEntityIdxBeingProcessed
-;		jsr snapEntityXsYtoTile
-;	
-;	loopTryToFall:
-;		inc wEntityPhase, x
-;		jmp clearEntityHorizVertSpeeds
-;	
-;	
-;	entityPhaseFunc_a1:
-;		lda #$10		; a9 10
-;		jsr addAtoEntityVertSpeed		; 20 7f 80
-;		ldy #$0e		; a0 0e
-;		jsr getCollisionTileValUsingOffsetPresets		; 20 a6 b7
-;		beq B22_019a ; f0 24
-;
-;		ldx wCurrEntityIdxBeingProcessed			; a6 6c
-;		lda wEntityBaseY, x	; bd 1c 04
-;		and #$f8		; 29 f8
-;		sta wEntityBaseY, x	; 9d 1c 04
-;	
-;	; next phase, clear speeds
-;		jmp loopTryToFall
-;	
-;	
-;	entityPhaseFunc_9e:
-;		jsr $81ef		; 20 ef 81
-;		lda #$10		; a9 10
-;		jsr addAtoEntityVertSpeed		; 20 7f 80
-;		lda wEntityBaseY, x	; bd 1c 04
-;		cmp #$f8		; c9 f8
-;		bcc B22_019a ; 90 08
-;
-;		lda #$23		; a9 23
-;		jsr playSound		; 20 5f e2
-;		inc wEntityPhase, x	; fe c1 05
-;		rts				; 60 
-;	
-;	
-;	entityPhaseFunc_01_setStateNotMoving:
-;		inc wEntityPhase, x
-;	
-;	setEntityStateNotMoving:
-;		lda wEntityState, x
-;		and #$ff-ES_MOVING
-;		sta wEntityState, x
-;		rts
-;	
-;	
-;	entityPhaseFunc_2a_setStateMoving:
-;		inc wEntityPhase, x
-;	
-;	setEntityStateMoving:
-;		lda wEntityState, x
-;		ora #ES_MOVING
-;		sta wEntityState, x
-;		rts
-;	
-;	
-;	entityPhaseFunc_2b_reverseHorizontally:
-;		inc wEntityPhase, x
-;		jmp reverseEntityHorizSpeed
-;	
-;	
-;	entityPhaseFunc_03:
-;		inc wEntityPhase, x	; fe c1 05
-;		lda wEntityState, x	; bd 70 04
-;		and #$f7		; 29 f7
-;		sta wEntityState, x	; 9d 70 04
-;		rts				; 60 
-;	
-;	
-;	entityPhaseFunc_0a:
-;		inc wEntityPhase, x	; fe c1 05
-;		lda wEntityState, x	; bd 70 04
-;		ora #$88		; 09 88
-;		sta wEntityState, x	; 9d 70 04
-;		rts				; 60 
-;	
-;	
-;	entityPhaseFunc_54_setStateIllusion:
-;		inc wEntityPhase, x
-;		lda wEntityState, x
-;		ora #ES_ILLUSION
-;		sta wEntityState, x
-;		rts
-;	
-;	
-;	entityPhaseFunc_53_setStateNotIllusion:
-;		inc wEntityPhase, x
-;		lda wEntityState, x
-;		and #$ff-ES_ILLUSION
-;		sta wEntityState, x
-;		rts
-;	
-;	
-;	entityPhaseFunc_2d:
-;	B22_01e9:		
-;		jsr setEntityStateNotMoving		; 20 9e 81
-;	
-;	incEntityPhase_setUnanimated:
-;		inc wEntityPhase, x
-;		lda wEntityState, x
-;		ora #ES_UNANIMATED
-;		sta wEntityState, x
-;		rts
-;	
-;	
-;	setEntityStateAnimated:
-;		lda wEntityState, x
-;		and #$ff-ES_UNANIMATED
-;		sta wEntityState, x
-;		rts
-;	
-;	
-;	entityPhaseFunc_55:
-;		inc wEntityPhase, x	; fe c1 05
-;		ldy #$01		; a0 01
-;		lda (wPhaseFuncDataAddr), y	; b1 02
-;		sta $0657, x	; 9d 57 06
-;		rts				; 60 
-;	
-;	
-;	entityPhaseFunc_04_setPhase:
-;		ldy #$01
-;		lda (wPhaseFuncDataAddr), y
-;		sta wEntityPhase, x
-;		rts
-;	
-;	
-;	entityPhaseFunc_62_addOffsetsToXY:
-;		ldy #$01
-;		clc
-;		lda (wPhaseFuncDataAddr), y
-;		adc wEntityBaseX, x
-;		sta wEntityBaseX, x
-;		iny
-;		clc
-;		lda (wPhaseFuncDataAddr), y
-;		adc wEntityBaseY, x
-;		sta wEntityBaseY, x
-;		inc wEntityPhase, x
-;	
-;	entityPhaseFunc_72_stub:
-;		rts
-;	
-;	
-;	entityPhaseFunc_05_facePlayer:
-;		inc wEntityPhase, x
-;	
-;	entityFacePlayer:
-;		lda #$00
-;		ldy wEntityBaseX, x
-;		cpy wEntityBaseX
-;		bcc +
-;	
-;		lda #$01
-;	
-;	+	sta wEntityFacingLeft, x
-;		rts
-;	
-;	
-;	entityPhaseFunc_91:
-;		inc wEntityPhase, x	; fe c1 05		B22_0240:
-;		jsr entityFacePlayer		; 20 30 82
-;		lda wEntityState, x	; bd 70 04
-;		and #ES_DESTROYED		; 29 01
-;		beq B22_0255 ; f0 08
-;
-;		lda wEntityFacingLeft, x	; bd a8 04
-;		eor #$01		; 49 01
-;		sta wEntityFacingLeft, x	; 9d a8 04
-;		rts				; 60 
-;	
-;	
-;	entityPhaseFunc_06:
-;		inc wEntityPhase, x	; fe c1 05
-;	
-;	func_16_0259:
-;		sec				; 38 
-;		lda wEntityObjectIdxes, x	; bd 4e 05
-;		sbc #$48		; e9 48
-;		tay				; a8 
-;		lda $826c, y	; b9 6c 82
-;		tay				; a8 
-;		lda #$08		; a9 08
-;		jsr setEntitySpecGroupA_animationDefIdxY_animateNextFrame		; 20 5c ef
-;		jmp updateEntityXanimationFrame		; 4c 75 ef
-;
-;
-;		.db $00				; 00
-;
-;		.db $01
-;		.db $03
-;		.db $04
-;		.db $02
-;		ora $06			; 05 06
-;		.db $10
-;		.db $07
-;
-;		php				; 08 
-;		ora #$11		; 09 11
-;		.db $0b
-;		ora $0600		; 0d 00 06
-;		.db $0f
-;		.db $00				; 00
-;		.db $12
-;		ora $1b			; 05 1b
-;		.db $1c
-;		.db $00				; 00
-;		.db $00				; 00
-;	
-;	
-;	entityPhaseFunc_13_animateGroupAndDefIdx:
-;		inc wEntityPhase, x	; fe c1 05		B22_0284
-;		ldy #$01		; a0 01
-;		lda (wPhaseFuncDataAddr), y	; b1 02
-;		sta $00			; 85 00
-;		iny				; c8 
-;		lda (wPhaseFuncDataAddr), y	; b1 02
-;		tay				; a8 
-;		lda $00			; a5 00
-;	
-;	entityInitAnimation_specGroupA_animationDefIdxY:
-;		jsr setEntitySpecGroupA_animationDefIdxY_animateNextFrame
-;		jsr updateEntityXanimationFrame
-;		jmp setEntityStateAnimated
-;	
-;	
-;	entityPhaseFunc_8b:
-;	B22_029c:		ldy #$07		; a0 07
-;	B22_029e:		lda wChrBankSpr_0800			; a5 48
-;	B22_02a0:		cmp #$08		; c9 08
-;	B22_02a2:		bne B22_02a6 ; d0 02
-;	
-;	B22_02a4:		ldy #$0a		; a0 0a
-;	B22_02a6:		lda #$12		; a9 12
-;	
-;	B22_02a8:		inc wEntityPhase, x	; fe c1 05
-;	B22_02ab:		jmp entityInitAnimation_specGroupA_animationDefIdxY		; 4c 93 82
-;	
-;	
-;	entityPhaseFunc_a5:
-;	B22_02ae:		ldy #$07		; a0 07
-;	B22_02b0:		lda #$14		; a9 14
-;	B22_02b2:		bne B22_02a8 ; d0 f4
-;	
-;	entityPhaseFunc_8c:
-;	B22_02b4:		ldy #$00		; a0 00
-;	B22_02b6:		lda wChrBankSpr_0800			; a5 48
-;	B22_02b8:		cmp #$08		; c9 08
-;	B22_02ba:		beq B22_02bd ; f0 01
-;	
-;	B22_02bc:		iny				; c8 
-;	B22_02bd:		lda $82d1, y	; b9 d1 82
-;	B22_02c0:		sta $00			; 85 00
-;	B22_02c2:		lda $82cd, y	; b9 cd 82
-;	B22_02c5:		ldy $00			; a4 00
-;	B22_02c7:		jsr $82a8		; 20 a8 82
-;	B22_02ca:		jmp $82f0		; 4c f0 82
-;	
-;	
-;	B22_02cd:		php				; 08 
-;	B22_02ce:	.db $12
-;	B22_02cf:		php				; 08 
-;	B22_02d0:	.db $12
-;	B22_02d1:		ora ($0b, x)	; 01 0b
-;	B22_02d3:	.db $04
-;	B22_02d4:	.db $0c
-;	
-;	entityPhaseFunc_8d:
-;	B22_02d5:		jsr entityFacePlayer		; 20 30 82
-;	B22_02d8:		jsr incEntityPhase_setUnanimated		; 20 ec 81
-;	B22_02db:		ldy #$00		; a0 00
-;	B22_02dd:		lda wChrBankSpr_0800			; a5 48
-;	B22_02df:		cmp #$08		; c9 08
-;	B22_02e1:		beq B22_02e4 ; f0 01
-;	
-;	B22_02e3:		iny				; c8 
-;	B22_02e4:		lda $82cd, y	; b9 cd 82
-;	B22_02e7:		sta wEntityOamSpecGroupDoubled, x	; 9d 8c 04
-;	B22_02ea:		lda $8305, y	; b9 05 83
-;	B22_02ed:		sta wOamSpecIdxDoubled, x	; 9d 00 04
-;	B22_02f0:		lda wCurrRoomGroup		; a5 32
-;	B22_02f2:		cmp #$05		; c9 05
-;	B22_02f4:		bne B22_0304 ; d0 0e
-;	
-;	B22_02f6:		lda wCurrRoomSection			; a5 33
-;	B22_02f8:		cmp #$03		; c9 03
-;	B22_02fa:		bne B22_0304 ; d0 08
-;	
-;	B22_02fc:		lda wEntityPaletteOverride, x	; bd 54 04
-;	B22_02ff:		ora #$03		; 09 03
-;	B22_0301:		sta wEntityPaletteOverride, x	; 9d 54 04
-;	B22_0304:		rts				; 60 
-;	
-;	
-;	B22_0305:	.db $12
-;	B22_0306:		.db $70
-;	
-;	
-;	entityPhaseFunc_95:
-;		ldy #$02
-;	B22_0309:		lda $49			; a5 49
-;	B22_030b:		cmp #$0f		; c9 0f
-;	B22_030d:		beq B22_02bd ; f0 ae
-;	
-;	B22_030f:		iny				; c8 
-;	B22_0310:		jmp B22_02bd		; 4c bd 82
-;	
-;	
-;	entityPhaseFunc_4f:
-;	B22_0313:		lda #$01		; a9 01
-;	B22_0315:		sta wEntityFacingLeft, x	; 9d a8 04
-;	B22_0318:		lda #$00		; a9 00
-;	B22_031a:		sta wEntityPaletteOverride, x	; 9d 54 04
-;	B22_031d:		lda wEntityObjectIdxes, x	; bd 4e 05
-;	B22_0320:		sec				; 38 
-;	B22_0321:		sbc #$93		; e9 93
-;	B22_0323:		tay				; a8 
-;	B22_0324:		lda data_16_0333, y	; b9 33 83
-;	B22_0327:		sta wEntityOamSpecGroupDoubled, x	; 9d 8c 04
-;	B22_032a:		lda data_16_0353, y	; b9 53 83
-;	B22_032d:		sta wOamSpecIdxDoubled, x	; 9d 00 04
-;	B22_0330:		jmp incEntityPhase_setUnanimated		; 4c ec 81
-;	
-;	data_16_0333:
-;		.db $00
-;		.db $00
-;		.db $00
-;		.db $00
-;		.db $0e
-;		.db $0e
-;		.db $0e
-;		.db $0e
-;		.db $00
-;		.db $00
-;		.db $00
-;		.db $00
-;		.db $0e
-;		.db $0e
-;		.db $0e
-;		.db $0e
-;		.db $0e
-;		.db $0e
-;		.db $0e
-;		.db $0e
-;		.db $0e
-;		.db $0e
-;		.db $0e
-;		.db $0e
-;		.db $0e
-;		.db $0e
-;		.db $0e
-;		.db $0e
-;		.db $0e
-;		.db $0e
-;		.db $0e
-;		.db $0e
-;	
-;	data_16_0353:
-;		.db $46
-;		.db $42
-;		.db $4e
-;		.db $50
-;		.db $68
-;		.db $54
-;		.db $56
-;		.db $52
-;		.db $4e
-;		.db $46
-;		.db $54
-;		.db $54
-;		.db $6a
-;		.db $1c
-;		.db $1e
-;		.db $20
-;		.db $24
-;		.db $24
-;		.db $24
-;		.db $24
-;		.db $24
-;		.db $24
-;		.db $24
-;		.db $24
-;		.db $24
-;		.db $22
-;		.db $10
-;		.db $0e
-;		.db $58
-;		.db $5a
-;		.db $6a
-;		.db $10
-;	
-;	
-;	entityPhaseFunc_87:
-;	B22_0373:		inc wEntityPhase, x
-;	B22_0376:		lda #$0e		; a9 0e
-;	B22_0378:		sta wEntityOamSpecGroupDoubled, x	; 9d 8c 04
-;	B22_037b:		sec				; 38 
-;	B22_037c:		lda wEntityObjectIdxes, x	; bd 4e 05
-;	B22_037f:		sbc #$a3		; e9 a3
-;	B22_0381:		tay				; a8 
-;	B22_0382:		lda $8389, y	; b9 89 83
-;	B22_0385:		sta wOamSpecIdxDoubled, x	; 9d 00 04
-;	B22_0388:		rts				; 60 
-;	
-;	
-;	B22_0389:		rol $28			; 26 28
-;	B22_038b:		rol a			; 2a
-;	B22_038c:		bit $302e		; 2c 2e 30
-;	B22_038f:	.db $32
-;	B22_0390:	.db $34
-;	B22_0391:		.db $70
-;	
-;	
-;	entityPhaseFunc_88:
-;		ldy #$00
-;	B22_0394:		lda wChrBankSpr_0800			; a5 48
-;	B22_0396:		cmp #$14		; c9 14
-;	B22_0398:		bne B22_039c ; d0 02
-;	
-;	B22_039a:		ldy #$0e		; a0 0e
-;	B22_039c:		sty $00			; 84 00
-;	B22_039e:		lda #$12		; a9 12
-;	B22_03a0:		sta wEntityOamSpecGroupDoubled, x	; 9d 8c 04
-;	B22_03a3:		ldy #$01		; a0 01
-;	B22_03a5:		clc				; 18 
-;	B22_03a6:		lda (wPhaseFuncDataAddr), y	; b1 02
-;	B22_03a8:		adc $00			; 65 00
-;	B22_03aa:		jmp $83b7		; 4c b7 83
-;	
-;	
-;	entityPhaseFunc_0b:
-;	B22_03ad:		ldy #$01		; a0 01
-;	
-;	B22_03af:		lda (wPhaseFuncDataAddr), y	; b1 02
-;	B22_03b1:		sta wEntityOamSpecGroupDoubled, x	; 9d 8c 04
-;	B22_03b4:		iny				; c8 
-;	B22_03b5:		lda (wPhaseFuncDataAddr), y	; b1 02
-;	B22_03b7:		sta wOamSpecIdxDoubled, x	; 9d 00 04
-;	B22_03ba:		jmp incEntityPhase_setUnanimated		; 4c ec 81
-;	
-;	
-;	entityPhaseFunc_07:
-;	B22_03bd:		jsr setEntityStateAnimated		; 20 f8 81
-;	B22_03c0:		jsr func_16_0259		; 20 59 82
-;	
-;	entityPhaseFunc_1e_moveToPlayerSetHorizSpeeds:
-;		inc wEntityPhase, x
-;	
-;	; start moving to player
-;		jsr setEntityStateMoving
-;		jsr entityFacePlayer
-;		jsr clearEntityHorizVertSpeeds
-;	
-;	; override horiz speeds from params
-;		ldy #$01
-;		lda (wPhaseFuncDataAddr), y
-;		sta wEntityHorizSpeed, x
-;		iny
-;		lda (wPhaseFuncDataAddr), y
-;		sta wEntityHorizSubSpeed, x
-;	
-;	reverseEntityHorizSpeedIfFacingLeft:
-;		ldy wEntityFacingLeft, x
-;		beq +
-;	
-;		jmp reverseEntityHorizSpeed
-;	
-;	+	rts
-;	
-;	
-;	entityPhaseFunc_a6:
-;	B22_03e5:		jsr setEntityStateAnimated		; 20 f8 81
-;	B22_03e8:		ldy #$08		; a0 08
-;	B22_03ea:		lda #$14		; a9 14
-;	B22_03ec:		jsr setEntitySpecGroupA_animationDefIdxY_animateNextFrame		; 20 5c ef
-;	B22_03ef:		jsr updateEntityXanimationFrame		; 20 75 ef
-;	B22_03f2:		jmp $83c3		; 4c c3 83
-;	
-;	
-;	entityPhaseFunc_08:
-;	B22_03f5:		ldy #$01		; a0 01
-;	B22_03f7:		lda (wPhaseFuncDataAddr), y	; b1 02
-;	B22_03f9:		jsr jumpTablePreserveY		; 20 6d e8
-;		.dw $8404
-;		.dw getStartYforSinusoidalMovement
-;		.dw $8410
-;		.dw $8428
-;	B22_0404:		jsr $841c
-;	B22_0407:		lda data_16_040c, y			; b9
-;	B22_040a:		bne setEntityAlarmOrStartYforSinusoidalMovement_nextPhase			; d0
-;	
-;	data_16_040c:
-;		.db $f8 $b0 $a0 $c8
-;	
-;	
-;	B22_0410:		jsr $841c		; 20 1c 84
-;	B22_0413:		lda $8418, y	; b9 18 84
-;	B22_0416:		bne setEntityAlarmOrStartYforSinusoidalMovement_nextPhase ; d0 2d
-;	
-;	B22_0418:		pha				; 48 
-;	B22_0419:		rts				; 60 
-;	
-;	
-;	B22_041a:		;removed
-;		.db $50 $38
-;	
-;	B22_041c:		txa				; 8a 
-;	B22_041d:		adc wEntityBaseX		; 6d 38 04
-;	B22_0420:		and $1f			; 25 1f
-;	B22_0422:		adc wGameStateLoopCounter			; 65 1a
-;	B22_0424:		and #$03		; 29 03
-;	B22_0426:		tay				; a8 
-;	B22_0427:		rts				; 60 
-;	
-;	
-;	B22_0428:		jsr $841c		; 20 1c 84
-;	B22_042b:		ldy wHardMode		; ac f6 07
-;	B22_042e:		beq B22_0433 ; f0 03
-;	
-;	B22_0430:		clc				; 18 
-;	B22_0431:		adc #$04		; 69 04
-;	B22_0433:		tay				; a8 
-;	B22_0434:		lda $8439, y	; b9 39 84
-;	B22_0437:		bne setEntityAlarmOrStartYforSinusoidalMovement_nextPhase ; d0 0c
-;	
-;	B22_0439:		ldy #$60		; a0 60
-;	B22_043b:		bvs B22_03bd ; 70 80
-;	
-;	B22_043d:		;removed
-;		.db $30 $48
-;	
-;	B22_043f:		sec				; 38 
-;	B22_0440:		rti				; 40 
-;	
-;	
-;	entityPhaseFunc_1f_setAlarmOrStartYforSinusoidalMovement:
-;		ldy #$01
-;		lda (wPhaseFuncDataAddr), y
-;	
-;	setEntityAlarmOrStartYforSinusoidalMovement_nextPhase:
-;		sta wEntityAlarmOrStartYforSinusoidalMovement, x
-;	--	inc wEntityPhase, x
-;	-	rts
-;	
-;	
-;	entityPhaseFunc_20_incPhaseWhenAlarm0:
-;		dec wEntityAlarmOrStartYforSinusoidalMovement, x
-;		bne -
-;	; inc phase
-;		beq --
-;	
-;	
-;	getStartYforSinusoidalMovement:
-;		ldy wHardMode
-;	
-;		txa
-;		adc wRandomVal
-;		and #$07
-;		clc
-;		adc @difficultyModeOffsetsForAbove, y
-;		tay
-;		lda @startYforSinusoidalMovement, y
-;		bne setEntityAlarmOrStartYforSinusoidalMovement_nextPhase ; d0 e0
-;	
-;	@startYforSinusoidalMovement:
-;		.db $68 $84 $62 $73 $94 $79 $81 $a7
-;		.db $58 $74 $42 $63 $24 $49 $31 $47
-;	
-;	@difficultyModeOffsetsForAbove:
-;		.db $00 $08
-;	
-;	
+		lda #$00
+		sta wEntityAI_idx, x
+	
+	entityPhaseFunc_75_stub:
+		rts
+	
+	
+	scfIfInSunkenCityRisingWaterRooms:
+		lda wCurrRoomGroup
+		cmp #RG_SUNKEN_CITY
+		bne +
+	
+		lda wCurrRoomSection
+		cmp #$03
+		rts
+	
+	+	clc
+	-	rts
+	
+	
+	entityPhaseFunc_a0:
+		jsr scfIfInSunkenCityRisingWaterRooms		; 20 13 81
+		bcc -
+	
+		lda wEntityBaseY, x	; bd 1c 04
+		cmp $ca				; c5 ca
+		bcc -
+	
+		jsr $84b2			; 20 b2 84
+		sec					; 38 
+		rts					; 60 
+	
+	
+	func_16_0131:
+		lda wInGameSubstate	; a5 2a FIXME!
+		cmp #$1b			; c9 1b
+		bne B22_014f 		; d0 18
+
+		lda wEntityState, x	; bd 70 04
+		and #ES_FROZEN		; 29 02
+		bne B22_014f 		; d0 11
+
+		jsr $b6e6			; 20 e6 b6
+		clc					; 18 
+		lda $c7				; a5 c7
+		adc #$04			; 69 04
+		sta $05d8, x		; 9d d8 05
+		jsr $ff8a 			; func_1f_1f8a		; 20 8a ff
+		lda #$00			; a9 00
+		rts					; 60 
+	B22_014f:
+		lda wEntityAI_idx, x	; bd ef 05
+		rts				; 60 
+		
+	entityPhaseFunc_6d_tryToFall:
+		lda #$10
+		jsr addAtoEntityVertSpeed
+	
+	; 04/fc, 10
+	; if floor below is empty, continue falling from vert speed
+		ldy #$06
+		jsr getCollisionTileValUsingOffsetPresets
+		beq entityPhaseFunc_75_stub
+	
+	; solid below entity, cancel fall
+		ldx wCurrEntityIdxBeingProcessed
+		jsr snapEntityXsYtoTile
+	
+	loopTryToFall:
+		inc wEntityPhase, x
+		jmp clearEntityHorizVertSpeeds
+	
+
+	entityPhaseFunc_a1:
+		lda #$10		; a9 10
+		jsr addAtoEntityVertSpeed		; 20 7f 80
+		ldy #$0e		; a0 0e
+		jsr getCollisionTileValUsingOffsetPresets		; 20 a6 b7
+		beq B22_019a ; f0 24
+
+		ldx wCurrEntityIdxBeingProcessed			; a6 6c
+		lda wEntityBaseY, x	; bd 1c 04
+		and #$f8		; 29 f8
+		sta wEntityBaseY, x	; 9d 1c 04
+	
+	; next phase, clear speeds
+		jmp loopTryToFall
+	
+	entityPhaseFunc_9e:
+		jsr $81ef		; 20 ef 81
+		lda #$10		; a9 10
+		jsr addAtoEntityVertSpeed		; 20 7f 80
+		lda wEntityBaseY, x	; bd 1c 04
+		cmp #$f8		; c9 f8
+		bcc B22_019a ; 90 08
+
+		lda #$23		; a9 23
+		jsr playSound		; 20 5f e2
+		inc wEntityPhase, x	; fe c1 05
+	B22_019a:	
+		rts				; 60 
+	
+
+	entityPhaseFunc_01_setStateNotMoving:
+		inc wEntityPhase, x
+	
+	setEntityStateNotMoving:
+		lda wEntityState, x
+		and #$ff-ES_MOVING
+		sta wEntityState, x
+		rts
+		
+	entityPhaseFunc_2a_setStateMoving:
+		inc wEntityPhase, x
+	
+	setEntityStateMoving:
+		lda wEntityState, x
+		ora #ES_MOVING
+		sta wEntityState, x
+		rts
+	
+	entityPhaseFunc_2b_reverseHorizontally:
+		inc wEntityPhase, x
+		jmp reverseEntityHorizSpeed
+		
+	entityPhaseFunc_03:
+		inc wEntityPhase, x	; fe c1 05
+		lda wEntityState, x	; bd 70 04
+		and #$f7		; 29 f7
+		sta wEntityState, x	; 9d 70 04
+		rts				; 60 
+		
+	entityPhaseFunc_0a:
+		inc wEntityPhase, x	; fe c1 05
+		lda wEntityState, x	; bd 70 04
+		ora #$88		; 09 88
+		sta wEntityState, x	; 9d 70 04
+		rts				; 60 
+		
+	entityPhaseFunc_54_setStateIllusion:
+		inc wEntityPhase, x
+		lda wEntityState, x
+		ora #ES_ILLUSION
+		sta wEntityState, x
+		rts
+		
+	entityPhaseFunc_53_setStateNotIllusion:
+		inc wEntityPhase, x
+		lda wEntityState, x
+		and #$ff-ES_ILLUSION
+		sta wEntityState, x
+		rts	
+	
+	entityPhaseFunc_2d:		
+		jsr setEntityStateNotMoving		; 20 9e 81
+	
+	incEntityPhase_setUnanimated:
+		inc wEntityPhase, x
+		lda wEntityState, x
+		ora #ES_UNANIMATED
+		sta wEntityState, x
+		rts
+	
+	
+	setEntityStateAnimated:
+		lda wEntityState, x
+		and #$ff-ES_UNANIMATED
+		sta wEntityState, x
+		rts
+	
+	
+	entityPhaseFunc_55:
+		inc wEntityPhase, x	; fe c1 05
+		ldy #$01		; a0 01
+		lda (wPhaseFuncDataAddr), y	; b1 02
+		sta $0657, x	; 9d 57 06
+		rts				; 60 
+	
+	
+	entityPhaseFunc_04_setPhase:
+		ldy #$01
+		lda (wPhaseFuncDataAddr), y
+		sta wEntityPhase, x
+		rts
+	
+	
+	entityPhaseFunc_62_addOffsetsToXY:
+		ldy #$01
+		clc
+		lda (wPhaseFuncDataAddr), y
+		adc wEntityBaseX, x
+		sta wEntityBaseX, x
+		iny
+		clc
+		lda (wPhaseFuncDataAddr), y
+		adc wEntityBaseY, x
+		sta wEntityBaseY, x
+		inc wEntityPhase, x
+	
+	entityPhaseFunc_72_stub:
+		rts
+	
+	
+	entityPhaseFunc_05_facePlayer:
+		inc wEntityPhase, x
+	
+	entityFacePlayer:
+		lda #$00
+		ldy wEntityBaseX, x
+		cpy wEntityBaseX
+		bcc +
+	
+		lda #$01
+	
+	+	sta wEntityFacingLeft, x
+		rts
+	
+	
+	entityPhaseFunc_91:
+		inc wEntityPhase, x	; fe c1 05		B22_0240:
+		jsr entityFacePlayer		; 20 30 82
+		lda wEntityState, x	; bd 70 04
+		and #ES_DESTROYED		; 29 01
+		beq B22_0255 ; f0 08
+
+		lda wEntityFacingLeft, x	; bd a8 04
+		eor #$01		; 49 01
+		sta wEntityFacingLeft, x	; 9d a8 04
+	B22_0255:	
+		rts				; 60 
+	
+	
+	entityPhaseFunc_06:
+		inc wEntityPhase, x	; fe c1 05
+	
+	func_16_0259:
+		sec				; 38 
+		lda wEntityObjectIdxes, x	; bd 4e 05
+		sbc #$48		; e9 48
+		tay				; a8 
+		lda $826c, y	; b9 6c 82
+		tay				; a8 
+		lda #$08		; a9 08
+		jsr setEntitySpecGroupA_animationDefIdxY_animateNextFrame		; 20 5c ef
+		jmp updateEntityXanimationFrame		; 4c 75 ef
+	
+
+		db $00 ,$01 ,$03 ,$04 
+		db $02 ,$05 ,$06 ,$10
+		db $07 ,$08 ,$09 ,$11
+		db $0B ,$0D ,$00 ,$06
+		db $0F ,$00 ,$12 ,$05 
+		db $1B ,$1C ,$00 ,$00
+
+	entityPhaseFunc_13_animateGroupAndDefIdx:
+		inc wEntityPhase, x	; fe c1 05		B22_0284
+		ldy #$01		; a0 01
+		lda (wPhaseFuncDataAddr), y	; b1 02
+		sta $00			; 85 00
+		iny				; c8 
+		lda (wPhaseFuncDataAddr), y	; b1 02
+		tay				; a8 
+		lda $00			; a5 00
+	
+	entityInitAnimation_specGroupA_animationDefIdxY:
+		jsr setEntitySpecGroupA_animationDefIdxY_animateNextFrame
+		jsr updateEntityXanimationFrame
+		jmp setEntityStateAnimated
+	
+	
+	entityPhaseFunc_8b:
+		ldy #$07		; a0 07
+		lda wChrBankSpr_0800			; a5 48
+		cmp #$08		; c9 08
+		bne B22_02a6 ; d0 02
+
+		ldy #$0a		; a0 0a
+	B22_02a6:	
+		lda #$12		; a9 12
+	
+	B22_02a8:		
+		inc wEntityPhase, x	; fe c1 05
+		jmp entityInitAnimation_specGroupA_animationDefIdxY		; 4c 93 82
+	
+	
+	entityPhaseFunc_a5:
+		ldy #$07		; a0 07
+		lda #$14		; a9 14
+		bne B22_02a8 ; d0 f4
+	
+	entityPhaseFunc_8c:
+		ldy #$00		; a0 00
+		lda wChrBankSpr_0800			; a5 48
+		cmp #$08		; c9 08
+		beq B22_02bd ; f0 01
+
+		iny				; c8 
+	B22_02bd:		
+		lda $82d1, y	; b9 d1 82
+		sta $00			; 85 00
+		lda $82cd, y	; b9 cd 82
+		ldy $00			; a4 00
+		jsr $82a8		; 20 a8 82
+		jmp $82f0		; 4c f0 82
+	
+	data82cd:
+		db $08, $12, $08, $12 
+		db $01, $0B, $04, $0C 
+		
+	entityPhaseFunc_8d:
+		jsr entityFacePlayer					; 20 30 82
+		jsr incEntityPhase_setUnanimated		; 20 ec 81
+
+		ldy #$00								; a0 00
+		lda wChrBankSpr_0800					; a5 48
+		cmp #$08								; c9 08
+		beq B22_02e4  							; f0 01
+
+		iny										; c8 
+	B22_02e4:
+		lda $82cd, y							; b9 cd 82
+		sta wEntityOamSpecGroupDoubled, x		; 9d 8c 04
+		lda $8305, y							; b9 05 83
+		sta wOamSpecIdxDoubled, x				; 9d 00 04
+		lda wCurrRoomGroup						; a5 32
+		cmp #$05								; c9 05
+		bne B22_0304 							; d0 0e
+
+		lda wCurrRoomSection					; a5 33
+		cmp #$03		
+		bne B22_0304 
+
+		lda wEntityPaletteOverride, x			; bd 54 04
+		ora #$03		
+		sta wEntityPaletteOverride, x			; 9d 54 04
+	B22_0304:		
+		rts				; 60 
+	
+
+	B22_0305:	
+		db $12, $70
+	
+	
+	entityPhaseFunc_95:
+		ldy #$02
+		lda $49			; a5 49
+		cmp #$0f		; c9 0f
+		beq B22_02bd ; f0 ae
+
+		iny				; c8 
+		jmp B22_02bd		; 4c bd 82
+		
+	entityPhaseFunc_4f:
+		lda #$01		; a9 01
+		sta wEntityFacingLeft, x	; 9d a8 04
+		lda #$00		; a9 00
+		sta wEntityPaletteOverride, x	; 9d 54 04
+		lda wEntityObjectIdxes, x	; bd 4e 05
+		sec				; 38 
+		sbc #$93		; e9 93
+		tay				; a8 
+		lda data_16_0333, y	; b9 33 83
+		sta wEntityOamSpecGroupDoubled, x	; 9d 8c 04
+		lda data_16_0353, y	; b9 53 83
+		sta wOamSpecIdxDoubled, x	; 9d 00 04
+		jmp incEntityPhase_setUnanimated		; 4c ec 81
+	
+	data_16_0333:
+		db $00 ,$00 ,$00 ,$00 
+		db $0E ,$0E ,$0E ,$0E
+		db $00 ,$00 ,$00 ,$00
+		db $0E ,$0E ,$0E ,$0E
+		db $0E ,$0E ,$0E ,$0E 
+		db $0E ,$0E ,$0E ,$0E
+		db $0E ,$0E ,$0E ,$0E
+		db $0E ,$0E ,$0E ,$0E
+	
+	data_16_0353:
+		db $46 ,$42 ,$4E ,$50 
+		db $68 ,$54 ,$56 ,$52
+		db $4E ,$46 ,$54 ,$54
+		db $6A ,$1C ,$1E ,$20
+		db $24 ,$24 ,$24 ,$24 
+		db $24 ,$24 ,$24 ,$24
+		db $24 ,$22 ,$10 ,$0E
+		db $58 ,$5A ,$6A ,$10
+	; point of success		
+	
+	entityPhaseFunc_87:
+		inc wEntityPhase, x
+		lda #$0e		; a9 0e
+		sta wEntityOamSpecGroupDoubled, x	; 9d 8c 04
+		sec				; 38 
+		lda wEntityObjectIdxes, x	; bd 4e 05
+		sbc #$a3		; e9 a3
+		tay				; a8 
+		lda $8389, y	; b9 89 83
+		sta wOamSpecIdxDoubled, x	; 9d 00 04
+		rts				; 60 
+
+	B22_0389:		
+		db $26, $28, $2a, $2c, $2e, $30, $32, $34, $70 
+
+	
+	entityPhaseFunc_88:
+		ldy #$00
+		lda wChrBankSpr_0800			; a5 48
+		cmp #$14		; c9 14
+		bne B22_039c ; d0 02
+
+		ldy #$0e		; a0 0e
+	B22_039c:		
+		sty $00			; 84 00
+		lda #$12		; a9 12
+		sta wEntityOamSpecGroupDoubled, x	; 9d 8c 04
+		ldy #$01		; a0 01
+		clc				; 18 
+		lda (wPhaseFuncDataAddr), y	; b1 02
+		adc $00			; 65 00
+		jmp $83b7		; 4c b7 83
+	
+	
+	entityPhaseFunc_0b:
+		ldy #$01		; a0 01
+
+		lda (wPhaseFuncDataAddr), y	; b1 02
+		sta wEntityOamSpecGroupDoubled, x	; 9d 8c 04
+		iny				; c8 
+		lda (wPhaseFuncDataAddr), y	; b1 02
+		sta wOamSpecIdxDoubled, x	; 9d 00 04
+		jmp incEntityPhase_setUnanimated		; 4c ec 81
+	
+	
+	entityPhaseFunc_07:
+		jsr setEntityStateAnimated		; 20 f8 81
+		jsr func_16_0259		; 20 59 82
+	
+	entityPhaseFunc_1e_moveToPlayerSetHorizSpeeds:
+		inc wEntityPhase, x
+	
+	; start moving to player
+		jsr setEntityStateMoving
+		jsr entityFacePlayer
+		jsr clearEntityHorizVertSpeeds
+	
+	; override horiz speeds from params
+		ldy #$01
+		lda (wPhaseFuncDataAddr), y
+		sta wEntityHorizSpeed, x
+		iny
+		lda (wPhaseFuncDataAddr), y
+		sta wEntityHorizSubSpeed, x
+	
+	reverseEntityHorizSpeedIfFacingLeft:
+		ldy wEntityFacingLeft, x
+		beq +
+	
+		jmp reverseEntityHorizSpeed
+	
+	+	rts
+	
+	
+	entityPhaseFunc_a6:
+		jsr setEntityStateAnimated		; 20 f8 81
+		ldy #$08		; a0 08
+		lda #$14		; a9 14
+		jsr setEntitySpecGroupA_animationDefIdxY_animateNextFrame		; 20 5c ef
+		jsr updateEntityXanimationFrame		; 20 75 ef
+		jmp $83c3		; 4c c3 83
+	
+	
+	entityPhaseFunc_08:
+		ldy #$01		; a0 01		B22_03f5
+		lda (wPhaseFuncDataAddr), y	; b1 02
+		jsr jumpTablePreserveY		; 20 6d e8
+
+		dw B22_0404
+		dw getStartYforSinusoidalMovement
+		dw B22_0410
+		dw B22_0428
+
+	B22_0404:		
+		jsr $841c
+		lda data_16_040c, y			; b9
+		bne setEntityAlarmOrStartYforSinusoidalMovement_nextPhase			; d0
+	
+	data_16_040c:
+		db $f8, $b0, $a0, $c8
+		
+	B22_0410:
+		jsr $841c		; 20 1c 84
+		lda $8418, y	; b9 18 84
+		bne setEntityAlarmOrStartYforSinusoidalMovement_nextPhase ; d0 2d	
+		pha				; 48 
+		rts				; 60 	B22_0419
+	
+	
+	B22_041a:		;removed
+		db $50, $38
+	
+		txa				; 8a 
+		adc wEntityBaseX		; 6d 38 04
+		and $1f			; 25 1f
+		adc wGameStateLoopCounter			; 65 1a
+		and #$03		; 29 03
+		tay				; a8 
+		rts				; 60 
+	
+	
+	B22_0428:		
+		jsr $841c		; 20 1c 84
+		ldy wHardMode	; ac f6 07
+		beq +			 ; f0 03
+	
+		clc				; 18 
+		adc #$04		; 69 04
+	+	tay				; a8 
+		lda $8439, y	; b9 39 84
+		bne setEntityAlarmOrStartYforSinusoidalMovement_nextPhase ; d0 0c
+
+		ldy #$60				; a0 60
+		bvs entityPhaseFunc_07 ; 70 80
+	
+	B22_043d:		;removed
+		db $30, $48
+	
+		sec				; 38 
+	B22_0440:	
+		rti				; 40 
+	
+	
+	entityPhaseFunc_1f_setAlarmOrStartYforSinusoidalMovement:
+		ldy #$01
+		lda (wPhaseFuncDataAddr), y
+	
+	setEntityAlarmOrStartYforSinusoidalMovement_nextPhase:
+		sta wEntityAlarmOrStartYforSinusoidalMovement, x
+	--	inc wEntityPhase, x
+	-	rts
+	
+	
+	entityPhaseFunc_20_incPhaseWhenAlarm0:
+		dec wEntityAlarmOrStartYforSinusoidalMovement, x
+		bne -
+	; inc phase
+		beq --
+		
+	getStartYforSinusoidalMovement:
+		ldy wHardMode
+	
+		txa
+		adc wRandomVal
+		and #$07
+		clc
+		adc difficultyModeOffsetsForAbove, y
+		tay
+		lda startYforSinusoidalMovement, y
+		bne setEntityAlarmOrStartYforSinusoidalMovement_nextPhase ; d0 e0
+	
+	startYforSinusoidalMovement:
+		db $68, $84, $62, $73, $94, $79, $81, $a7
+		db $58, $74, $42, $63, $24, $49, $31, $47		; second quest medusa
+	
+	difficultyModeOffsetsForAbove:
+		db $00, $08
+	
+	
 ;	entityPhaseFunc_9f:
 ;	B22_0477:		jsr $80d5		; 20 d5 80
 ;	B22_047a:		cmp #$30		; c9 30
@@ -1955,8 +1882,8 @@ org $8000
 ;	B22_0b8e:		ldx wCurrEntityIdxBeingProcessed			; a6 6c
 ;	B22_0b90:		rts				; 60 
 ;	
-;	
-;	snapEntityXsYtoTile:
+org $8b91	
+	snapEntityXsYtoTile:
 ;		lda wCurrRoomMetadataByte
 ;		bmi @vertRoom
 ;	
@@ -7945,8 +7872,8 @@ org $a538 		; data/entityScript
 ;B23_17a3:		cmp $03			; c5 03
 ;B23_17a5:		rts				; 60 
 ;
-;
-;getCollisionTileValUsingOffsetPresets:
+org $b7a6 
+	getCollisionTileValUsingOffsetPresets:
 ;B23_17a6:		tya				; 98 
 ;B23_17a7:		asl a			; 0a
 ;B23_17a8:		ldy wEntityFacingLeft.w, x	; bc a8 04
@@ -8582,7 +8509,7 @@ org $ba7e
 execEntityXNextPhaseFunc:
 		lda $ab					; a5 ab
 		beq +
-		jsr	$e7b6				; func_1f_07b6		; 20 b6 e7 	; ab non-0
+		jsr	func_1f_07b6		; 20 b6 e7 	; ab non-0
 		bcs -
 
 	+	lda wEntityAI_idx, x	; bd ef 05
@@ -8590,7 +8517,7 @@ execEntityXNextPhaseFunc:
 		cmp #$27				; c9 27
 		bne +
 
-		jsr $8131				; func_16_0131		; 20 31 81	; ai idx == 27
+		jsr func_16_0131		; 20 31 81	; ai idx == 27
 		beq -
 
 +
@@ -8636,7 +8563,7 @@ execEntityXNextPhaseFunc:
 
 entityPhaseFuncsAddresses:
 	.dw entityPhaseFunc_00_setEntityAIIdxTo0
-;	.dw entityPhaseFunc_01_setStateNotMoving
+	.dw entityPhaseFunc_01_setStateNotMoving
 ;	.dw entityPhaseFunc_02
 ;	.dw entityPhaseFunc_03
 ;	.dw entityPhaseFunc_04_setPhase
@@ -8940,6 +8867,30 @@ org $bea1
 		.dw entityPhaseFunc_19_stub
 		.dw entityPhaseFunc_19_stub
 
+
+bank $1f
+if expandPRG
+bank $3f
+endif
+base $e000
+
+org $e25f
+	playSound:		
+
+org $e86d
+	jumpTablePreserveY: 
+
+org $e7b6	
+	func_1f_07b6:
+
+org $ef5c 
+	setEntitySpecGroupA_animationDefIdxY_animateNextFrame: 
+
+org $ef75 
+	updateEntityXanimationFrame:
+	
+org $fec8
+	clearEntityHorizVertSpeeds:
 
 
 ;.macro sc_setEntityAIIdxTo0		; toDo find known function to lable them properly 

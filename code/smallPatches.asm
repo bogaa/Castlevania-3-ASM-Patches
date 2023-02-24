@@ -400,6 +400,8 @@ endif
 
 if experiment			
 		checkRamPage:
+			lda wInGameSubstate  ; 2a 
+			
 			lda OAMDMA
 			lda NAMETABLE_MAPPING
 			
