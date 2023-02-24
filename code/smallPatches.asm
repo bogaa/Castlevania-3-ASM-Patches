@@ -163,7 +163,7 @@ org $8af1
 bank $03
 base $a000	
 org $b05d
-		lda #$01			; default start
+		lda #$01			; default start replace FF for no character
 endif
 
 
@@ -177,6 +177,14 @@ org $E252
 		LDA #$98          	; music engine bank
 		JSR prgBankSwitchWithBackup  
 		JSR $89DE   	   	; music Routine. Not SFX..             	
+
+org $e2e6    
+	prgBankSwitchWithBackup: 
+		STA $21		
+	prgBankSwitch:			; games prgSwapRoutine 
+		STA $5115 
+		RTS
+
 ; ----------------------------------------------------
 if fastLunch
 	org $e386
@@ -185,13 +193,24 @@ if fastLunch
 		LDA #$01     			; title screen count down till it starts            
 endif	
 ; ----------------------------------------------------
+if fastDoor
+    doorSpeed = $02
+    org $fb6c
+        adc #doorSpeed
 
-org $e2e6    
-	prgBankSwitchWithBackup: 
-		STA $21		
-	prgBankSwitch:			; games prgSwapRoutine 
-		STA $5115 
-		RTS
+    org $f9cb
+        sbc #doorSpeed
+
+    org $fa00
+        ; wait time for door to open
+        lda #$10
+
+    org $faa2
+        ; wait time for door to close
+        lda #$28
+endif
+
+
 
 
 	org $f384
@@ -381,18 +400,20 @@ endif
 
 if experiment			
 		checkRamPage:
-;			lda OAMDMA
-;			lda NAMETABLE_MAPPING
-;			
-;			
-;			lda w190 								
-;			
-;			lda w0d1
-;			lda wCurrInstrumentDataAddr ;e0
-;			lda wFreqAdjustFromEnvelope ; e2
-;			lda wSoundBankTempVar1 	;e4
-;		
-;			lda w7f7    							; dsb $800-$7f7
+			lda OAMDMA
+			lda NAMETABLE_MAPPING
+			
+			
+			lda w190 								
+			
+			lda w0d1
+			lda wCurrInstrumentDataAddr ;e0
+			lda wFreqAdjustFromEnvelope ; e2
+			lda wSoundBankTempVar1 	;e4
+			
+			lda w3cc
+			lda wEntityOamSpecIdxBaseOffset	; 593
+			lda w7f7    							; dsb $800-$7f7
 			
 			
 		spriteViewer:	

@@ -58,6 +58,7 @@ chrAnimations = 1			; expands to have more of them avalible
 
 subWeaponDrop = 1			; made by SpiderDave
 
+fastDoor = 1
 
 ; ---------------------------------------------------
 ; experimental features
@@ -87,12 +88,15 @@ incsrc code/spriteAssembly.asm
 
 incsrc code/misc.asm			; this is a revamp lable. About the breakable walls and special events that go into levels. 
 
+incsrc code/entity.asm 			; editing enemy AI 
+
 ;textmap 0...9 d0	;TextMapMainGame
 ;textmap A...Z e0
+; to do: text, progression table, 
 
 
 if extraBGpalette4Character
-incsrc  code/extraPalette.asm
+incsrc  code/xperimentalPatches/extraPalette.asm
 endif 
 
 

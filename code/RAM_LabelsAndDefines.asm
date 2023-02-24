@@ -219,9 +219,9 @@
 		wVramQueueNextIdxToFill: 			.dsb 1	; $1d db
 		wRandomVal: 						.dsb 1	; $1f db
 		wCurrFrameStartingOamOffset: 		.dsb 1	; $20 db
-		wPrgBank_8000: 						.dsb 1 	; $21 db
-		wPrgBankBkup_8000: 					.dsb 1	; $22 db
-		wPrgBankBkup2_8000: 				.dsb 1	; $23 db
+		wPrgBank_8000: 						.db 1 	; $21 db
+		wPrgBankBkup_8000: 					.db 1	; $22 db
+		wPrgBankBkup2_8000: 				.db 1	; $23 db
 		wIsExecutingSoundFunc: 				.dsb 1	; $24 db
 		wNametableMapping: 					.dsb 1	; $25db
 		wJoy1NewButtonsPressed: 			.dsb 1	; $26 db
@@ -435,3 +435,453 @@
 ;bank $09
 ;base $a000
 ;org  $bdf0				; free Space
+
+
+
+;Address    Size    Description			to do check for better lables.. 
+;--------   ----    -----------
+;$0017              Repeat Counter
+;$0018              System State
+;                            00 = Title; 02 = New Game; 03 = In-game Transition; 04 = In-Game;
+;                            05 = Game Over Transition; 06 = Game Over; 07 = Stage Select Debug;
+;                            08 = Map Screen; 09 = Prayer Scene; 0a = Name Entry; 0b = Password Entry;
+;                            0c = Epilogue; 0d = Credit Roll; 0e = Respawn; 0f = Sound Test Debug
+;$0019              System Substate
+;$001A              System Step Counter
+;$001B              Radio Mode (halts most code except music)
+;$001C              Blackout Delay
+;$001D              X Register Backup
+;$001E              Pausing Disabled (always 00?)
+;$001F              Randomizer
+;$0020              OAM Batch
+;$0021              Current PROM Bank 
+;$0022              Previous PROM Bank
+;$0023              PROM Bank Backup (used by some functions)
+;$0024              Bank Changed (for debugging probably)
+;$0025              Nametable Mapping
+;$0026       #02    Controller Buttons Pressed
+;                            01 = right; 02 = left; 04 = down; 08 = up;
+;                            10 = start; 20 = select; 40 = B; 80 = A
+;$0028       #02    Controller Buttons Held
+;$002A              Game State (set $006B to 00 before changing)
+;                            00 = initialize room; 01 = initialize nametables; 02 = load horizontal room;
+;                            03 = horizontal gameplay; 04 = load vertical room; 05 = vertical gameplay;
+;                            06 = stair transition start; 07 = stair transition fade; 08 = door transition;
+;                            09 = initialize fog; 0a = fog parallax; 0b = horizontal partner swap;
+;                            0c = vertical partner swap; 0d/0e = <CUT CONTENT>; 0f = detect automatic stairs;
+;                            10 = automatic stair transition; 11 = tally score; 12 = <UNUSED>;
+;                            13 = flee Aquarius; 14 = initialize flooding; 15 = load flood room;
+;                            16 = flood room gameplay; 17 = map transition; 18 = autowalk to door;
+;                            19 = powering up; 1a = freeze water; 1b = thaw ice; 1c = Bone King escape;
+;                            1d = Aquarius ruptured; 1e = initialize map transition; 1f = map transition exit
+;$002B              User Paused (toggled by Start button)
+;$002C              Boss Defeated
+;$002D              Entry End (valid in Name screen, garbage in Pass screen)
+;$002E              Checkpoint
+;$002F              Grant Defeated
+;$0030       #02    System Effect Timer
+;$0032              Stage
+;$0033              Block
+;$0034              Room
+;$0035              Lives   
+;$0036       #03    Score  
+;$0039              Main Character (change this to not always be Trevor)
+;$003A              Partner   
+;                            00 = Trevor; 01 = Syfa; 02 = Grant; 03 = Alucard; ff = None
+;$003B              Partner Active 
+;$003C              Player's Health
+;                            40 = full
+;$003D              Boss Health 
+;$003E              Score Target (for extra life)
+;$003F              Default Drawing State (write to $006D)
+;$0040              Scanline IRQ
+;$0041              Scanline Target
+;$0042              Default Vertical Scanline Target (write to $0089)
+;$0043              Scanline Next Target
+;$0044       #02    Draw State Address
+;$0046       #08    CHR Banks
+;$004E              Hard Mode CHR Bank (overwrites $0049)
+;$0050       #02    Tile Assembly Starting Address
+;$0052       #02    Tile Assembly Left Address
+;$0054       #02    Tile Assembly Right Address
+;$0056       #02    View Position (little endian) 
+;$0058              View Subpixel Position
+;$0059              Left Spawn Area
+;$005A              Right Spawn Area
+;$005B              Tile Assembly Count Left
+;$005C              Tile Assembly Count Right
+;$005D       #02    Tile Assembly Pointer
+;$005F       #02    Pallet Map Pointer
+;$0061       #02    Nametable Write Address
+;$0063              Tile Assembly ID
+;$0064              Transition Timer
+;$0065              Scroll Direction
+;                            00 = left; 01 = right; 02 = unchanged
+;$0066              View Refreshed Position
+;$0067              Update View
+;$0068              Room Orientation
+;                            00 = horizontal; 80 or 81 = vertical; 82 = scroll up;
+;                            83 = scroll down; 84 = collapse up; 85 = collapse down
+;$0069       #02    Stair Map Address
+;$006B              Menu selections
+;                   Door State
+;                            00 = unopened; 01 = load next room; 02 = scroll in next room;
+;                            03 = unlatch door; 04 = open door; 05 = walk in; 06 = close door;
+;                            07 = latch door; 08 = scroll out old room; 09 = end transition
+;$006C              Current Instance (saves X register)
+;$006D              Drawing State
+;$006E              View Speed
+;$006F       #02    PPU Scroll 
+;$0071              Room Size
+;$0072              CHR Write Mode
+;                            00 or 03 = all CHR banks; 01 = status bar banks;  02 = clear NPC banks
+;$0073              Previous Room Orientation
+;$0074              Music Loaded
+;$0075              Transition Nametable (nametable to use after door closes)
+;$0076              Horizontal Spawner Block
+;$0077              First Spawner Block
+;$0078              Boss Scroll Lock
+;$0079              Vertical Spawner Block
+;$007A              Vertical Spawner Previous (?)
+;$007B              Spawner Count
+;$007C              Vertical Partner Y-Coordinate (used for partner swap in vertical rooms)
+;$007D              Room Type
+;                            10 = Stormclouds; 20 = Autowalk; 30 = River; 40 = Clockwork;
+;                            50 and 60 = Watery Grave; 70 = Flood Zone; 80 = Collapsing Bridge
+;                            Note: lower 4 bits alter behavior
+;$007E       #02    Time
+;$0080              Wounded Timer (invincibility frames)
+;$0081              Damage Received/Effect on Player
+;$0082              PC Height
+;                            00 = Trevor standing; 01 = Syfa standing; 02 = Grant standing; 03 = Alucard standing;
+;                            04 = Trevor duck; 05 = Syfa duck; 06 = Grant duck; 07 = Alucard duck; 08 = Bat
+;$0084              Hearts
+;$0085              Trevor Subweapon
+;                            00 = none; 01 = axe; 02 = boomerang; 03 = knife/book; 04 = holy water; 05 = fireball; 
+;                            06 = freeze; 07 = orb; 08 = axe; 09 = boomerang; 0a = knife/book ;0b = clock
+;$0086              Partner Subweapon
+;$0087              Trevor Subweapon Multiplier   
+;                            00 = none; 01 = [II]; 02 = [III]
+;$0088              Partner Subweapon Multiplier
+;$0089              Vertical Scanline Target (HUD bottom in vertical rooms)
+;$008B              Conveyance
+;                            01 = Elevator/Frozen enemy; 02 = Scroll-locked right; 05 = Teeter-totter;
+;                            06 = Cogwheel; 07 = Mud; 08 = Waterfall; 09 = Waterfall w/current;
+;                            0a = Conveyor left; 0b = Conveyor right; 0d = Petrified; 0e = Auto-walk
+;$008C              Whip Spark Timer
+;$008D              Room Initialized
+;$008E              Trevor Weapon Level   
+;                            00 = short; 01 = medium; 02 = long
+;$008F              Partner Weapon Level
+;                            00 = one orb; 01 = two orbs; 03 = three orbs
+;$0090              Knockback Direction
+;                            00 = left; 01 = right
+;$0091              Conveyor (see $008B)
+;$0093              Cog Proximity
+;                            00 = none; 01 = right OR below; 02 = right AND below
+;$0094              Cog ID
+;$0095              Cogwheel Size
+;                            00 = small; 01 = large
+;$0096              Terrain Present
+;$0098       #02    Spawner Data Address
+;$009a       #02    Terrain Data Address
+;$009C              Subweapon Kill Count (affects multiplier drops)
+;$009D              Variable Jump (for Grant)
+;$009E              Subweapon Iterator
+;$009F              Upgrade Previous Game State
+;$00A0              Recent Player Direction (copy of $009E)
+;$00A1              Previous Player Direction (copy of $0062)
+;$00A3              Game Step Counter (only increments while game not paused)
+;$00A4              Map Transition Checkpoint
+;$00A5              Check Right Tile
+;$00A6              Default Drawing State Backup (used during partner swap)
+;$00A7       #02    IRQ Latch Backup (used during partner swap)
+;$00A9              IRQ Control Backup (used during partner swap)
+;$00AA              Partner Swap Previous Game State
+;$00AB              Stopwatch Active
+;$00AC              Stopwatch Timer
+;$00AD              Invincibility Potion Timer
+;$00AE              Alucard Bat Timer (drains 1 heart when decreased to 0)
+;$00AF              Landing Delay (prevents walking between elevators)
+;$00B0              Load Doppelganger Sprites (forces CHR updates)
+;$00B1              Current Instance (backup for X register)
+;$00B2              Rosary Flash Timer
+;$00B3              Bridge Out
+;$00B6              Tile Assembly Count Vertical (only for vertical rooms)
+;$00B7              Power Up (used for weapon upgrade)
+;$00B8              Current Platform (ID of elevator or frozen enemy)
+;$00B9              Crash Timer (stuns Player after falling too far)
+;$00BA              Boss Special Hitbox (bitmasked)
+;$00BB              Boss Melee Hitbox
+;                            01-03 = Doppelganger whip; 04 = Doppelganger staff;
+;                            05 = Death's Skull; 06 = Moat Dragon head; 
+;$00BC              Boss Hitbox Phase (redundant with Doppelganger)
+;$00BD              Bone Dragon King HP
+;$00BE              Bone Dragon King Misc. Ticker
+;$00BF              Faint Pause (pauses game when killed or time runs out)
+;$00C0              Flood Halted
+;$00C1              Boss Object
+;$00C2              Boss Second Phase
+;$00C3              Boss Spawner
+;$00C4       #02    Character Disabled (cleared in every transition)
+;$00C6              Autowalk Data Pointer (ref. $00:9140 for autowalk behavior)
+;                            00 = Clocktower/Default; 04 = Forest; 08 = Alucard Caves;
+;                            0C = Ghost Ship; 10 = Mountain Pass; 14 = Castle Keep
+;$00C7              Thaw Timer (for frozen water)
+;$00C8              Horizontal Scroll Lock (used by crumbling bridge)
+;$00CA              Flood Height
+;$00CE              Weapon Kill Count (affects item drops)
+;$00CF              Previous Conveyance (backup of $0088)
+;$00D0              Vertical Ceiling (lowest y-coordinate in vertical room)
+;$00D2              Cogwheel ID Copy
+;$00D3              Grant Corner Y-Coordinate
+;$00D4              Cogwheel ID
+;$00E0       #02    Audio Current Note Address
+;$00E2       #02    Audio Redirect Address
+;                   Audio Data Temporary Variable
+;$00E4       #02    Audio Data 16-bit Variable
+;$00E6       #02    Audio Track Base Address
+;$00E8       #02    Audio Track Address
+;$00EA              Audio Channels to Load
+;$00EB              Audio Routine PROM Bank
+;$00EC       #02    Audio Current Period (i.e., pitch)
+;$00EE              Audio Current Channel
+;$00EF              Audio Track ID
+;$00F0       #04    Candle Status (32-bit mask)
+;$00F4       #04    Breakable Wall Status
+;                            00 = unused/unbroken; ff = broken
+;$00F8       #02    Previous Controller Buttons Pressed
+;$00FA       #02    Previous Controller Buttons Held
+;$00FC       #02    PPU Scroll
+;$00FE              PPU Mask (for hue shifts and greyscale)
+;$00FF              PPU Control 
+;       Audio channels: (grouped by 3, 5, or 7)
+;           00 = BGM Square 1; 021 = BGM Square 2; 02 = BGM Triangle;
+;           03 = SFX Square 1; 04 = SFX Square 2;
+;           05 = Drums (DCM & Noise); 06 = Noise
+;$0100       #07    Audio Channel Note Duration
+;$0107       #07    Audio Channel Song ID
+;$010E       #07    Audio Channel Next Note Duration
+;$0115       #07    Audio Channel Behavior
+;                             bit 0 = SFX (ignore ritenuto); bits 1-2 = init/decay/sustain/release; 
+;                             bit 3 = Al segno loop; bit 5 = coda loop; bit 6 = ignore envelope;
+;$011C       #07    Audio Channel Loop Count
+;$0123       #07    Audio Channel Note Address Low Byte
+;$012A       #07    Audio Channel Note Address High Byte
+;$0131       #07    Audio Channel Al Segno Address Low Byte
+;$0138       #07    Audio Channel Al Segno Address High Byte
+;$013F       #07    Audio Channel Coda Address Low Byte
+;$0146       #07    Audio Channel Coda Address High Byte
+;$014D       #07    Audio Channel Previous Period High Byte
+;$0152              Audio Global Dampening (lowers volume for all channels)
+;$0154       #07    Audio Channel Volume
+;$0159              Audio Global Fade Timer (decreases $017C after 2b steps)
+;$015B       #07    Audio Channel Next Control Value / Channel Dampening Placeholder
+;$0160              Audio Global Fade Delay
+;$0162       #07    Audio Channel Default Duty Cycle
+;$0167              Audio Global Mute for Pause
+;$0169       #05    Audio Channel Dampening (lowers volume for specific channel)
+;$016E       #05    Audio Channel Attributes
+;                             bit 4 = use waveform; bit 5 = alternate duty; bit 7 = disabled needs more info
+;$0173       #05    Audio Channel Pitch Bend Amount
+;$0178       #05    Audio Channel Period Low Byte Backup (useless?)
+;$017D       #03    Audio Channel Octave (raises octave by 5-n)
+;$0180       #03    Audio Channel Note Offset
+;                             (adds signed value to note ID to look up period)
+;$0183       #03    Audio Channel Period Low 
+;$0186       #03    Audio Channel Period High 
+;$0189       #03    Audio Channel Volume Envelope
+;                             (if bit 7 set, fade out instead based on bits 0-3)
+;$018C              Audio SFX Register Offset
+;$018D              Audio Global Ritenuto Delay (counts up to $018E)
+;$018E              Audio Global Ritenuto Cutoff (frames until $018F set)
+;$018F              Audio Global Ritenuto (prolongs BGM note duration when set)
+;$0190       #02    Audio SFX Square Sweep
+;$0192              Audio Current DPCM
+;$0193              Audio Triangle Staccato Timer
+;$0194              Audio Triangle Linear Counter (only used with $193)
+;$0195       #07    Audio Channel PROM Bank
+;$019C              Audio SFX Square 1 Sweep (write to $4001)
+;$0200      #100    OAM Data
+;$0300       #a0    Tile Data
+;$03C0       #03    Audio Channel Volume Envelope Duration
+;$03C3       #03    Audio Channel Volume Envelope Position
+;$03C6       #03    Audio Channel Volume Envelope Loop Count
+;$03C9       #03    Audio Channel Volume Envelope Loop Point
+;$03CC       #03    Audio Channel Fadeout Point (fades out when equal to $100,X)
+;$03CF       #03    Audio Channel Volume Envelope 
+;                             (bits 0-3 = value; $03CC = duration*value >> 4)
+;$03D2       #03    Audio Channel Next Fade Duration
+;$03D5       #03    Audio Channel Fade Duration
+;$03D8       #03    Audio Channel Alternate Duty Cycle
+;$03DB       #03    Audio Channel Next Pitchbend Duration
+;$03DE       #03    Audio Channel Pitchbend Duration
+;$03E1       #03    Audio Channel Sweep Rate
+;$0400       #1c    Sprite Frame Index
+;$041C       #1c    Y-Coordinate
+;$0438       #1c    X-Coordinate 
+;$0454       #1c    Sprite Attributes (palette & background priority)
+;$0470       #1c    Attributes
+;                            01 = destroyed; 02 = frozen; 04 = unknown; 08 = flicker;
+;                            10 = illusory; 20 = inanimate; 40 = moving; 80 = invisible
+;$048C       #1c    Animation Batch (even numbers)
+;                            00-06 = Player; 08-12 = NPCs; 14 = Epilogue; 16-1C = Doppelganger
+;$04A8       #1C    Sprite Mirrored
+;$04C4       #17    X-Coordinate Subpixel
+;$04DB       #17    Y-Coordinate Subpixel
+;$04F2       #17    Horizontal Speed
+;  $0505            Partner Swap Ghosting Amount
+;$0509       #17    Horizontal Speed Subpixel
+;  $051C            Partner Swap Ghosting Amount Fractional
+;$0520       #17    Vertical Speed
+;$0537       #17    Vertical Speed Subpixel
+;$054E       #17    Object Index
+;$0565              Player State
+;$0566       #11    Stun Timer
+;$0578              Weapon State
+;$0579       #03    Subweapon State
+;$057C       #17    Animation Timer
+;$0593       #17    Sprite Frame (used to calculate $0400,X)
+;$05AA       #17    Sprite Index
+;$05C1              Moving Down
+;$05C2       #12    NPC State
+;$05D4              Player Stunned State
+;                   Partner Swap X-coordinate
+;$05D5       #03    Subweapon Throw Delay
+;$05D8              Player Jump State
+;                             00-1D = Trevor/Syfa/Alucard; 1E-39 = Grant
+;$05D9       #0c    Boss Use
+;$05E5       #06    Candle Drop
+;                             83 = Axe; 84 = Cross; 85 = Dagger; 86 = Holy Water; 87 = Stopwatch;
+;                             88 = Syfa Fire; 89 = Syfa Ice; 8a = Syfa Water; 8b = Grant Dagger;
+;                             8c Grant Axe; 8d-8f = Upgrades (8f removed); 90 = Wall Meat; 
+;                             91 = Invincibility Potion; 92 = Rosary; 93-9b = Coins; 9c = 1UP; 
+;                             9d = Big Heart; 9e = Small Heart; 9f-a0 = Multipliers
+;$05EB              Stair Stun Timer
+;                   Partner Swap Ghosting Speed Fractional
+;$05EF              Stair Direction
+;                   Grant Jump State Fraction (functions like speed variables)
+;$05F0       #12    AI Class (determines behavior)
+;$0602              Stair Stun (decreases $05EB)
+;                   Freezing Rivers
+;                   Turning Into Bat
+;                   Partner Swap Ghosting Speed 
+;$0606              Grant Gravity Subpixel (increases $05EF for Grant)
+;$0607       #12    State Timer (time between state changes for most NPCs)
+;                   Sinusoid Center Axis
+;$0619              Partner Swap Y-Coordinate
+;$061A       #03    Subweapon Damage and Multikill Count
+;$061D              Stair Timer (time to climb one step)
+;                   Grant Gravity (increases $05D8 for Grant)
+;$061E       #12    Miscellaneous Ticker (usually timer or counter for NPCs)
+;$0630              Weapon Damage
+;$0631       #03    Subweapon Deflection (copy of $0658,X on Cross hit)
+;$0634       #17    Miscellaneous Use (used by a couple NPCs)
+;$0646       #12    Spawner Index
+;$0658       #0d    NPC Damage
+;$0664       #06    Candle Active
+;$066A       #12    Applied Effect (copy of $061A,X on subweapon hit)
+;$067B       #12    NPC Hitpoints
+;$068E       #12    Weapons Impact
+;                             01 = weapon; 02 = subweapon 1; 04 = subweapon 2; 08 = subweapon 3
+;$06A0       #03    Audio Channel Pitch Envelope Loop Start
+;$06A3       #03    Audio Channel Pitch Envelope ID
+;$06A6       #03    Audio Channel Pitch Envelope Position
+;$06A9       #03    Audio Channel Pitch Envelope Loop Count
+;$06AC       #03    Audio Channel Sustain State (80 = disabled)
+;$06AF       #03    Audio Channel Sustain Position (from 0 to 3)
+;$06B2       #03    Audio Channel Sustain Dampen
+;$06B5       #04    Audio BGM Square 1 Sustain Period Low Bytes
+;$06B9       #04    Audio BGM Square 2 Sustain Period Low Bytes
+;$06BD       #04    Audio BGM Square 1 Sustain Period High Bytes
+;$06C1       #04    Audio BGM Square 2 Sustain Period High Bytes
+;$06C8              Boss Scream Time (stops DPCM at f0)
+;$06C9              Music Paused
+;$06E0       #90    Collision Map
+;                             00 = empty; 01 = mud; 02 = convey right; 03 = convey left;
+;                             04 = fragile; 05 = ceiling spike; 06 = solid; 07 = floor spike;
+;                             08 = ice; 0c-0f = cracking
+;$0770       #08    CHR5 Solid Definitions
+;                             Byte 0 = empty; Byte 1 = mud; Byte 2 = convey right; Byte 3 = convey left;
+;                             Byte 4 = fragile; Byte 5 = ceiling spike; Byte 6 = solid; Byte 7 = floor spike
+;$0778       #08    CHR6 Solid Definitions 
+;$0780              Background Animation Frame
+;                   Entry Selector Column
+;                   Map Clipping
+;                             00 = To Grant; 01 = To Syfa; 02 = From Alucard
+;$0781              Background Animation Timer
+;                   Entry Selector Row
+;                   Map Fade-out Value
+;$0782       #40    Fog Parallax Positions
+;                             32 rows of parallax with 2 bytes per row:
+;                             Byte 0 = subpixel offset; Byte 1 = pixel offset
+;                   Previous Selector Column
+;                   Map Timer
+;                   Epilogue Partner
+;                   Sypha's Frozen Tile Column
+;$0783              Previous Selector Row
+;                   Map Horizontal Speed Subpixel
+;                   Epilogue State
+;                   Sypha's Frozen Tile Row
+;$0784              Name Cursor Position
+;                   Map Horizontal Speed
+;                   Castle Shake Direction
+;                   Leftmost Frozen Tile Column
+;$0785              Map Vertical Speed Subpixel
+;                   Epilogue Text Page
+;                   Leftmost Frozen Tile Row
+;$0786              Password Icon
+;                   Map Vertical Speed
+;                   Rightmost Frozen Tile Column
+;$0787              Previous Password Icon
+;                   Map Scroll Timer
+;                   Rightmost Frozen Tile Row
+;$0788       #02    Password Decryption Dump
+;                   Map X-coordinate Subpixel
+;                   Epilogue Scroll Timer
+;                   Water Freeze Counter
+;$0789              Map Y-coordinate Subpixel
+;                   Frozen Water Room Type
+;$078A              Epilogue Timer
+;                   Map Path PPU Scroll
+;$078B              Map Path PPU Control
+;                   Password Errors (used for debugging)
+;$078C       #02    Map Path PPU Address
+;                   Update Selector
+;$0790       #10    Entered Password
+;                             00 = empty; 01 = whip; 02 = cross; 03 = heart
+;            #10    Boss Stun Timer
+;                   Map Screen Platform
+;                             00 = full; 01 = short west; 02 = bottom east;
+;                             03 = top west; 04 = middle west; 05 = bottom west
+;$07A0       #0a    Generated Password
+;$07B1       #02    Stacked Breakable Wall
+;$07B3       #02    Lower Block Broken
+;$07B5       #02    Upper Block Broken
+;$07B7       #02    Wall ID (points to $00F4,X)
+;$07C2       #06    Spawner Type
+;$07C8       #06    Spawner State
+;$07CE       #06    Spawner Timer
+;$07D4       #06    Spawner Y-Coordinate
+;$07DA       #06    Spawner x-Coordinate
+;$07E0       #06    Spawner Offscreen
+;$07E6       #06    Spawner NPC Object
+;$07EC       #06    Bone Dragon King Frames (two ribs per byte)
+;                   Cyclops Lightning State
+;                   Bone Dragon Cycle
+;                   Giant Bat Leader
+;                   Dracula Phase
+;                             00 = Dracula; 01 = demon; 02 = Pazuzu
+;$07ED              Stage Clear State
+;                   Bone Dragon Mirrored
+;                   Collapsing Bridge Length
+;                   Giant Bat State
+;$07EE              Bone Dragon Fireball Timer
+;                   Death Scythe Count
+;$07EF              Bone Dragon Attacking
+;$07F3              Boss Battle State
+;                             00 = boss fight; 01 = boss defeat; 02 = crystal drop;
+;                             03 = battle over; 80 = boss waiting
+;                   Victory Delay (timer after battle over)
+;$07F6              Hard Mode
+;$07F8       #08    Player Name

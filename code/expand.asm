@@ -80,7 +80,7 @@ org $e0df
 		rts
 
 
-bank $1e
+bank $1e					; to do rewrite the loader make offload code to new bank like in CV1 practice hack.. 
 base $c000
 org $dd00
 	initSRAM:			

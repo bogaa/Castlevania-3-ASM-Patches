@@ -1,3 +1,123 @@
+; infos http://gmvania.blogspot.com/2012/08/bookmark-this-blog-entry-last-update.html
+
+; #00  Unused address used by diverted spawners
+;  #01  Zombie (slow rate) normal zombie
+;  #02  Zombie (from ground)
+;  #03  Medusa Head (one)
+;  #04  Winged Demon (one)
+;  #05  Skull Knight (Boss)
+;  #06  Cyclops (Boss)
+;  #07  Grant (Boss)
+;  #08  Lightning (bolts) first visual effect
+;  #09  Lightning (Sypha) cinematic visual effect
+;  #0A  Lightning (clouds) boss fight visual effect
+;  #0B  Hunchback
+;  #0C  Bats (flying)[1]
+;  #0D  Bats (asleep)
+;  #0E  Bone Pillar (3-shot)[1]
+;  #0F  Axe Knight
+;  #10  Crow (flying low)
+;  #11  Skeleton (sword)[1]
+;  #12  Fishmen (jumping) bridge variety
+;  #13  Skeleton (whip,red)
+;  #14  Floating Eye
+;  #15  Slime Ball
+;  #16  Skeleton (bones)
+;  #17  Skeleton (whip,blue)
+;  #18  Ghost (no flicker)
+;  #19  Skeleton (red)
+;  #1A  Mummies[1]
+;  #1B  Giant Bat (Boss)
+;  #1C  Alucard (Boss)
+;  #1D  Bone Dragon King (Boss)
+;  #1E  Medusa (Boss)
+;  #1F  Water Dragons (Boss)
+;  #20  Mummies + Cyclops (Boss)
+;  #21  Frankenstein's Monster (Boss)
+;  #22  UNUSED BOSS (no object, spawner position #2A)
+;  #23  Grim Reaper (Boss)
+;  #24  Doppelganger (Boss)
+;  #25  Mummy + Cyclops + Leviathan (Boss)
+;  #26  Dracula (Boss)
+;  #27  Crow (flying high)
+;  #28  Headless Pirate a.k.a. Dhuron
+;  #29  Spider
+;  #2A  Bone Pillar (2-shot)
+;  #2B  Bats (flying)[2] *unused in CV3j*
+;  #2C  Fuzz Buster[1] *unused in CV3j*
+;  #2D  Spore (floating)
+;  #2E  Spore
+;  #2F  Trap Door *unused*
+;  #30  Trap Door (spikes) *unused*
+;  #31  Gear Tooth *unused*
+;  #32  Skeleton (blue)
+;  #33  Pendulum *unused*
+;  #34  Falling Spikes[1] *unused*
+;  #35  Falling Spikes[2] *unused*
+;  #36  Water Current (4 blocks)
+;  #37  Falling Blocks *unused*
+;  #38  Acid Drops *unused*
+;  #39  Water Current (2 blocks)[1]
+;  #3A  Zombie (fast rate)[1]
+;  #3B  Mudmen
+;  #3C  Frog
+;  #3D  Fishmen (swimming) aqueduct variety
+;  #3E  Fishmen (swim+jump) deep water variety
+;  #3F  Fire Man
+;  #40  Knight
+;  #41  Bone Pillar (3-shot)[2]
+;  #42  Auto-Walk (forest)
+;  #43  Bone Dragon
+;  #44  Owl
+;  #45  Fuzz Buster[2]
+;  #46  Harpy
+;  #47  Bats Flying[3]
+;  #48  Medusa Heads (two)[1]
+;  #49  Skeleton (sword)[2]
+;  #4A  Medusa Heads (two)[2]
+;  #4B  Ghost (w/flicker)
+;  #4C  Auto-Walk (caves)
+;  #4D  Water Current (6 blocks)
+;  #4E  Water Current (2 blocks)[2]
+;  #4F  Zombie (fast rate)[2]
+;  #50  Mummies[2]
+;  #51  Flood Controller
+;  #52  Winged Demon (two) *CV3u only*
+
+
+
+;	$83 Axe
+;    $84 Cross
+;    $85 Dagger
+;    $86 Holy Water
+;    $87 Stopwatch
+;    $88 Sypha's fire
+;    $89 Sypha's ice
+;    $8A Sypha's water
+;    $8B Grant's Dagger
+;    $8C Grant's Axe
+;    $8D Upgrade 1 (upgrades whip to 1)
+;    $8E Upgrade 2 (upgrades whip to 2)
+;    $8F Nothing? (looks like whip upgrade but no effect)
+;    $90 Mystery Meat
+;    $91 Invincibility Potion (duration = $B4)
+;    $92 Rosary
+;    $93 100 Point Bag
+;    $94 200 Point Bag
+;    $95 400 Point Bag
+;    $96 700 Point Bag
+;    $97 1 k Point Bag
+;    $98 2 k Point Bag
+;    $99 4 k Point Bag
+;    $9A 7 k Point Bag
+;    $9B 10G Point Bag
+;    $9C 1UP
+;    $9D Big Heart
+;    $9E Small Heart
+;    $9F 2x Multiplier
+;    $A0 3x Multiplier
+;    $A1 Fake Candle (can be useful glitch)
+
 
 
 

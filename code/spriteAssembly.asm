@@ -2,24 +2,24 @@ bank $1a 			; ROM 34000
 base $8000
 org $823e 
 
-oamSpecData:
-	.dw data_1a_025c
-	.dw data_1a_02cc
-	.dw data_1a_0324
-	.dw data_1a_0378
-	.dw data_1a_0be9
-	.dw data_1a_16a2
-	.dw data_1b_0be7
-	.dw data_1b_0d53
-	.dw data_1a_1fd6
-	.dw data_1a_0ce9
-	.dw data_1b_0ce7
-	.dw data_1a_025c
+oamSpecData:		
+	.dw data_1a_025c	; trevor ??
+	.dw data_1a_02cc	; sympha ??
+	.dw data_1a_0324	; grant  ?? 
+	.dw data_1a_0378	; alucard??
+	.dw enemyAssemTable00_1a_0be9	; enemy 
+	.dw bossAssembTable00_1a_16a2
+	.dw bossAssembTable00_1b_0be7
+	.dw data_1b_0d53	; door, platforms ..
+	.dw data_1a_1fd6	; candles items 
+	.dw data_1a_0ce9	; boss01 
+	.dw data_1b_0ce7	; enemy01 owls,...
+	.dw data_1a_025c	; intro??
 	.dw data_1a_02cc
 	.dw data_1a_0324
 	.dw data_1a_0378
 
-data_1a_025c:				; main enemy sprite assembly table ??
+data_1a_025c:				
 	.dw data_1a_03be
 	.dw data_1a_0402
 	.dw data_1a_0410
@@ -685,7 +685,7 @@ data_1a_0be0:
 	.db $02,$f0,$5e,$01,$fc,$f0,$5e,$41,$00
 
 
-data_1a_0be9:
+enemyAssemTable00_1a_0be9:					  ; enemie sprites 
 	.dw sprAssembZombie00_1a_0d7e
 	.dw sprAssembZombie00_1a_0d7e
 	.dw sprAssembZombie04_1a_0d8c
@@ -1427,7 +1427,7 @@ data_1a_1688:
 	.db $08,$e6,$ce,$01,$f0,$e1,$d0,$f8,$e1,$d2,$00,$e7,$d4,$08,$05,$d6,$f0,$01,$d8,$f8,$01,$da,$00,$05,$dc,$08
 
 
-data_1a_16a2:
+bossAssembTable00_1a_16a2:
 	.dw data_1a_1782
 	.dw data_1a_1782
 	.dw data_1a_17a9
@@ -2446,7 +2446,7 @@ data_1b_0bdf:
 	.db $02,$f0,$da,$41,$f8,$f1,$d8,$00
 
 
-data_1b_0be7:
+bossAssembTable00_1b_0be7:
 	.dw data_1b_0e99
 	.dw data_1b_0ea7
 	.dw data_1b_0ebb
@@ -3261,7 +3261,7 @@ org $EFB4
 	.dw data_1f_0fd2
 	.dw data_1f_0fd2
 
-data_1f_0fd2:			; format start, speed, leanth
+data_1f_0fd2:			; format start, speed, leanth		; player??
 	.db $02, $08, $08		; trevorWalk_1f_0fd2
 	.db $18, $08, $04
 	.db $1e, $08, $04
@@ -3279,11 +3279,11 @@ data_1f_0fd2:			; format start, speed, leanth
 	.db $66, $08, $06
 	.db $6c, $08, $04 
 
-data_1f_1002:
-	.db $02, $0a, $04
-	.db $04, $0a, $04
-	.db $08, $08, $02
-	.db $0a, $08, $02
+data_1f_1002:			
+	.db $02, $0a, $04	
+	.db $04, $0a, $04	
+	.db $08, $08, $02	
+	.db $0a, $08, $02	
 	.db $0c, $08, $02
 	.db $0e, $08, $02
 	.db $10, $08, $02
@@ -3343,7 +3343,7 @@ data_1f_1002:
 	.db $fe, $08, $02
 
 
-data_1f_10b9:
+data_1f_10b9:			; boss??
 	.db $02, $10, $04
 	.db $0a, $08, $08
 	.db $1a, $0a, $04
@@ -3385,7 +3385,7 @@ data_1f_10b9:
 	.db $92, $14, $04
 	.db $7e, $0a, $04 
 
-data_1f_1131:
+data_1f_1131:				; items??
 	.db $1A, $08, $06 
 	.db $20, $14, $04 
 	.db $24, $0C, $04 
@@ -3401,14 +3401,14 @@ data_1f_1131:
 	.db $7A, $0A, $04 
 
 data_1f_1158:
-	.db $02, $08, $06 
-	.db $0A, $04, $02 
-	.db $0C, $18, $02 
-	.db $0E, $18, $02 
-	.db $10, $08, $02 
-	.db $12, $08, $06 
-	.db $18, $10, $08 
-	.db $18, $08, $08 
+	.db $02, $08, $06 		; enemy ??
+	.db $0A, $04, $02 		
+	.db $0C, $18, $02 		
+	.db $0E, $18, $02       ; zombie walk??
+	.db $10, $08, $02       ; zomgie Appear??
+	.db $12, $08, $06 		; bird??					
+	.db $18, $10, $08 		; birdsit??
+	.db $18, $08, $08 		; ghost??
 	.db $20, $10, $02 
 	.db $22, $10, $02 
 	.db $26, $08, $02 
