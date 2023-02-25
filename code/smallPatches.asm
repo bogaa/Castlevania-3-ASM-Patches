@@ -155,6 +155,34 @@ org $bec0
 		LDA $3B                  
 		EOR #$01                 
 		rts
+;    switchCharacter:
+;        lda $3a
+;        cmp #$ff
+;        bne +
+;        lda #$01
+;    +
+;        sta $39
+;        
+;        inc $3a
+;        lda $3a
+;        cmp #$04
+;        bne +
+;        lda #$00
+;        sta $3a
+;    +
+;        lda $3b
+;        ora #$01
+;        sta $3b
+;
+;        lda #$99
+;        sta $84
+;        
+;        lda #$15
+;        jsr $e25f
+;        rts
+
+
+
 
 bank $00
 org $8af1
@@ -400,7 +428,14 @@ endif
 
 if experiment			
 		checkRamPage:
-			lda wInGameSubstate  ; 2a 
+			lda $f8
+			and #$40
+			beq +
+			
+;			lda #$23
+;			jsr playSound
+			
+		+	lda wInGameSubstate  ; 2a 
 			
 			lda OAMDMA
 			lda NAMETABLE_MAPPING
@@ -453,7 +488,7 @@ if experiment
 			lda #$0000
 			sta $7000			; table 
 			sta $7002			; CHR 
-		
+					
 		+	lda wJoy1NewButtonsPressed2			; change CHR 
 			and #$08
 			beq +

@@ -1,3 +1,4 @@
+																																				
 bank $16
 base $8000
 org $8000
@@ -8740,121 +8741,121 @@ org $be4f
 ;
 org $bea1
 	entityScriptsAddresses:
-	.dw entityScripts_stub				; #00  Unused address used by diverted spawners
-	.dw entityScripts_01                ;  #01  Zombie (slow rate) normal zombie
-	.dw entityScripts_02                ;  #02  Zombie (from ground)
-	.dw entityScripts_03                ;  #03  Medusa Head (one)
-	.dw entityScripts_04                ;  #04  Winged Demon (one)
-	.dw entityScripts_05                ;  #05  Skull Knight (Boss)
-	.dw entityScripts_06                ;  #06  Cyclops (Boss)
-	.dw entityScripts_07                ;  #07  Grant (Boss)
-	.dw entityScripts_08                ;  #08  Lightning (bolts) first visual effect
-	.dw entityScripts_09                ;  #09  Lightning (Sypha) cinematic visual effect
-	.dw entityScripts_0a                ;  #0A  Lightning (clouds) boss fight visual effect
-	.dw entityScripts_0b                ;  #0B  Hunchback
-	.dw entityScripts_0c                ;  #0C  Bats (flying)[1]
-	.dw entityScripts_0d                ;  #0D  Bats (asleep)
-	.dw entityScripts_0e                ;  #0E  Bone Pillar (3-shot)[1]
-	.dw entityScripts_0f                ;  #0F  Axe Knight
-	.dw entityScripts_10                ;  #10  Crow (flying low)
-	.dw entityScripts_11                ;  #11  Skeleton (sword)[1]
-	.dw entityScripts_12                ;  #12  Fishmen (jumping) bridge variety
-	.dw entityScripts_13                ;  #13  Skeleton (whip,red)
-	.dw entityScripts_14                ;  #14  Floating Eye
-	.dw entityScripts_stub              ;  #15  Slime Ball
-	.dw entityScripts_16                ;  #16  Skeleton (bones)
-	.dw entityScripts_17                ;  #17  Skeleton (whip,blue)
-	.dw entityScripts_18                ;  #18  Ghost (no flicker)
-	.dw entityScripts_19                ;  #19  Skeleton (red)
-	.dw entityScripts_1a                ;  #1A  Mummies[1]
-	.dw entityScripts_1b                ;  #1B  Giant Bat (Boss)
-	.dw entityScripts_1c                ;  #1C  Alucard (Boss)
-	.dw entityScripts_1d                ;  #1D  Bone Dragon King (Boss)
-	.dw entityScripts_1e                ;  #1E  Medusa (Boss)
-	.dw entityScripts_stub              ;  #1F  Water Dragons (Boss)
-	.dw entityScripts_20                ;  #20  Mummies + Cyclops (Boss)
-	.dw entityScripts_21                ;  #21  Frankenstein's Monster (Boss)
-	.dw entityScripts_22                ;  #22  UNUSED BOSS (no object, spawner position #2A)
-	.dw entityScripts_23                ;  #23  Grim Reaper (Boss)
-	.dw entityScripts_24                ;  #24  Doppelganger (Boss)
-	.dw entityScripts_25                ;  #25  Mummy + Cyclops + Leviathan (Boss)
-	.dw entityScripts_26                ;  #26  Dracula (Boss)
-	.dw entityScripts_27                ;  #27  Crow (flying high)
-	.dw entityScripts_28                ;  #28  Headless Pirate a.k.a. Dhuron
-	.dw entityScripts_29                ;  #29  Spider
-	.dw entityScripts_2a                ;  #2A  Bone Pillar (2-shot)
-	.dw entityScripts_2b                ;  #2B  Bats (flying)[2] *unused in CV3j*
-	.dw entityScripts_2c                ;  #2C  Fuzz Buster[1] *unused in CV3j*
-	.dw entityScripts_2d                ;  #2D  Spore (floating)
-	.dw entityScripts_2e                ;  #2E  Spore
-	.dw entityScripts_2f                ;  #2F  Trap Door *unused*
-	.dw entityScripts_30                ;  #30  Trap Door (spikes) *unused*
-	.dw entityScripts_31                ;  #31  Gear Tooth *unused*
-	.dw entityScripts_32                ;  #32  Skeleton (blue)
-	.dw entityScripts_33                ;  #33  Pendulum *unused*
-	.dw entityScripts_34                ;  #34  Falling Spikes[1] *unused*
-	.dw entityScripts_35                ;  #35  Falling Spikes[2] *unused*
-	.dw entityScripts_36                ;  #36  Water Current (4 blocks)
-	.dw entityScripts_37                ;  #37  Falling Blocks *unused*
-	.dw entityScripts_38                ;  #38  Acid Drops *unused*
-	.dw entityScripts_39                ;  #39  Water Current (2 blocks)[1]
-	.dw entityScripts_3a                ;  #3A  Zombie (fast rate)[1]
-	.dw entityScripts_3b                ;  #3B  Mudmen
-	.dw entityScripts_3c                ;  #3C  Frog
-	.dw entityScripts_3d                ;  #3D  Fishmen (swimming) aqueduct variety
-	.dw entityScripts_3e                ;  #3E  Fishmen (swim+jump) deep water variety
-	.dw entityScripts_3f                ;  #3F  Fire Man
-	.dw entityScripts_40                ;  #40  Knight
-	.dw entityScripts_41                ;  #41  Bone Pillar (3-shot)[2]
-	.dw entityScripts_42                ;  #42  Auto-Walk (forest)
-	.dw entityScripts_43                ;  #43  Bone Dragon
-	.dw entityScripts_44                ;  #44  Owl
-	.dw entityScripts_45                ;  #45  Fuzz Buster[2]
-	.dw entityScripts_46                ;  #46  Harpy
-	.dw entityScripts_47                ;  #47  Bats Flying[3]
-	.dw entityScripts_48                ;  #48  Medusa Heads (two)[1]
-	.dw entityScripts_49                ;  #49  Skeleton (sword)[2]
-	.dw entityScripts_4a                ;  #4A  Medusa Heads (two)[2]
-	.dw entityScripts_4b                ;  #4B  Ghost (w/flicker)
-	.dw entityScripts_4c                ;  #4C  Auto-Walk (caves)
-	.dw entityScripts_4d                ;  #4D  Water Current (6 blocks)
-	.dw entityScripts_4e                ;  #4E  Water Current (2 blocks)[2]
-	.dw entityScripts_4f                ;  #4F  Zombie (fast rate)[2]
-	.dw entityScripts_50                ;  #50  Mummies[2]
-	.dw entityScripts_51                ;  #51  Flood Controller
-	.dw entityScripts_52                ;  #52  Winged Demon (two) *CV3u only*
+	.dw entityScripts_stub				
+	.dw entityScripts_01                
+	.dw entityScripts_02                
+	.dw entityScripts_03                
+	.dw entityScripts_04                
+	.dw entityScripts_05                
+	.dw entityScripts_06                
+	.dw entityScripts_07                
+	.dw entityScripts_08                
+	.dw entityScripts_09                
+	.dw entityScripts_0a                
+	.dw entityScripts_0b                
+	.dw entityScripts_0c                
+	.dw entityScripts_0d                
+	.dw entityScripts_0e                
+	.dw entityScripts_0f                
+	.dw entityScripts_10                
+	.dw entityScripts_11                
+	.dw entityScripts_12                
+	.dw entityScripts_13                
+	.dw entityScripts_14                
+	.dw entityScripts_stub              
+	.dw entityScripts_16                
+	.dw entityScripts_17                
+	.dw entityScripts_18                
+	.dw entityScripts_19                
+	.dw entityScripts_1a                
+	.dw entityScripts_1b                
+	.dw entityScripts_1c                
+	.dw entityScripts_1d                
+	.dw entityScripts_1e                
+	.dw entityScripts_stub              
+	.dw entityScripts_20                
+	.dw entityScripts_21                
+	.dw entityScripts_22                
+	.dw entityScripts_23                
+	.dw entityScripts_24                
+	.dw entityScripts_25                
+	.dw entityScripts_26                
+	.dw entityScripts_27                
+	.dw entityScripts_28                
+	.dw entityScripts_29                
+	.dw entityScripts_2a                
+	.dw entityScripts_2b                
+	.dw entityScripts_2c                
+	.dw entityScripts_2d                
+	.dw entityScripts_2e                
+	.dw entityScripts_2f                
+	.dw entityScripts_30                
+	.dw entityScripts_31                
+	.dw entityScripts_32                
+	.dw entityScripts_33                
+	.dw entityScripts_34                
+	.dw entityScripts_35                
+	.dw entityScripts_36                
+	.dw entityScripts_37                
+	.dw entityScripts_38                
+	.dw entityScripts_39                
+	.dw entityScripts_3a                
+	.dw entityScripts_3b                
+	.dw entityScripts_3c                
+	.dw entityScripts_3d                
+	.dw entityScripts_3e                
+	.dw entityScripts_3f                
+	.dw entityScripts_40                
+	.dw entityScripts_41                
+	.dw entityScripts_42                
+	.dw entityScripts_43                
+	.dw entityScripts_44                
+	.dw entityScripts_45                
+	.dw entityScripts_46                
+	.dw entityScripts_47                
+	.dw entityScripts_48                
+	.dw entityScripts_49                
+	.dw entityScripts_4a                
+	.dw entityScripts_4b                
+	.dw entityScripts_4c                
+	.dw entityScripts_4d                
+	.dw entityScripts_4e                
+	.dw entityScripts_4f                
+	.dw entityScripts_50                
+	.dw entityScripts_51                
+	.dw entityScripts_52                
 	.dw entityScripts_53				
-	.dw entityScripts_stub				;	$83 Axe
-	.dw entityScripts_stub              ;    $84 Cross
-	.dw entityScripts_stub              ;    $85 Dagger
-	.dw entityScripts_57                ;    $86 Holy Water
-	.dw entityScripts_58                ;    $87 Stopwatch
-	.dw entityScripts_59                ;    $88 Sypha's fire
-	.dw entityScripts_5a                ;    $89 Sypha's ice
-	.dw entityScripts_5b                ;    $8A Sypha's water
-	.dw entityScripts_5c                ;    $8B Grant's Dagger
-	.dw entityScripts_5d                ;    $8C Grant's Axe
-	.dw entityScripts_5e                ;    $8D Upgrade 1 (upgrades whip to 1)
-	.dw entityScripts_5f                ;    $8E Upgrade 2 (upgrades whip to 2)
-	.dw entityScripts_60                ;    $8F Nothing? (looks like whip upgrade but no effect)
-	.dw entityScripts_61                ;    $90 Mystery Meat
-	.dw entityScripts_62                ;    $91 Invincibility Potion (duration = $B4)
-	.dw entityScripts_63                ;    $92 Rosary
-	.dw entityScripts_64                ;    $93 100 Point Bag
-	.dw entityScripts_65                ;    $94 200 Point Bag
-	.dw entityScripts_66                ;    $95 400 Point Bag
-	.dw entityScripts_67                ;    $96 700 Point Bag
-	.dw entityScripts_68                ;    $97 1 k Point Bag
-	.dw entityScripts_69                ;    $98 2 k Point Bag
-	.dw entityScripts_6a                ;    $99 4 k Point Bag
-	.dw entityScripts_6b                ;    $9A 7 k Point Bag
-	.dw entityScripts_6c                ;    $9B 10G Point Bag
-	.dw entityScripts_6d                ;    $9C 1UP
-	.dw entityScripts_6e                ;    $9D Big Heart
-	.dw entityScripts_6f                ;    $9E Small Heart
-	.dw entityScripts_70                ;    $9F 2x Multiplier
-	.dw entityScripts_71                ;    $A0 3x Multiplier
-	.dw entityScripts_72                ;    $A1 Fake Candle (can be useful glitch)
+	.dw entityScripts_stub				
+	.dw entityScripts_stub              
+	.dw entityScripts_stub              
+	.dw entityScripts_57                
+	.dw entityScripts_58                
+	.dw entityScripts_59                
+	.dw entityScripts_5a                
+	.dw entityScripts_5b                
+	.dw entityScripts_5c                
+	.dw entityScripts_5d                
+	.dw entityScripts_5e                
+	.dw entityScripts_5f                
+	.dw entityScripts_60                
+	.dw entityScripts_61                
+	.dw entityScripts_62                
+	.dw entityScripts_63                
+	.dw entityScripts_64                
+	.dw entityScripts_65                
+	.dw entityScripts_66                
+	.dw entityScripts_67                
+	.dw entityScripts_68                
+	.dw entityScripts_69                
+	.dw entityScripts_6a                
+	.dw entityScripts_6b                
+	.dw entityScripts_6c                
+	.dw entityScripts_6d                
+	.dw entityScripts_6e                
+	.dw entityScripts_6f                
+	.dw entityScripts_70                
+	.dw entityScripts_71                
+	.dw entityScripts_72                
 
 
 ; Scripts_00, Scripts_15, Scripts_1f

@@ -36,35 +36,35 @@ print "seed: {format:04x:seed}"
 ; ---------------------------------------------------
 ; feature are explained in readme.txt! --------------
 
-enableROM_Mods = 0			; this is useful to disable if you do not want any code to be patched. Usefull to add vanilla tables and check if there are not any errors.
+enableROM_Mods = 1			; this is useful to disable if you do not want any code to be patched. Usefull to add vanilla tables and check if there are not any errors.
 
-expand = 0					
+expand = 1					
 	if expand				
 		addSRAM = 1
 		expandCHR = 1		
 		expandPRG = 1		
 		incsrc code/expand.asm
 		 
-		levelSelect = 0		; Mods needs SRAM! Or Expansion.
-		cheats = 0			;
-		airControl = 0		;	
+		levelSelect = 1		; Mods needs SRAM! Or Expansion.
+		cheats = 1			;
+		airControl = 1		;	
 	endif
 
-fastLunch = 0				; cheats to test the game faster. 
-allCharacters = 0			;								  
-fastCharacterSwap = 0		;
+fastLunch = 1				; cheats to test the game faster. 
+allCharacters = 1			;								  
+fastCharacterSwap = 1		;
 
-chrAnimations = 0			; expands to have more of them avalible 
+chrAnimations = 1			; expands to have more of them avalible 
 
-subWeaponDrop = 0			; made by SpiderDave
+subWeaponDrop = 1			; made by SpiderDave
 
-fastDoor = 0
+fastDoor = 1
 
 ; ---------------------------------------------------
 ; experimental features
 extraBGpalette4Character = 0	; non functional or buggy
 mapExpand = 0					;
-experiment = 1					;	
+experiment = 0					;	
 
 
 ; ----------------------------------------------------
@@ -88,6 +88,7 @@ incsrc code/spriteAssembly.asm
 
 incsrc code/misc.asm			; this is a revamp lable. About the breakable walls and special events that go into levels. 
 
+incsrc code/entitySpawning.asm
 incsrc code/entity.asm 			; editing enemy AI 
 
 ;textmap 0...9 d0	;TextMapMainGame
