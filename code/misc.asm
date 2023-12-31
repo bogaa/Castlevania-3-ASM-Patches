@@ -335,7 +335,7 @@ dw miscData3f               ; $A5A3
 dw miscData40               ; $A642
 dw miscData41               ; $A6E0
 dw miscData42               ; $A4A6
-
+;dw miscData43
 
 ; format: 
 ; screen, 	Xpos,	??, 	ID, 	Ypos??, 	quantity,	??,		??
@@ -561,7 +561,8 @@ miscData41:
 db $00, $80, $08, $08, $30, $08, $00, $00, $FF
 
 org $bed0			; freeSpace
-
+;miscData43:
+;db $00, $80, $08, $08, $30, $08, $00, $00, $FF
 
 
 

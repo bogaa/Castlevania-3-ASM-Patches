@@ -274,6 +274,10 @@ base $6000					; This section goes to SRAM when start or reset
 		jsr checkRamPage
 		endif 
 
+		if CHRparallex
+		jsr newParalexScroll
+		endif
+
 		if expandPRG
 		lda $21 
 		jsr prgBankSwitch
@@ -292,13 +296,14 @@ base $6000					; This section goes to SRAM when start or reset
 		jsr levelSelectDebuggScreen
 		endif
 
+
 		if cheats		
 		jsr backupRestorePlayerState	; check if you like to copy stats to practice faster		
 		jsr getItemWhiteAB
 		endif			
 		
 		if expandPRG
-		lda #$a0
+		lda #$21
 		jsr prgBankSwitch
 		endif
 
@@ -398,6 +403,30 @@ endif
 			rts 
 	endif	
 	
+	if CHRparallex
+		newParalexScroll:
+			lda $7d					; read ram effect table
+			cmp #$1f				
+			bne +
+			
+			lda $56					; read loScrollOffset
+			lsr						; make it a max 16 bamls 
+			lsr
+			lsr
+			lsr 
+			tax
+			lda animParlX,x 		; read current offset and store to bank update table 
+			sta $4b 
+			
+		+	rts 
+	
+		animParlX:
+			db $54,$55,$56,$54
+			db $55,$56,$54,$55
+			db $56,$54,$55,$56
+			db $54,$55,$56,$54       
+	
+	endif 
 
 		updateSpritesMulti:
 			tax
