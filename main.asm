@@ -42,12 +42,12 @@ expand = 1
 	if expand				
 		addSRAM = 1
 		expandCHR = 0		
-		expandPRG = 0		
+		expandPRG = 1		
 		incsrc code/expand.asm
 		 
-		levelSelect = 1		; Mods needs SRAM! Or Expansion.
+		levelSelect = 0		; Mods needs SRAM! Or Expansion.
 		cheats = 0			;
-		airControl = 1		;	
+		airControl = 0		;	
 	endif
 
 fastLunch = 0				; cheats to test the game faster. 
@@ -56,11 +56,11 @@ fastCharacterSwap = 0		;
 
 chrAnimations = 0			; expands to have more of them avalible 
 
-CHRparallex = 1
+CHRparallex = 0
 
-subWeaponDrop = 1			; made by SpiderDave
+subWeaponDrop = 0			; made by SpiderDave
 
-fastDoor = 1
+fastDoor = 0
 
 ; ---------------------------------------------------
 ; experimental features
@@ -98,10 +98,14 @@ incsrc code/entity.asm 			; editing enemy AI
 ; to do: text, progression table, 
 
 
+
 if extraBGpalette4Character
 incsrc  code/xperimentalPatches/extraPalette.asm
 endif 
 
+if expandPRG
+incsrc code/screens.asm 
+endif 
 
 listFile {listFilename}
 outputFile {outputFilename}

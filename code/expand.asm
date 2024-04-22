@@ -1,9 +1,6 @@
 if expandPRG
-;prgbanks 64			; there is probably a better way to write header changes but could not find out.. 	
-bank $00
-base $8000
-org $8000-16 + 4
-		db $20
+prgbanks = 32	
+inesprg prgbanks   ; write header PRG 
 
 bank $1d
 base $8000
@@ -14,11 +11,8 @@ endif
 ;-------------------------------------------------------------------------------
 
 if expandCHR
-;chrbanks 32		  	; there is probably a better way to write header changes but could not find out.. 	
-bank $00
-base $8000
-org $8000-16 + 5
-		db $20
+chrbanks = 32
+ineschr chrbanks
 
 bank $30				; 48 banks in total this is a hacky way as I could not figure chrbank directives.. 
 if expandPRG
@@ -32,13 +26,13 @@ endif
 ;-------------------------------------------------------------------------------
 
 if addSRAM
+inesbattery 		; write 2 header 
 print "sRAM"		; we always use SRAM
+
 	sramCode = $6000	; define unused code blocks
 	sramCode2 = $6100
 
-bank -1
-org $8000-16 + 6
-		db $52
+
 
 ;----------- initiate and prepare SRAM codeblock --------------------------------------------------------------------
 bank $1f
