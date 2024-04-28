@@ -10,14 +10,15 @@ Some features may be incomplete, have bugs, or change.
 ## Command line ##
 
 Usage:
-    py sdasm.py [-h] [-l <file>] [-bin <file>] [-cfg <file>] [-fulltb]
-                [-d <symbol>] [-q] [-symbols <file>]
-                sourcefile [outputfile]
+    py sdasm.py <asm file>
+    
+Currently, creates output.txt and output.bin.
+
 
 ## Features ##
 * Supports all (official) 6502 opcodes
 * Anonymous labels, local labels
-* macros, functions
+* macros
 
 # Syntax #
 
@@ -25,11 +26,11 @@ Configuration:
     After running once, a config.ini will be generated.  Some syntax may be changed with configuration.
 
 Opcodes:
-    Standard 6502 ocodes are supported.
+    Standard 6502 ocodes are supported.  Opcodes are case-insensitive.
 
 Comments:
-    Comments start with ";" or "//", and can also be used at the end of a line.
-    Block-level comments are enclosed in "/*" "*/".
+    Comments start with a semicolon or "//", and can also be used at the end of a line.
+    Block-level comments are enclosed in "/*" "*/" and may be nested.
     
 ```
     ; This is a comment
@@ -38,12 +39,6 @@ Comments:
         This is a block level comment
     */
 ```
-
-Line Continuation:
-    A \ at the end of a line may be used as a line continuation.  Whitespace
-    after the character will be ignored.
-    
-    A , may also be used, but will preserve the , character.
 
 ## Labels ##
     Labels may end in a colon.  Code can be placed on the same line as labels.
@@ -85,22 +80,12 @@ Line Continuation:
     sta $4002
 ```
 
-    Symbols and expressions enclosed in {} can be used to insert them
-    anywhere, even in text.
+    Symbols enclosed in {} can be used to insert them anywhere.
+    {:expression} can be used to insert an expression anywhere.
     
 ```
     file = foobar
-    include "{file}.asm"
-```
-
-## Lists ##
-    Lists can be used in most places.  List indexes start with 0.
-
-```
-    list = [1,2,3]          ; Create a list
-    list = 1,2,3            ; Create a list
-    list[2]                 ; Set the value of a list item.
-    list = {concat:list, 5} ; Add an item to the end of list
+    include {file}.asm
 ```
 
 ## Filters ##
@@ -111,17 +96,14 @@ Line Continuation:
         Shuffle a list of bytes.
     
 ```
-    db {shuffle:$00, $01, $02, $03, $04}    ; outputs 5 bytes in random order
-    
-    a = 1,2,3,4,5                           ; Create list
-    a = {shuffle:a}                         ; Shuffle list
+    db {shuffle:$00, $01, $02, $03, $04} ; outputs 5 bytes in random order
 ```
     
     choose
         Choose a random item from a list.
     
 ```
-    db {choose:$01, $02, $03} ; outputs either $01, $02 or $03
+    db {choose:$00, $01, $02} ; outputs either $01, $02 or $03
 ```
     
     random
@@ -157,34 +139,17 @@ Line Continuation:
 ```
     
     format
-        Format to a string
+        format to a string
     
 ```
     print {$04x:99} ; prints $0063.
 ```
     
     textmap
-        Apply textmap to a string
+        apply textmap to a string
     
 ```
     db {textmap:"HELLO"} ; Works the same as text "HELLO"
-```
-    
-    astext
-        Force value to format value as text.  Useful if you have a symbol displaying as an array.
-    
-```
-    test = "hello"
-    print test          ; prints "test"
-    print {test}        ; prints "[104, 101, 108, 108, 111]"
-    print {astext:test} ; prints "hello"
-```
-    
-    concat
-        Concatenate data.
-    
-```
-    print {concat:"foo","bar",0}    ; prints "102,111,111,98,97,114,0"
 ```
     
 ## Special Symbols ##
@@ -321,15 +286,6 @@ pad / fillto
     pad $FFFA, $ea
 ```
 
-fill
-    
-    Fill memory with specified number of bytes.  A fill value may also be specified.
-    
-```
-    fill $20        ; output $20 bytes using current fillvalue
-    fill $20, $ff   ; output $20 bytes using $ff
-```
-
 align
     
     Fill memory from the current address to specified byte boundary.  A fill
@@ -372,55 +328,12 @@ chr
     chr 0   ; Start of chr area
 ```
 
-loadld65cfg
-    
-    load a ld65 configuration file.
-
-```
-    loadld65cfg "file.cfg"    ; load and parse "file.cfg"
-    loadld65cfg               ; use default filename "ld65.cfg"
-```
-
-segment
-    
-    Set the current segment.  Requires loading a ld65 configuration file first.
-
-```
-    loadld65cfg         ; use default filename "ld65.cfg"
-    segment "VECTORS"   ; use defined segment "VECTORS"
-```
-
 fillvalue
 
     Change the default filler for pad, align, etc.
     
 ```
     fillvalue $ff
-```
-
-insert
-
-    Insert bytes at the current position.  A fill value may also be specified.
-    
-```
-    insert $10          ; Insert $10 bytes using current fill value
-    insert $10, $ff     ; Insert $10 bytes using $ff
-```
-
-delete
-
-    Delete bytes at the current position.
-    
-```
-    delete $10          ; Delete $10 bytes
-```
-
-truncate
-
-    Delete everything at or beyond current position.
-    
-```
-    truncate        ; The file ends here now.
 ```
 
 enum
@@ -511,9 +424,8 @@ includeall
 
 incbin / bin
     
-    Add a file to the assembly as raw data.  A start offset and size may be
-    specified, as well as a symbol to fill the data with instead of adding it
-    to the output.
+    Add a file to the assembly as raw data.  A start offset and size may also
+    be specified
     
 ```
     ; include whole file
@@ -521,10 +433,6 @@ incbin / bin
     
     ; include 32 bytes from file.dat starting at file offset 16.
     incbin "file.dat", $10, $20
-    
-    ; get 32 bytes from file.dat starting at file offset 16 and 
-    ; fill the symbol "foobar" with it.
-    incbin "file.dat", $10, $20, foobar
 ```
     
 incchr
@@ -540,60 +448,6 @@ incchr
     incchr "smbchr0.png"
     incchr "smbchr0.png", 5, 2  ; include image starting at coordinates 5,2
     incchr "smbchr0.png", 5, 2, 16, 1  ; include 16 columns and 1 row starting at coordinates 5,2
-```
-    
-start tilemap ... end tilemap
-    
-    Define a tilemap.  Before the main tilemap entries, you can define gridsize, chr, org, palette.
-    
-    gridsize = <size>
-    chr <chr page>
-    org <offset>
-    palette = <hexidecimal palette>
-    
-    Each main entry uses hexidecimal for each tile id, x, y, and then flags of 
-    either "h", "v", or "hv", to flip the tile horizontally, vertically, or both.
-    
-    Note: Syntax of this directive will likely change to something more consistant.
-    
-```
-    start tilemap Mario_select1
-        gridsize = 1
-        chr $0c
-        org $0
-        palette = 0f271601
-        00 00 00
-        01 00 08
-        00 08 00 h
-        01 08 08 h
-        02 00 10
-        03 00 18
-        02 08 10 h
-        03 08 18 h
-    end tilemap
-```
-    
-importmap
-exportmap
-    
-    Import image file data using a tilemap.  The tilemap may have its own chr bank, org, palette
-    set.  exportmap works the same but exports using a tilemap to an image file.
-    
-```
-    importmap "Mario_select1", "Mario_select1.png"            ; import using default coordinates (0,0)
-    importmap $00, $00, "Mario_select1", "Mario_select1.png"  ; import using set coordinates
-    exportmap "Mario_select1", "Mario_select1.png"            ; export using default coordinates (0,0)
-    exportmap $00, $00, "Mario_select1", "Mario_select1.png"  ; export using set coordinates
-```
-    
-assemble
-    
-    Assemble a file.  This is useful to assemble things in multiple stages, or to create a base
-    binary and include it conditionally, etc.  The output file, etc can't be specified here, but
-    the directives to do so are available from the file to assemble.
-    
-```
-    assemble "test2.asm"
 ```
     
 loadpalette
@@ -622,19 +476,6 @@ cleartable
     textmap clear   ; This does the same thing as above
 ```
     
-textmap
-    
-    Create a textmap.
-    
-```
-    textmap set title       ; Set current textmap to "title"
-    textmap clear           ; clear current textmap
-    textmap abcd 00010203   ; Map characters a,b,c,d to $00,$01,$02,$03
-    textmap 0...9 00        ; Map characters from 0 to 9 to tiles starting at $00
-    textmap A...Z 0a        ; Map characters A-Z to tiles starting at $0a
-    textmap space 24        ; Map a space to $24
-```
-    
 outputfile
     
     Set the output filename.
@@ -649,32 +490,6 @@ listfile
     
 ```
     outputfile "list.txt"
-```
-    
-export
-    
-    Export a symbol to a file.
-    
-```
-    ; Write the contents of foobar to foobar.dat
-    export foobar, "foobar.dat"
-```
-    
-diff
-    
-    Generate a diff between the current data and a file.
-    
-```
-    diff original.nes               ; display differences as asm data
-    diff original.nes, "data.asm"   ; output differences to data.asm
-```
-    
-ips
-    
-    Apply IPS patch.
-    
-```
-    ips "patch.ips"                 ; apply ips patch.
 ```
     
 print
@@ -720,25 +535,6 @@ endm / endmacro
             ;expands to lda #$12
             ;           ldx #$34
             ;           ldy #$56
-```
-
-function
-endf / endfunction
-
-    Define a function.  Function arguments are separated by commas.
-    Functions create a namespace with the function's name.
-
-```
-    function splitByte(a)
-        ; to access this symbol outside of this function
-        ; use splitByte.foo or change the namespace with
-        ; namespace splitByte
-        foo = 42 
-        return >a, <a
-    endfunction
-    
-    h,l = splitByte($42)
-
 ```
 
 if
@@ -840,24 +636,4 @@ endr / endrept
     rept 5
         print This is rept loop {reptindex}.
     endr
-```
-
-findtext
-
-    Search for text using the current textmap, starting at the current position.
-    If found, the resulting bank and address will be printed, and the symbols
-    "resultbank" and "resultaddress" will be filled.  If not found, the symbols
-    will be false.
-    
-```
-    lastpass        ; skip to final pass
-```
-
-lastpass
-
-    Skip to final pass.  This will likely cause issues, but can be useful if you
-    know the result will be ok.
-    
-```
-    lastpass        ; skip to final pass
 ```

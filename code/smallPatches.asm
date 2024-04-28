@@ -213,7 +213,6 @@ org $e2e6
 		STA $5115 
 		RTS
 
-; ----------------------------------------------------
 if fastLunch
 	org $e386
 		dw $e50a				; pointer replacement Prayer screen to game start 
@@ -238,9 +237,6 @@ if fastDoor
         lda #$28
 endif
 
-
-
-
 	org $f384
 	if addSRAM
 		jsr beforePause
@@ -256,13 +252,16 @@ endif
 	+	
 		RTS  
 	endif
+
+;if $ > $ffef
+;    error not enough space for custom code ({format:05x:$})
+;endif
 	
 ; ----------------------------------------------------	
 bank $1e
 base $c000	
 org $de00	
-base $6000					; This section goes to SRAM when start or reset
-
+base SRAM_Code				; This section goes to SRAM when start or reset
 	
 	beforePause:			; you can write any routine that should always run in game mode					
 		if expandPRG
@@ -298,7 +297,7 @@ base $6000					; This section goes to SRAM when start or reset
 
 
 		if cheats		
-		jsr backupRestorePlayerState	; check if you like to copy stats to practice faster		
+	;	jsr backupRestorePlayerState	; check if you like to copy stats to practice faster bugged since location is used!!
 		jsr getItemWhiteAB
 		endif			
 		
@@ -359,30 +358,30 @@ endif
 			rts 
 	
 		backupRestorePlayerState:
+			ldy #$0b
+			
 			lda $26
 			cmp #$02
 			beq copyPlayerStats
 			cmp #$01
 			beq savePlayerStates
 			rts
+		
 		copyPlayerStats:	
-			ldy #$0b
-		-
 			lda $84,y
-			sta $6200,y
+			sta SR_playerStateBackup,y
 			dey 
-			bne -
+			bne copyPlayerStats
 			lda $3b					; player ID used for upgrades resived
-			sta $6200
+			sta SR_playerStateBackup
 			rts
+		
 		savePlayerStates:
-			ldy #$0b
-		-
-			lda $6200,y
+			lda SR_playerStateBackup,y
 			sta $84,y
 			dey 
-			bne -
-			lda $6200
+			bne savePlayerStates
+			lda SR_playerStateBackup
 			sta $3b
 			rts	
 		endif	
@@ -487,10 +486,10 @@ if experiment
 			and #$40
 			beq +
 	
-			inc $7000
-			inc $7000
+			inc SR_temp00
+			inc SR_temp00
 			
-			lda $7000
+			lda SR_temp00
 			sta $418
 	
 			lda #$54							; fix XY pos 
@@ -501,27 +500,27 @@ if experiment
 		+	lda wJoy1NewButtonsPressed2			; $f8
 			and #$80
 			beq ++
-			inc $7001							; go next pointer
-			inc $7001
+			inc SR_temp01							; go next pointer
+			inc SR_temp01
 			
-			lda $7001		
+			lda SR_temp01		
 			cmp #$1e
 			bne +
 			lda #$00 
-			sta $7001
+			sta SR_temp01
 		+	sta $4a4
 			
 		++	lda wJoy1NewButtonsPressed2			; reset pointer 
 			and #$20
 			beq +
 			lda #$0000
-			sta $7000			; table 
-			sta $7002			; CHR 
+			sta SR_temp00			; table 
+			sta SR_temp02			; CHR 
 					
 		+	lda wJoy1NewButtonsPressed2			; change CHR 
 			and #$08
 			beq +
-			lda $7002
+			lda SR_temp02
 
 			sta CHR_BANK_0800
 			clc
@@ -537,18 +536,18 @@ if experiment
 ;			clc
 ;			adc #$02			
 			
-			sta $7002
+			sta SR_temp02
 			cmp #$37
 			bne +
 			lda #$08
-			sta $7002
+			sta SR_temp02
 		+	lda wJoy1NewButtonsPressed2		; change CHR 
 			and #$04
 			beq +
-			lda $7002
+			lda SR_temp02
 			sec
 			sbc #$02
-			sta $7002
+			sta SR_temp02
 			sta CHR_BANK_0800
 			clc
 			adc #$01

@@ -1,0 +1,1 @@
+busybox split -b 1024 chr.chr _.CHR

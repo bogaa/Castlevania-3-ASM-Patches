@@ -156,7 +156,7 @@ base $c000
 ;org $dc18			; orginal.. crash at boss..
 
 org $df00
-base $6100		 	; will go into SRAM    
+base SRAM_Code+256	
 	jumpStateAirMovement:
 		lda #$97
 		pha

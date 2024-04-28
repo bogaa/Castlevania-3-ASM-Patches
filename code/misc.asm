@@ -1,3 +1,24 @@
+bank 0				; stage 0 is never beside the clear e828 
+;1244 Check to send into next Stage (p1218) Format AA BB CC DD
+bank 1
+base $a000 
+org $A9A5
+	progressionPointerTable: 
+		dw goClockTower                     
+		dw goSymphaOrAlucard                
+		dw goCryptOrWater                   
+	goClockTower: 
+		db $01,$00,$00
+		db $00,$00,$00   ; ??     
+    goWoods: 
+		db $02,$00,$00                     
+    goSymphaOrAlucard: 
+		db $02,$03,$02
+		db $06,$00,$01        
+	goCryptOrWater: 
+		db $07,$06,$00
+		db $08,$00,$00          
+
 bank 5
 base $a000 
 org $a073 

@@ -29,11 +29,6 @@ if addSRAM
 inesbattery 		; write 2 header 
 print "sRAM"		; we always use SRAM
 
-	sramCode = $6000	; define unused code blocks
-	sramCode2 = $6100
-
-
-
 ;----------- initiate and prepare SRAM codeblock --------------------------------------------------------------------
 bank $1f
 if expandPRG
@@ -41,8 +36,6 @@ bank $3f
 endif
 base $e000
 org $e03a
-
-
 
 		JSR $E0DF 		; initMMC5Regs
 		JSR $E2DA  		; setBank_c000_toRom1eh   
@@ -83,29 +76,34 @@ org $dd00
 		
 		lda #$01			;enable write to RAM
 		sta $5103
-		
-		lda #$00
-		tay
-	loopClearSRAM			;clear the beginning of SRAM so it is clean to be used again	
-		sta $7000,y
-		dey
-		bne loopClearSRAM	
-		;	sta $5113			; Switch SRAM Page you could put extra code to different SRAM pages.. 
-
-	CopyToSRAM:
-		LDY #$00       		;Copy code block to SRAM. Run on startup          
+	
+	CopyToSRAM:			;	sta $5113 Switch SRAM Page
+		LDY #$00       	; 	Copy code block to SRAM. Run on startup          
 	CopyToSRAMLoop:
 		LDA CodeBlock,y              
-		STA $6000,y              
-		dey                      
-		BNE CopyToSRAMLoop      
-	CopyToSRAMLoop2:
+		STA SRAM_Code,y              
 		LDA CodeBlock2,y              
-		STA $6100,y              
-		dey                      
-		BNE CopyToSRAMLoop2 	
-	
-	
+		STA SRAM_Code+256,y     		
+		lda #$00
+		sta $6000,y		; initalize sRAM 
+		sta $6100,y
+		sta $6200,y
+		sta $6300,y
+		sta $6400,y
+		sta $6500,y
+		sta $6600,y
+		sta $6700,y
+		sta $6800,y
+		sta $6900,y
+		sta $6a00,y
+		sta $6b00,y
+		sta $6c00,y
+		sta $6d00,y
+		sta $6e00,y
+		sta $6f00,y
+		iny                       
+		BNE CopyToSRAMLoop      
+		
 	endInitRAM:	
 		JSR $E227     		 ;hijack fix  ->  initSound
 		rts
@@ -134,13 +132,11 @@ org $dd00
 ;		jmp initMMC5Regs
 
 
-org $de00	
+org $de00	; SRAM_Code
 	CodeBlock:	
-		;base $6000	
 		db "goes_into_sram._a_good_place_to_transit_to_different_banks"
 
 org $df00	
-	CodeBlock2:	
-		;base $6100		
+	CodeBlock2:		
 		db "goes_into_sram._a_good_place_to_transit_to_different_banks"
 endif

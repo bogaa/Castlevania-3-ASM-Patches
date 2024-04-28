@@ -940,7 +940,7 @@ superglobals = [
 ]
 
 specialSymbols = [
-    'sdasm','bank','banksize','chrsize','randbyte','randword','fileoffset',
+    'sdasm','bank','banksize','chrsize','randbyte','randword','fileoffset','filesize',
     'prgbanks','chrbanks','lastbank','lastchr','mapper','binfile','namespace',
     'vectornmi','vectorreset','vectorirq','warnings',
 ]
@@ -1215,12 +1215,16 @@ def _assemble(filename, outputFilename, listFilename, cfg, fileData, binFile, sy
             return str(out[4])
         elif s == 'lastbank':
             return str(out[4]-1)
-        elif s == 'chrbanks' or s == 'lastchr':
+        elif s == 'chrbanks':
             return str(out[5])
+        elif s == 'lastchr':
+            return str(out[5]-1)
         elif s == 'mapper':
             return str((out[7] & 0xf0) + (out[6]>>4))
         elif s == 'warnings':
             return str(assembler.warnings)
+        elif s == 'filesize':
+            return str(len(out))
         elif s == 'fileoffset':
             if bank != None:
                 #return str(addr + bank * bankSize + headerSize)
@@ -1528,6 +1532,13 @@ def _assemble(filename, outputFilename, listFilename, cfg, fileData, binFile, sy
             else:
                 return 0, 1
         
+        if v.startswith(assembler.quotes) and v.endswith(assembler.quotes):
+            if mode == 'textmap':
+                v = assembler.mapText(assembler.stripQuotes(v))
+            else:
+                v = list(bytes(assembler.stripQuotes(v), 'utf-8'))
+            l=len(v)
+            return v, l
         
         if '=' in v:
             v = v.replace('==', '=')
@@ -1542,13 +1553,13 @@ def _assemble(filename, outputFilename, listFilename, cfg, fileData, binFile, sy
             else:
                 return 0, 1
         
-        if v.startswith(assembler.quotes) and v.endswith(assembler.quotes):
-            if mode == 'textmap':
-                v = assembler.mapText(assembler.stripQuotes(v))
-            else:
-                v = list(bytes(assembler.stripQuotes(v), 'utf-8'))
-            l=len(v)
-            return v, l
+#        if v.startswith(assembler.quotes) and v.endswith(assembler.quotes):
+#            if mode == 'textmap':
+#                v = assembler.mapText(assembler.stripQuotes(v))
+#            else:
+#                v = list(bytes(assembler.stripQuotes(v), 'utf-8'))
+#            l=len(v)
+#            return v, l
         
         if v.startswith('-'):
             label = v.split(' ',1)[0]
@@ -2457,7 +2468,7 @@ def _assemble(filename, outputFilename, listFilename, cfg, fileData, binFile, sy
                         print('Not found')
                     print()
             
-            elif k == 'insert':
+            elif k == 'insert' and (passNum == lastPass):
                 v = getValue(line.split(" ", 1)[1].strip())
                 fv = fillValue
                 if type(v) == list:
@@ -2470,8 +2481,8 @@ def _assemble(filename, outputFilename, listFilename, cfg, fileData, binFile, sy
                 # This is used for display in list file
                 assembler.insert = (v, fv)
                 
-                if debug or True:
-                    print('insert', v, 'bytes.')
+                if debug:
+                    print('insert', hex(v), 'bytes at ', hex(fileOffset))
             elif k == 'truncate':
                 #fileOffset = addr + bank * bankSize + headerSize
                 fileOffset = int(getSpecial('fileoffset'))
@@ -2499,6 +2510,8 @@ def _assemble(filename, outputFilename, listFilename, cfg, fileData, binFile, sy
                     data = data.split()
                     if data[0].lower() == 'space':
                         data[0] = ' '
+                    elif data[0].lower() == 'equals':
+                        data[0] = '='
                     elif '...' in data[0]:
                         c1,c2 = data[0].split('...')
                         data[0] = ''.join([chr(c) for c in range(ord(c1), ord(c2)+1)])
@@ -3118,6 +3131,9 @@ def _assemble(filename, outputFilename, listFilename, cfg, fileData, binFile, sy
                 assembler.namespace.push(k)
                 lines = lines[:i]+['']+macros[k].lines+[assembler.hidePrefix+'namespace _pop_']+lines[i+1:]
             if kf: # keyword function
+                if len(kfdata) < len(functions[kf].params):
+                    kfdata = kfdata + ['0'] * (len(functions[kf].params) - len(kfdata))
+                
                 for item in mergeList(functions[kf].params, kfdata):
                     symbols[kf + namespaceSymbol + assembler.lower(item[0])] = getValue(item[1])
                 
@@ -3245,6 +3261,16 @@ def _assemble(filename, outputFilename, listFilename, cfg, fileData, binFile, sy
                 
                 for v in [getValue(x) >>8 for x in values]:
                     b = b + makeList(v)
+            elif k == 'lineContinueComma':
+                v = line.split(' ',1)
+                if len(v) == 1:
+                    lineContinueComma = True
+                else:
+                    v = v[1].strip()
+                    if (v.lower() in ['on','true']) or (getValue(v) == 1):
+                        lineContinueComma = True
+                    else:
+                        lineContinueComma = False
             elif k == 'mapdb':
                 v = line.split(' ',1)
                 if len(v) == 1:
