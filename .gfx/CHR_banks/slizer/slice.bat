@@ -1,1 +1,3 @@
-busybox split -b 1024 chr.chr _.CHR
+busybox split -b 4096 chr.chr bin.chr_ 
+
+::1024

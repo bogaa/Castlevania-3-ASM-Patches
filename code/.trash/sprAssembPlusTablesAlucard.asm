@@ -21,216 +21,277 @@ oamSpecData:
 	dw alucard_0378
 
 trevor_025c:				
-	dw data_1a_03be
-	dw data_1a_0402
+	dw data_1a_03be       ; 0   
+	dw data_1a_0402       ; 2   
+	dw data_1a_0410       ; 4   
+	dw data_1a_041b       ; 6   
+	dw data_1a_0410       ; 8   
+	dw data_1a_0429       ; A   
+	dw data_1a_0437       ; C   
+	dw data_1a_0453       ; E   
+	dw data_1a_051e       ; 10  
+	dw data_1a_052c       ; 12  
+	dw data_1a_053a       ; 14  
+	dw data_1a_0445       ; 16  
+	dw data_1a_0461       ; 18  
+	dw data_1a_046f       ; 1A  
+	dw data_1a_047d       ; 1C  
+	dw data_1a_048e       ; 1E  
+	dw data_1a_049f       ; 20  
+	dw data_1a_04ad       ; 22  
+	dw data_1a_0548       ; 24  
+	dw data_1a_0550       ; 26  
+	dw data_1a_0558       ; 28  
+	dw data_1a_0563       ; 2A  
+	dw data_1a_056b       ; 2C  
+	dw data_1a_0573       ; 2E  
+	dw data_1a_057b       ; 30  
+	dw data_1a_0586       ; 32  
+	dw data_1a_04be       ; 34  
+	dw data_1a_04cf       ; 36  
+	dw data_1a_04dd       ; 38  
+	dw data_1a_04ee       ; 3A  
+	dw data_1a_04ff       ; 3C  
+	dw data_1a_050d       ; 3E  
+	dw data_1a_0597       ; 40  
+	dw data_1a_05a0       ; 42  
+	dw data_1a_05a8       ; 44  
+	dw data_1a_05b0       ; 46  
+	dw data_1a_05b8       ; 48  
+	dw data_1a_05c0       ; 4A  
+	dw data_1a_05c8       ; 4C  
+	dw data_1a_05d0       ; 4E  
+	dw data_1a_05dd       ; 50  
+	dw data_1a_05e5       ; 52  
+	dw data_1a_05ea       ; 54  
+	dw data_1a_13cb       ; 56  
+	dw data_1a_13d0       ; 58  
+	dw data_1a_13d5       ; 5A  
+	dw data_1a_13d0       ; 5C  
+	dw data_1a_05f2       ; 5E  
+	dw data_1a_05fb       ; 60  
+	dw data_1a_03f9       ; 62  
+	dw data_1a_05d8       ; 64  
+	dw data_1a_03be       ; 66  
+	dw data_1a_03c7       ; 68  
+	dw data_1a_03d2       ; 6A  
+	dw data_1a_03e0       ; 6C  
+	dw data_1a_03eb       ; 6E  
+
+	dw data_1a_0402			; 70 trevor walking
 	dw data_1a_0410
 	dw data_1a_041b
+	
 	dw data_1a_0410
-	dw data_1a_0429
-	dw data_1a_0437
-	dw data_1a_0453
-	dw data_1a_051e
-	dw data_1a_052c
-	dw data_1a_053a
-	dw data_1a_0445
-	dw data_1a_0461
-	dw data_1a_046f
-	dw data_1a_047d
-	dw data_1a_048e
-	dw data_1a_049f
-	dw data_1a_04ad
-	dw data_1a_0548
-	dw data_1a_0550
-	dw data_1a_0558
-	dw data_1a_0563
-	dw data_1a_056b
-	dw data_1a_0573
-	dw data_1a_057b
-	dw data_1a_0586
-	dw data_1a_04be
-	dw data_1a_04cf
-	dw data_1a_04dd
-	dw data_1a_04ee
-	dw data_1a_04ff
-	dw data_1a_050d
-	dw data_1a_0597
-	dw data_1a_05a0
-	dw data_1a_05a8
-	dw data_1a_05b0
-	dw data_1a_05b8
-	dw data_1a_05c0
-	dw data_1a_05c8
-	dw data_1a_05d0
-	dw data_1a_05dd
-	dw data_1a_05e5
-	dw data_1a_05ea
-	dw data_1a_13cb
-	dw data_1a_13d0
-	dw data_1a_13d5
-	dw data_1a_13d0
-	dw data_1a_05f2
-	dw data_1a_05fb
-	dw data_1a_03f9
-	dw data_1a_05d8
-	dw data_1a_03be
-	dw data_1a_03c7
-	dw data_1a_03d2
-	dw data_1a_03e0
-	dw data_1a_03eb
+	dw data_1a_0402
+	dw data_1a_041b
+		
 
-sympha_02cc:
-	dw data_1a_03be
-	dw data_1a_0604
+sympha_02cc:                 
+	dw data_1a_03be		; 0 
+	dw data_1a_0604     ; 2 
+	dw data_1a_0612     ; 4 
+	dw data_1a_0620     ; 6 
+	dw data_1a_0612     ; 8 
+	dw data_1a_062e     ; A 
+	dw data_1a_063c     ; C 
+	dw data_1a_0658     ; E 
+	dw data_1a_0666     ; 10
+	dw data_1a_0674     ; 12
+	dw data_1a_0682     ; 14
+	dw data_1a_064a     ; 16
+	dw data_1a_0690     ; 18
+	dw data_1a_069e     ; 1A
+	dw data_1a_06ac     ; 1C
+	dw data_1a_06ba     ; 1E
+	dw data_1a_0700     ; 20
+	dw data_1a_0705     ; 22
+	dw data_1a_06c8     ; 24
+	dw data_1a_06d6     ; 26
+	dw data_1a_06e4     ; 28
+	dw data_1a_06f2     ; 2A
+	dw data_1a_0737     ; 2C
+	dw data_1a_070d     ; 2E
+	dw data_1a_071b     ; 30
+	dw data_1a_0729     ; 32
+	dw data_1a_0745     ; 34
+	dw data_1a_0756     ; 36
+	dw data_1a_0767     ; 38
+	dw data_1a_0778     ; 3A
+	dw data_1a_0789     ; 3C
+	dw data_1a_078e     ; 3E
+	dw data_1a_0799     ; 40
+	dw data_1a_07aa     ; 42
+	dw data_1a_07b8     ; 44
+	dw data_1a_07c8     ; 46
+	dw data_1a_07cd     ; 48
+	dw data_1a_07d6     ; 4A
+	dw data_1a_07df     ; 4C
+	dw data_1a_07e8     ; 4E
+	dw data_1a_07f1     ; 50
+	dw data_1a_07fa     ; 52
+	dw data_1a_0802     ; 54
+	dw data_1a_07c0     ; 56
+	
+    dw $0000            ; 58
+    dw $0000            ; 5A
+    dw $0000            ; 5C
+    dw $0000            ; 5E
+    dw $0000            ; 60
+    dw $0000            ; 62
+    dw $0000            ; 64
+    dw $0000            ; 66
+    dw $0000            ; 68
+    dw $0000            ; 6A
+    dw $0000            ; 6C
+	dw $0000            ; 6E
+	
+	dw data_1a_0604 	; 70
+	dw data_1a_0612 
+	dw data_1a_0620 	
+	
 	dw data_1a_0612
-	dw data_1a_0620
-	dw data_1a_0612
-	dw data_1a_062e
-	dw data_1a_063c
-	dw data_1a_0658
-	dw data_1a_0666
-	dw data_1a_0674
-	dw data_1a_0682
-	dw data_1a_064a
-	dw data_1a_0690
-	dw data_1a_069e
-	dw data_1a_06ac
-	dw data_1a_06ba
-	dw data_1a_0700
-	dw data_1a_0705
-	dw data_1a_06c8
-	dw data_1a_06d6
-	dw data_1a_06e4
-	dw data_1a_06f2
-	dw data_1a_0737
-	dw data_1a_070d
-	dw data_1a_071b
-	dw data_1a_0729
-	dw data_1a_0745
-	dw data_1a_0756
-	dw data_1a_0767
-	dw data_1a_0778
-	dw data_1a_0789
-	dw data_1a_078e
-	dw data_1a_0799
-	dw data_1a_07aa
-	dw data_1a_07b8
-	dw data_1a_07c8
-	dw data_1a_07cd
-	dw data_1a_07d6
-	dw data_1a_07df
-	dw data_1a_07e8
-	dw data_1a_07f1
-	dw data_1a_07fa
-	dw data_1a_0802
-	dw data_1a_07c0
+	dw data_1a_0604 
+	dw data_1a_0620 
+	
 
-grant_0324:
-	dw data_1a_03be
-	dw data_1a_080a
-	dw data_1a_0818
+grant_0324:             
+	dw data_1a_03be  	; 0    
+	dw data_1a_080a     ; 2 
+	dw data_1a_0818     ; 4 
+	dw data_1a_0834     ; 6 
+	dw data_1a_0818     ; 8 
+	dw data_1a_0842     ; A 
+	dw data_1a_0850     ; C 
+	dw data_1a_086c     ; E 
+	dw data_1a_0874     ; 10
+	dw data_1a_0882     ; 12
+	dw data_1a_088a     ; 14
+	dw data_1a_085e     ; 16
+	dw data_1a_0895     ; 18
+	dw data_1a_089d     ; 1A
+	dw data_1a_08ab     ; 1C
+	dw data_1a_08b6     ; 1E
+	dw data_1a_08be     ; 20
+	dw data_1a_08c9     ; 22
+	dw data_1a_08d4     ; 24
+	dw data_1a_08e2     ; 26
+	dw data_1a_099d     ; 28
+	dw data_1a_08f3     ; 2A
+	dw data_1a_0901     ; 2C
+	dw data_1a_0912     ; 2E
+	dw data_1a_0920     ; 30
+	dw data_1a_0931     ; 32
+	dw data_1a_093f     ; 34
+	dw data_1a_0950     ; 36
+	dw data_1a_0958     ; 38
+	dw data_1a_0966     ; 3A
+	dw data_1a_0971     ; 3C
+	dw data_1a_097c     ; 3E
+	dw data_1a_0987     ; 40
+	dw data_1a_0992     ; 42
+	dw data_1a_09ab     ; 44
+	dw data_1a_09c0     ; 46
+	dw data_1a_0826     ; 48
+	dw data_1a_09ce     ; 4A
+	dw data_1a_09e3     ; 4C
+	dw data_1a_09f1     ; 4E
+	dw data_1a_0a06     ; 50
+	dw data_1a_0a14     ; 52
+   
+    dw $0000            ; 54
+    dw $0000            ; 56
+    dw $0000            ; 58
+    dw $0000            ; 5A
+    dw $0000            ; 5C
+    dw $0000            ; 5E
+    dw $0000            ; 60
+    dw $0000            ; 62
+    dw $0000            ; 64
+    dw $0000            ; 66
+    dw $0000            ; 68
+    dw $0000            ; 6A
+    dw $0000            ; 6C
+    dw $0000            ; 6E
+	
+	dw data_1a_080a		; 70 
+    dw data_1a_0818
 	dw data_1a_0834
-	dw data_1a_0818
-	dw data_1a_0842
-	dw data_1a_0850
-	dw data_1a_086c
-	dw data_1a_0874
-	dw data_1a_0882
-	dw data_1a_088a
-	dw data_1a_085e
-	dw data_1a_0895
-	dw data_1a_089d
-	dw data_1a_08ab
-	dw data_1a_08b6
-	dw data_1a_08be
-	dw data_1a_08c9
-	dw data_1a_08d4
-	dw data_1a_08e2
-	dw data_1a_099d
-	dw data_1a_08f3
-	dw data_1a_0901
-	dw data_1a_0912
-	dw data_1a_0920
-	dw data_1a_0931
-	dw data_1a_093f
-	dw data_1a_0950
-	dw data_1a_0958
-	dw data_1a_0966
-	dw data_1a_0971
-	dw data_1a_097c
-	dw data_1a_0987
-	dw data_1a_0992
-	dw data_1a_09ab
-	dw data_1a_09c0
-	dw data_1a_0826
-	dw data_1a_09ce
-	dw data_1a_09e3
-	dw data_1a_09f1
-	dw data_1a_0a06
-	dw data_1a_0a14
 
-alucard_0378:
-	dw data_1a_03be
-	dw data_1a_0a29
+	dw data_1a_0818
+	dw data_1a_080a
+	dw data_1a_0834
+	  
+
+alucard_0378:           
+	dw data_1a_03be		; 0 							
+	dw data_1a_0a29     ; 2 
+	dw data_1a_0a3a     ; 4 
+	dw data_1a_0a4b     ; 6 
+	dw data_1a_0a3a     ; 8 
+	dw data_1a_0a5c     ; A 
+	dw data_1a_0a6d     ; C 
+	dw data_1a_0ace     ; E 
+	dw data_1a_0b15     ; 10
+	dw data_1a_0b23     ; 12
+	dw data_1a_0b31     ; 14
+	dw data_1a_0ac0     ; 16
+	dw data_1a_0a7e     ; 18
+	dw data_1a_0a8f     ; 1A
+	dw data_1a_0aa9     ; 1C
+	dw data_1a_0adc     ; 1E
+	dw data_1a_0aea     ; 20
+	dw data_1a_0b01     ; 22
+	dw data_1a_0b3f     ; 24
+	dw data_1a_0b47     ; 26
+	dw data_1a_0b4f     ; 28
+	dw data_1a_0b57     ; 2A
+	dw data_1a_0b6b     ; 2C
+	dw data_1a_0b82     ; 2E
+	dw data_1a_0b90     ; 30
+	dw data_1a_0b9e     ; 32
+	dw data_1a_0bba     ; 34
+	dw data_1a_0b9e     ; 36
+	dw data_1a_0b90     ; 38
+	dw data_1a_0b82     ; 3A
+	dw data_1a_0b6b     ; 3C
+	dw data_1a_0b57     ; 3E
+	dw data_1a_0bd6     ; 40
+	dw data_1a_0bdb     ; 42
+	dw data_1a_0be0     ; 44
+    
+	dw $0000            ; 46
+    dw $0000            ; 48
+    dw $0000            ; 4A
+    dw $0000            ; 4C
+    dw $0000            ; 4E
+    dw $0000            ; 50
+    dw $0000            ; 52
+    dw $0000            ; 54
+    dw $0000            ; 56
+    dw $0000            ; 58
+    dw $0000            ; 5A
+    dw $0000            ; 5C
+    dw $0000            ; 5E
+    dw $0000            ; 60
+    dw $0000            ; 62
+    dw $0000            ; 64
+    dw $0000            ; 66
+    dw $0000            ; 68
+    dw $0000            ; 6A
+    dw $0000            ; 6C
+    dw $0000            ; 6E
+ 
+	dw data_1a_0a29		; 70 alucard walking 
 	dw data_1a_0a3a
 	dw data_1a_0a4b
-	dw data_1a_0a3a
-	dw data_1a_0a5c
-	dw data_1a_0a6d
-	dw data_1a_0ace
-	dw data_1a_0b15
-	dw data_1a_0b23
-	dw data_1a_0b31
-	dw data_1a_0ac0
-	dw data_1a_0a7e
-	dw data_1a_0a8f
-	dw data_1a_0aa9
-	dw data_1a_0adc
-	dw data_1a_0aea
-	dw data_1a_0b01
-	dw data_1a_0b3f
-	dw data_1a_0b47
-	dw data_1a_0b4f
-	dw data_1a_0b57
-	dw data_1a_0b6b
-	dw data_1a_0b82
-	dw data_1a_0b90
-	dw data_1a_0b9e
-	dw data_1a_0bba
-	dw data_1a_0b9e
-	dw data_1a_0b90
-	dw data_1a_0b82
-	dw data_1a_0b6b
-	dw data_1a_0b57
-	dw data_1a_0bd6
-	dw data_1a_0bdb
-	dw data_1a_0be0
 
-data_1a_03be:
-	db $02
-	db $00,$e0,$02,$f8
-	db $00,$e0,$42,$00
+	dw data_1a_alucardNew1
+	dw data_1a_alucardNew2          
+	dw data_1a_alucardNew3          
 
-data_1a_03c7:
-	db $03,$00,$e2,$02,$f4,$01,$e4,$fc,$01,$e6,$04
 
-data_1a_03d2:
-	db $04,$00,$e8,$02,$f0,$01,$ea,$f8,$01,$ec,$00,$01,$ee,$08
 
-data_1a_03e0:
-	db $03,$00,$f0,$02,$f4,$01,$f2,$fc,$01,$f4,$04
-
-data_1a_03eb:
-	db $04,$e0,$f6,$02,$f5,$e1,$f8,$fd,$01,$fa,$f8,$01,$fc,$00
-
-data_1a_03f9:
-	db $02,$f0,$5f,$01,$f8,$f0,$5f,$41,$00
-
-data_1a_0402:				; !! if Ypos is uneven M+F+P is skippet. $80 is followed by a pointer where to continue the table 
-	db $04				    ; number of 8x16 segments		
-	db $e0,$00,$00,$f8		; Ypos,ID,Mirr+Flip+Palette,Xpos  
-	db $e1,$02,$00         	; Ypos,ID,Xpos 						
-	db $01,$04,$f8         	; Ypos,ID,Xpos 
-	db $01,$06,$00         	; Ypos,ID,Xpos 
 
 data_1a_0410:
 	db $03,$e0,$08,$00,$f8,$e1,$0a,$00,$01,$0c,$fb
@@ -607,15 +668,6 @@ data_1a_0a06:
 data_1a_0a14:
 	db $06,$dc,$60,$01,$e6,$d8,$1c,$00,$ee,$d9,$1e,$f6,$d9,$20,$fe,$f9,$2a,$f8,$f9,$2c,$00
 
-data_1a_0a29:
-	db $05,$c0,$00,$00,$fc,$e1,$02,$f8,$e1,$04,$00,$01,$06,$f9,$01,$08,$01
-
-data_1a_0a3a:
-	db $05,$c0,$0a,$00,$fc,$e1,$0c,$f8,$e1,$0e,$00,$01,$10,$f8,$01,$12,$00
-
-data_1a_0a4b:
-	db $05,$c0,$00,$00,$fc,$e1,$14,$f8,$e1,$16,$00,$01,$18,$f9,$01,$1a,$01
-
 data_1a_0a5c:
 	db $05,$c0,$00,$00,$fc,$e1,$02,$f8,$e1,$04,$00,$01,$06,$f9,$01,$1c,$01
 
@@ -637,17 +689,7 @@ data_1a_0ac0:
 data_1a_0ace:
 	db $04,$f0,$38,$00,$f8,$f1,$3a,$00,$11,$3c,$f8,$11,$3e,$00
 
-data_1a_0adc:
-	db $04,$f0,$40,$00,$f8,$f1,$42,$00,$11,$44,$f8,$11,$46,$00
 
-data_1a_0aea:
-	db $07,$f0,$38,$00,$f8,$f1,$48,$00,$f1,$2a,$08,$11,$3c,$f8,$11,$4a,$00,$11,$2e,$08,$f9,$30,$10
-
-data_1a_0b01:
-	db $06,$f0,$38,$00,$f8,$f1,$48,$00,$f1,$34,$08,$11,$3c,$f8,$11,$4a,$00,$11,$36,$08
-
-data_1a_0b15:
-	db $04,$e0,$4c,$00,$fb,$e1,$4e,$03,$01,$50,$f8,$01,$52,$00
 
 data_1a_0b23:
 	db $04,$e0,$4c,$00,$f8,$e1,$4e,$00,$01,$36,$f8,$01,$3e,$00
@@ -3239,9 +3281,129 @@ data_1b_1736:
 data_1b_175d:
 	db $02,$f0,$64,$41,$f8,$f1,$62,$00
 
+if PC >= $b750
+print "spriteData!!" 
+endif 
+
+pad $b765, $ff 		; fill to non sprite data.. 
+	
+
+
 
 org $be63				; free space 
+
+data_1a_0402:				; !! if Ypos is uneven M+F+P is skippet. $80 is followed by a pointer where to continue the table 
+	db $04				    ; number of 8x16 segments		
+	db $e0,$00,$00,$f8		; Ypos,ID,Mirr+Flip+Palette,Xpos  
+	db $e1,$02,$00         	; Ypos,ID,Xpos 						
+	db $01,$04,$f8         	; Ypos,ID,Xpos 
+	db $01,$06,$00         	; Ypos,ID,Xpos 
+
 	
+data_1a_0a29:				; alucard sprite assembly data 
+	db $05
+	db $c0,$00,$00,$fc
+	db $e1,$02,$f8
+	db $e1,$04,$00
+	db $01,$06,$f9
+	db $01,$08,$01
+
+data_1a_0a3a:
+	db $05
+	db $c0,$0a,$00,$fc
+	db $e1,$0c,$f8
+	db $e1,$0e,$00
+	db $01,$10,$f8
+	db $01,$12,$00	
+
+data_1a_0a4b:			
+	db $05
+	db $c0,$00,$00,$fc
+	db $e1,$14,$f8
+	db $e1,$16,$00
+	db $01,$18,$f9
+	db $01,$1a,$01
+
+data_1a_alucardNew1:		; alucard sprite assembly data NEW
+	db $05
+	db $c0,$00,$01,$fc
+	db $e0,$02,$02,$f8
+	db $e0,$04,$03,$00
+	db $00,$06,$00,$f9
+	db $00,$08,$01,$01
+data_1a_alucardNew2:
+	db $05
+	db $c0,$0a,$02,$fc
+	db $e0,$0c,$02,$f8
+	db $e0,$0e,$02,$00
+	db $00,$10,$02,$f8
+	db $00,$12,$02,$00	
+data_1a_alucardNew3:
+	db $05
+	db $c0,$00,$03,$fc
+	db $e0,$14,$03,$f8
+	db $e0,$16,$03,$00
+	db $00,$18,$03,$f9
+	db $00,$1a,$03,$01
+
+
+
+data_1a_0a5c:
+	db $05,$c0,$00,$00,$fc,$e1,$02,$f8,$e1,$04,$00,$01,$06,$f9,$01,$1c,$01
+
+data_1a_0a6d:
+	db $05,$c0,$00,$00,$fc,$e1,$14,$f8,$e1,$16,$00,$01,$1e,$f9,$01,$1a,$01
+
+data_1a_0a7e:
+	db $05,$c0,$00,$00,$fb,$e1,$20,$f4,$e1,$22,$fc,$01,$24,$f8,$01,$26,$00
+
+data_1a_0a8f:
+	db $08,$c0,$00,$00,$fc,$e1,$02,$f8,$e1,$28,$00,$e1,$2a,$08,$01,$06,$f9,$01,$2c,$00,$01,$2e,$08,$eb,$30,$10
+
+data_1a_0aa9:
+	db $07,$c0,$00,$00,$fc,$e1,$02,$f8,$e1,$32,$00,$e1,$34,$08,$01,$06,$f9,$01,$2c,$00,$01,$2e,$08
+
+
+
+
+data_1a_0adc:
+	db $04,$f0,$40,$00,$f8,$f1,$42,$00,$11,$44,$f8,$11,$46,$00
+
+data_1a_0aea:
+	db $07,$f0,$38,$00,$f8,$f1,$48,$00,$f1,$2a,$08,$11,$3c,$f8,$11,$4a,$00,$11,$2e,$08,$f9,$30,$10
+
+data_1a_0b01:
+	db $06,$f0,$38,$00,$f8,$f1,$48,$00,$f1,$34,$08,$11,$3c,$f8,$11,$4a,$00,$11,$36,$08
+
+data_1a_0b15:
+	db $04,$e0,$4c,$00,$fb,$e1,$4e,$03,$01,$50,$f8,$01,$52,$00
+
+
+
+	
+data_1a_03be:
+	db $02
+	db $00,$e0,$02,$f8
+	db $00,$e0,$42,$00
+
+data_1a_03c7:
+	db $03,$00,$e2,$02,$f4,$01,$e4,$fc,$01,$e6,$04
+
+data_1a_03d2:
+	db $04,$00,$e8,$02,$f0,$01,$ea,$f8,$01,$ec,$00,$01,$ee,$08
+
+data_1a_03e0:
+	db $03,$00,$f0,$02,$f4,$01,$f2,$fc,$01,$f4,$04
+
+data_1a_03eb:
+	db $04,$e0,$f6,$02,$f5,$e1,$f8,$fd,$01,$fa,$f8,$01,$fc,$00
+
+data_1a_03f9:
+	db $02,$f0,$5f,$01,$f8,$f0,$5f,$41,$00
+
+
+
+
 	
 ; ----------------------------- entityAnimation Data
 ; --------------------------------------------------
@@ -3269,8 +3431,8 @@ org $EFB4
 	dw data_1f_0fd2
 	dw data_1f_0fd2
 
-data_1f_0fd2:			; format start, speed, leanth		; player??
-	db $02, $08, $08		; trevorWalk_1f_0fd2
+data_1f_0fd2:			; format start, speed, leanth		; playerAll
+	db $70, $08, $0c		; trevorWalk_1f_0fd2			; alucard 
 	db $18, $08, $04
 	db $1e, $08, $04
 	db $24, $08, $06

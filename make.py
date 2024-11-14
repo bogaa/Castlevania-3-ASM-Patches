@@ -1,4 +1,4 @@
-from SpiderDaveAsm import sdasm
+from SDasm import sdasm
 
 filename = 'Castlevania_3.nes'
 

@@ -1,3 +1,167 @@
+if extandedSoundCheck
+	bank $18
+	base $8000
+	
+	org $A21F
+		CMP #$7d                           ;0CA21F|C919    |      ;
+		bcc ++
+		lda #$7d
+        BNE +        
+		DEC.W $0780            
+		BPL ++        
+		LDA.B #$00             
+    + 
+		STA.W $0780            		
+	++	
+
+	org $A237
+		lda $780
+		jsr newMusicDemo
+	
+	org $A259
+		LDA #$2B                        
+		STA $61		; r_VRAM_QueueDest            
+		LDA #$23                        
+		STA $62                         
+		jsr $E8B5  
+		
+		lda $780
+		pha 
+		and #$f0
+		lsr
+		lsr
+		lsr
+		lsr
+		jsr makeHexNumber
+		sta $0300,X
+		inx
+		
+		pla 
+		and #$0f
+		jsr makeHexNumber
+		sta $0300,X 
+		inx
+		jmp $E8DE	; endVRAM_queue
+	makeHexNumber:
+		clc 
+		adc #$01 
+		cmp #$0b
+		bcc +
+		adc #$04	
+	+	rts
+
+	org $A2DB		; free space old text  A30F
+	newMusicDemo:
+				; no code to skip larger portions.. 
+		rts 
+		
+	pad $A3FE,$ff 
+endif 
+
+if playerEnhance = 1
+playerAclucardShootOnStairs = 1
+grantClimbSpeed = 1
+
+if playerAclucardShootOnStairs
+
+
+
+bank $1c
+org $9978
+	-	
+		lda $3a
+		jsr characterCheckAluSt
+		bne +
+		lda #$1e
+		jmp $940a 
+		jsr $b9f5 
+		bcc -
+	+	
+
+org $94FF
+    jsr alucardAttackStairs 
+org $bfac 
+    alucardAttackStairs:
+		lda $3a
+		cmp #$03
+		bne +	
+		lda $562
+        bne +
+		jsr $ba69                     ; ba69 alucard attack        
+    +   jmp $BAF2                    ; hijack fix 
+     
+	characterCheckAluSt:	
+	   	cmp #$03
+		beq +
+		
+		lda #$00
+		rts 
+	 +  lda $3b
+		rts 
+	   
+;org $9507                            ; delayed shoot 
+;    jsr alucardAttackStairs     
+;org $BFAC    ; free space ?!
+;    alucardAttackStairs:
+;        sta wPlayerStateDoubled        ; $565 
+;        jsr $ba69                     ; ba69 alucard attack        
+;        rts 
+ 
+endif 
+
+if grantClimbSpeed
+    bank $1d
+	base $a000
+		
+	org $a405
+		lda #$00
+		ldy #$ff
+
+	org $a41E
+		lda #$ff
+		ldy #$00
+	
+	
+;	org $a08f
+;		jmp dontFall_whenAPressed	
+;	org $BFAB			; freeSpace 
+;	dontFall_whenAPressed:
+;		lda $fa 
+;		bit #$80
+;		bne +
+;		lda #$0c
+;		sta $565
+;		jmp $a092 
+;		
+;	+	rts
+		
+		
+
+endif 
+
+endif 
+
+if levelSelect				; while level select menu
+	bank $00
+	org $8a46
+	jsr levelSelectAddons
+
+org $beb8
+	levelSelectAddons:
+	jsr $8b1a				; hijack fix 
+	
+	lda wJoy1NewButtonsPressed
+	and #$03
+	beq +
+	lda #$01 
+	eor wHardMode 
+	sta wHardMode
+	asl
+	asl  
+	sta wEntityPaletteOverride
++	
+	rts 
+endif 
 
 ; ----------------------------------------------------
 if subWeaponDrop
@@ -141,7 +305,7 @@ org $95f7
 	
 bank $01
 base $a000	
-org $bec0
+org $becf		; LEVEL SELECT ALLIGNED!!
 	rotateCharacters:
 		lda $3a
 		clc
@@ -221,13 +385,16 @@ if fastLunch
 endif	
 ; ----------------------------------------------------
 if fastDoor
-    doorSpeed = $02
-    org $fb6c
+    doorSpeed = $04
+    org $fb6c			; door right 
         adc #doorSpeed
-
     org $f9cb
         sbc #doorSpeed
-
+	org $f9da 			; door Left
+		adc #doorSpeed
+	org $fb7a
+        sbc #doorSpeed
+		
     org $fa00
         ; wait time for door to open
         lda #$10
@@ -270,7 +437,8 @@ base SRAM_Code				; This section goes to SRAM when start or reset
 		endif
 		
 		if experiment
-		jsr checkRamPage
+;		jsr checkRamPage
+		jsr spriteViewer		
 		endif 
 
 		if CHRparallex
@@ -455,31 +623,31 @@ endif
 			db $00,$00,$00,$00,$00,$02,$02,$02,$00,$00,$00,$0E	
 
 if experiment			
-		checkRamPage:
-			lda $f8
-			and #$40
-			beq +
-			
-;			lda #$23
-;			jsr playSound
-			
-		+	lda wInGameSubstate  ; 2a 
-			
-			lda OAMDMA
-			lda NAMETABLE_MAPPING
-			
-			
-			lda w190 								
-			
-			lda w0d1
-			lda wCurrInstrumentDataAddr ;e0
-			lda wFreqAdjustFromEnvelope ; e2
-			lda wSoundBankTempVar1 	;e4
-			
-			lda w3cc
-			lda wEntityOamSpecIdxBaseOffset	; 593
-			lda w7f7    							; dsb $800-$7f7
-			
+;		checkRamPage:
+;			lda $f8
+;			and #$40
+;			beq +
+;			
+;;			lda #$23
+;;			jsr playSound
+;			
+;		+	lda wInGameSubstate  ; 2a 
+;			
+;			lda OAMDMA
+;			lda NAMETABLE_MAPPING
+;			
+;			
+;			lda w190 								
+;			
+;			lda w0d1
+;			lda wCurrInstrumentDataAddr ;e0
+;			lda wFreqAdjustFromEnvelope ; e2
+;			lda wSoundBankTempVar1 	;e4
+;			
+;			lda w3cc
+;			lda wEntityOamSpecIdxBaseOffset	; 593
+;			lda w7f7    							; dsb $800-$7f7
+;			rts 
 			
 		spriteViewer:	
 			lda $f8
@@ -553,4 +721,6 @@ if experiment
 			adc #$01
 			sta CHR_BANK_0c00
 		+	rts 
+
+	
 endif 			

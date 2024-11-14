@@ -1,10 +1,15 @@
+textmap clear
+textmap A...Z C0
+textmap a...z E0
+textmap space 00 
+textmap .,!?-'15-& dbdcfafbfcdadedffcfd 	; '	 
 
-textmap 1...9 41		; TextMapMainGame
-textmap A...Z 50
-textmap a...z e0
-textmap space 00
+;textmap space 00							; TextMapMainGame
+;textmap 1...9 41		
+;textmap A...Z 50
+;textmap a...z e0
 
-textmap .,!?-' dbdcfafbfcda			;' ;textmap .=-"'?!, 4b4c4d4e4f6a6b78		; "  	
+;textmap .,!?-' dbdcfafbfcda				;' ;textmap .=-"'?!, 4b4c4d4e4f6a6b78		; "  	
 
 bank $1e                                                    
 base $c000                                                      			  
@@ -12,59 +17,61 @@ org $D929							; 3d929
 	introText:
 	db $00,$80,$00,$80,$06
 	
-	db "During 15th Century",$00,$80
-	db "Europe, there lived",$00,$80
-	db "a person named  Dracula.",$00,$80
-	db "He practiced sorcery",$00,$80
-	db "in order to create",$00,$80
-	db "a bad world filled",$00,$80
-	db "with evil.",$80,$81
+	db {textmap:"During 15th Century"},$80,$06
+	db {textmap:"Europe, there lived"},$80,$06
+	db {textmap:"a person named"},$80,$06
+	db {textmap:"Dracula."},$80,$06
+	db {textmap:"He practiced sorcery"},$80,$06
+	db {textmap:"in order to create"},$80,$06
+	db {textmap:"a bad world filled"},$80,$06
+	db {textmap:"with evil."},$80,$81
 	
 	db $00,$80,$00,$80,$06
 	
-	db "He began taking over",$00,$80
-	db "the Continent of",$00,$80
-	db "Europe, changing",$00,$80
-	db "countries from good",$00,$80
-	db "to bad.",$00,$80
-	db "The good people of",$00,$80
-	db "Europe tried to",$00,$80
-	db "fight off Dracula,",$00,$80
-	db "but no one was able",$00,$80
-	db "to survive.",$80,$81
+	db {textmap:"He began taking over"},$80,$06
+	db {textmap:"the Continent of"},$80,$06
+	db {textmap:"Europe, changing"},$80,$06
+	db {textmap:"countries from good"},$80,$06
+	db {textmap:"to bad."},$80,$06
+	db {textmap:"The good people of"},$80,$06
+	db {textmap:"Europe tried to"},$80,$06
+	db {textmap:"fight off Dracula,"},$80,$06
+	db {textmap:"but no one was able"},$80,$06
+	db {textmap:"to survive."},$80,$81
 	
 	db $00,$80,$00,$80,$06
 	
-	db "Finally, the Belmont",$00,$80
-	db "family was summoned",$00,$80
-	db "to battle Dracula's",$00,$80
-	db "vile forces.",$00,$80
-	db "The Belmont",$00,$80
-	db "family has",$00,$80
-	db "a long  history of",$00,$80
-	db "fighting",$00,$80
-	db "evil.",$80,$81
+	db {textmap:"Finally, the Belmont"},$80,$06
+	db {textmap:"family was summoned"},$80,$06
+	db {textmap:"to battle Dracula's"},$80,$06
+	db {textmap:"vile forces."},$80,$10
+	db {textmap:"The Belmont"},$80,$10
+	db {textmap:"family has"},$80,$10
+	db {textmap:"a long"},$80,$10
+	db {textmap:"history of"},$80,$10
+	db {textmap:"fighting"},$80,$10
+	db {textmap:"evil."},$80,$81
 	
 	db $00,$80,$00,$80,$06
 	
-	db "The townspeople be-",$00,$80
-	db "came afraid of the",$00,$80
-	db "Belmonts super-human",$00,$80
-	db "power and asked them",$00,$80
-	db "to leave the country.",$00,$80
-	db "Fortunately",$00,$80  
-	db "the people",$00,$80
-	db "found a",$00,$80
-	db "mighty",$00,$80
-	db "Belmont, ca-",$00,$80
-	db "lled Trevor.",$80,$81
+	db {textmap:"The townspeople be-"},$80,$06
+	db {textmap:"came afraid of the"},$80,$06
+	db {textmap:"Belmonts super-human"},$80,$06
+	db {textmap:"power and asked them"},$80,$06
+	db {textmap:"to leave the country."},$80,$06
+	db {textmap:"Fortunately"},$80,$06 
+	db {textmap:"the people"},$80,$06
+	db {textmap:"found a"},$80,$06
+	db {textmap:"mighty"},$80,$06
+	db {textmap:"Belmont, ca-"},$80,$06
+	db {textmap:"lled Trevor."},$80,$81
 	
 	db $00,$80,$00,$80,$00,$80,$00,$80,$00,$80,$00,$80,$00,$80,$00,$80,$00,$80,$06
 	
-	db "The curse of",$00,$80
-	db "Dracula has begun.",$00,$80
-	db "The fate of Europe",$00,$80
-	db "lies with Trevor.",$00,$80
+	db {textmap:"The curse of"},$80,$06
+	db {textmap:"Dracula has begun."},$80,$06
+	db {textmap:"The fate of Europe"},$80,$06
+	db {textmap:"lies with Trevor."},$80,$81
 
 bank $15                                                      
 base $a000
