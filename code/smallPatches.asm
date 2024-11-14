@@ -1,4 +1,4 @@
-if extandedSoundCheck
+if musicTestFull_BSTART
 	bank $18
 	base $8000
 	

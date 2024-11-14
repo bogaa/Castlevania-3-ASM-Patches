@@ -47,17 +47,17 @@ expand = 1					; needs to be enabled to patch small patches as well
 		incsrc code/expand.asm
 		 
 		levelSelect = 1		; Mods needs SRAM! Or Expansion.
-		cheats = 	  1		;
+		cheats = 	  0		;
 		airControl =  0		;	
 	endif
 
 fastLunch = 			0	; cheats to test the game faster. 
 allCharacters = 		0									  
-fastCharacterSwap =		0		
+fastCharacterSwap =		1		
 
 stageProgression = 		0
-playerEnhance = 		1
-extandedSoundCheck = 	1 
+playerEnhance = 		0
+musicTestFull_BSTART = 	1 
 
 chrAnimations = 		0	; expands to have more of them avalible 
 CHRparallex = 			0
