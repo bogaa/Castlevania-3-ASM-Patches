@@ -57,6 +57,7 @@ fastCharacterSwap =		1
 
 stageProgression = 		0
 playerEnhance = 		0
+newFogEffects = 		1
 musicTestFull_BSTART = 	1 
 
 chrAnimations = 		0	; expands to have more of them avalible 

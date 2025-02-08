@@ -163,7 +163,6 @@ org $beb8
 	rts 
 endif 
 
-; ----------------------------------------------------
 if subWeaponDrop
     bank $17
 	base $a000
@@ -279,7 +278,26 @@ org $dc19   ; start of blank space
         db $95, $93, $00, $97
 endif
 
-; ----------------------------------------------------
+if newFogEffects
+bank $1c
+org $852f
+		lda stairStatesAnyPlayer,y 
+org $8545					; space till $856a
+		lda #$20
+		sta $454 
+		lda #$17 
+		tay 
+		lda #$22
+	  - sta $454,y 
+		dey 
+		bne -
+		rts 
+	stairStatesAnyPlayer:	
+		db $0E, $10, $12, $14, $1E, $24
+
+pad $8561,$ff	
+;pad $856a,$ff		
+endif 
 
 bank $00
 base $8000
